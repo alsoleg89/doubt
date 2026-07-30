@@ -1,0 +1,24 @@
+name: Analyzer rule
+description: Propose a precise epistemic smell
+title: "[rule] "
+labels: ["rule", "needs-evidence"]
+body:
+  - type: textarea
+    id: claim
+    attributes:
+      label: Failure pattern
+      description: What concrete bad behavior should the rule catch?
+    validations:
+      required: true
+  - type: textarea
+    id: positives
+    attributes:
+      label: True-positive examples
+    validations:
+      required: true
+  - type: textarea
+    id: negatives
+    attributes:
+      label: False-positive examples to avoid
+    validations:
+      required: true
