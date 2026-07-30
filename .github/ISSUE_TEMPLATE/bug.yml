@@ -1,0 +1,28 @@
+name: Bug report
+description: Report incorrect CLI or skill behavior
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Include the command or triggering prompt and the actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Doubt version
+      placeholder: "0.1.0"
+  - type: input
+    id: environment
+    attributes:
+      label: Agent and environment
+      placeholder: "Codex, Node 22, macOS"

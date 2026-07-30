@@ -1,0 +1,50 @@
+{
+  "name": "doubt-ai",
+  "version": "0.1.0",
+  "description": "Give your AI healthy doubt. A portable anti-sycophancy skill and local epistemic linter.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Oleg Alshaev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alsoleg89/doubt.git"
+  },
+  "homepage": "https://github.com/alsoleg89/doubt#readme",
+  "bugs": {
+    "url": "https://github.com/alsoleg89/doubt/issues"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "agent-skills",
+    "anti-sycophancy",
+    "claude-code",
+    "codex",
+    "copilot",
+    "cursor",
+    "gemini",
+    "llm",
+    "prompt-engineering"
+  ],
+  "bin": {
+    "doubt": "bin/doubt.js"
+  },
+  "files": [
+    "bin",
+    "docs/demo.svg",
+    "src",
+    "skill",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "demo": "node bin/doubt.js demo",
+    "lint": "node --check bin/doubt.js && node --check src/cli.js && node --check src/analyze.js && node --check src/install.js",
+    "test": "node --test",
+    "check": "npm run lint && npm test",
+    "prepack": "npm run check"
+  }
+}
