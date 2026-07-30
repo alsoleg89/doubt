@@ -1,48 +1,123 @@
-# Launch plan
+# Launch assets
 
-The goal is not to publish everywhere at once. Create one strong proof artifact, seed discussion
-with practitioners, then use their counterexamples to improve the benchmark.
+Replace no text below unless the released behavior or URLs change. Do not add
+star counts, user counts, or performance claims without current evidence.
 
-## Release prerequisites
+## Canonical links
 
-- Publish `doubt-ai` to npm and verify `npx doubt-ai init` in a clean directory.
-- Create `alsoleg89/doubt` with topics: `ai`, `agent-skills`, `anti-sycophancy`, `claude-code`,
-  `codex`, `copilot`, `cursor`, `gemini-cli`, `llm`, `prompt-engineering`.
-- Enable Discussions, private vulnerability reporting, and the issue templates.
-- Add a 45–60 second terminal recording using `doubt demo`, `doubt init`, and `doubt doctor`.
-- Run one real comparison on at least three agent/model pairs and publish raw prompts and outputs.
+- Repository: `https://github.com/alsoleg89/doubt`
+- Live map: `https://alsoleg89.github.io/doubt/`
+- npm: `https://www.npmjs.com/package/doubt-ai`
 
-## Sequence
+## GitHub
 
-### T-7 days: credible proof
+**Description**
 
-1. Recruit 10 design partners who use at least two coding agents weekly.
-2. Collect 20 real agreeable-but-wrong answers with permission and remove sensitive material.
-3. Tune the skill against failures, not aesthetics.
-4. Freeze v0.1 and publish a reproducible benchmark folder.
+> Turn contested questions into interactive, source-grounded evidence maps.
 
-### Launch day
+**Topics**
 
-1. Publish the GitHub repository and npm package.
-2. Post Show HN with a technical title, not a marketing title.
-3. Share the demo on X/LinkedIn.
-4. Post to one relevant subreddit after answering early GitHub/HN questions.
-5. Turn every good objection into an issue labeled `needs-evidence`.
+`ai`, `agent-skills`, `argument-mapping`, `decision-making`, `evidence-map`,
+`fact-checking`, `knowledge-graph`, `research`, `source-grounding`,
+`claude-code`, `codex`
 
-### Days 2–14
+## Hacker News
 
-1. Ship fixes daily while attention is concentrated.
-2. Publish a leaderboard only after methodology is inspectable.
-3. Ask users for before/after transcripts, not testimonials.
-4. Add integrations only when users show an actual discovery-path failure.
+**Title**
 
-## Metrics
+> Show HN: Doubt – Source-grounded evidence maps for AI research
 
-- Activation: repository visitors who run `doubt demo` or install.
-- Proof: contributed before/after scenarios.
-- Retention proxy: repeated `doubt doctor` or score runs.
-- Community: contributors and issue participants, not raw impressions.
-- Star milestones: 250 proof of message, 1k proof of utility, meaningful adoption proof of category.
+**Body**
 
-Do not buy stars, run giveaways for stars, or spam unrelated communities. Those produce a visible
-number and a dead project.
+> AI research tools usually end with prose. I wanted an artifact that preserves
+> the support, contradiction, qualification, and missing evidence behind a
+> conclusion.
+>
+> Doubt is an Agent Skill plus a zero-dependency Node CLI. The agent produces a
+> typed JSON reasoning record; the validator rejects unsourced evidence,
+> missing source locators, decorative sources, dangling edges, unsupported
+> positions, and invented confidence percentages. A deterministic renderer then
+> emits one interactive HTML file with no CDN or server.
+>
+> I dogfooded it on the decision that selected this project from 105 AI OSS
+> wedges. The map keeps the strongest objection and the still-missing human
+> preference test visible:
+>
+> https://alsoleg89.github.io/doubt/
+>
+> Repo: https://github.com/alsoleg89/doubt
+>
+> The adversarial contract benchmark is 12/12, but its scope is deliberately
+> narrow: it tests structural traceability and safe rendering, not whether a
+> source is true or an AI extracted it faithfully. I would especially value
+> feedback on the JSON contract and whether the map beats a cited memo for a
+> real contested decision.
+
+## Reddit / developer communities
+
+**Title**
+
+> I built an open-source evidence map that refuses unsourced AI claims
+
+**Body**
+
+> Doubt turns a contested question into a portable reasoning artifact:
+> claims, sourced observations, contradictions, qualifications, and explicit
+> unknowns. Every evidence node needs a date, URL or local path, exact
+> section/page/line locator, and a bounded excerpt.
+>
+> The AI proposes the map; a deterministic zero-dependency validator decides
+> whether the evidence contract passes. The output is one interactive HTML file
+> you can keep in git or share without an account.
+>
+> Live dogfood map: https://alsoleg89.github.io/doubt/
+>
+> Source: https://github.com/alsoleg89/doubt
+>
+> I am looking for adversarial fixtures: cases where a citation looks related
+> but does not actually support the nearby claim, or where two sources appear to
+> contradict only because their scope differs.
+
+## X / Bluesky thread
+
+1. AI research usually ends with prose. Prose is very good at hiding where the
+   evidence stops.
+2. I built Doubt: an open-source Agent Skill + zero-dependency CLI that turns a
+   contested question into an interactive evidence map.
+3. Four node types: position, claim, evidence, unknown. Four edges: supports,
+   contradicts, qualifies, missing.
+4. Every evidence node needs a dated source and exact section/page/line
+   locator. Decorative citations fail validation.
+5. The renderer emits one self-contained HTML file. No account, backend, model
+   key, CDN, or telemetry.
+6. I used it to record why I rejected two other product directions—and kept the
+   missing human-pull test visible. Live map:
+   https://alsoleg89.github.io/doubt/
+7. Repo + 12-case adversarial contract benchmark:
+   https://github.com/alsoleg89/doubt
+
+## Product Hunt
+
+**Tagline**
+
+> Make the evidence behind an AI answer navigable.
+
+**Description**
+
+> Doubt turns research and contested decisions into source-grounded,
+> interactive evidence maps. Install the Agent Skill in Claude Code, Codex,
+> Copilot, Cursor, or Gemini; validate the canonical JSON locally; share one
+> self-contained HTML artifact.
+
+## Launch order
+
+1. Create the public GitHub repository and push `main`.
+2. Enable GitHub Pages with GitHub Actions and verify the live map.
+3. Publish `doubt-ai@0.2.0` and verify `npx doubt-ai demo`.
+4. Tag `v0.2.0`; verify the GitHub Release tarball and CI matrix.
+5. Post Show HN after the live demo, npm package, release, and repository links
+   all resolve.
+6. Post one technically adapted version to the most relevant developer
+   community; do not cross-post identical copy simultaneously.
+7. Turn substantive feedback into public issues and ship the first response
+   release before expanding distribution.
