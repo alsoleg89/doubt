@@ -103,6 +103,13 @@ test("rendered map is self-contained and keeps exact source regions", () => {
   assert.match(html, /Summary line 42/);
   assert.match(html, /supports/);
   assert.match(html, /requestAnimationFrame\(drawConnections\)/);
+  assert.match(html, /property="og:title"/);
+  assert.match(html, /name="description" content="Ship the narrow version\."/);
+  assert.match(html, /font-size: 12px;\n    \}\n    \.toolbar button\.active/);
+  assert.match(
+    html,
+    />Observed result<\/span>\s*<b>supports<\/b>\s*<span>Current position</,
+  );
   assert.doesNotMatch(html, /https:\/\/cdn\./);
 });
 
