@@ -1,8 +1,9 @@
-import { readFile } from "node:fs/promises";
-import { stdin as input } from "node:process";
-import { analyze } from "./analyze.js";
-import { after, before } from "./demo.js";
+import { writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { doctor, installSkill } from "./install.js";
+import { loadMap } from "./map.js";
+import { renderMap } from "./render-map.js";
 
 const c = {
   cyan: "\u001b[36m",
@@ -13,21 +14,26 @@ const c = {
   yellow: "\u001b[33m",
 };
 
-const help = `doubt — give your AI healthy doubt
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const demoMap = resolve(root, "examples", "what-should-doubt-become.json");
+
+const help = `doubt — turn contested questions into source-grounded evidence maps
 
 Usage
   doubt init [--agent <name|all>] [--global] [--force] [--json]
   doubt doctor [--agent <name|all>] [--global] [--json]
-  doubt score <file|-> [--json]
-  doubt demo [--json]
+  doubt map <file.json> [--out <file.html>] [--json]
+  doubt validate <file.json> [--json]
+  doubt demo [--out <file.html>] [--json]
 
 Agents
   universal (default), claude, codex, copilot, cursor, gemini, all
 
 Examples
   npx doubt-ai init --agent all
-  doubt score answer.md
-  cat answer.md | doubt score -
+  npx doubt-ai map research.doubt.json --out evidence-map.html
+  npx doubt-ai validate research.doubt.json
+  npx doubt-ai demo --out doubt-demo.html
 `;
 
 function options(args) {
@@ -49,28 +55,21 @@ function options(args) {
   return result;
 }
 
-async function readStdin() {
-  let content = "";
-  input.setEncoding("utf8");
-  for await (const chunk of input) content += chunk;
-  return content;
-}
-
-function printAnalysis(result) {
-  const color = result.score >= 80 ? c.green : result.score >= 55 ? c.yellow : c.red;
-  console.log(`${color}${result.grade} ${result.score}/100${c.reset}  ${result.summary}`);
-  for (const finding of result.findings) {
-    console.log(`  ${c.yellow}▲${c.reset} line ${finding.line}  ${finding.message}`);
-  }
-  for (const strength of result.strengths) {
-    console.log(`  ${c.green}✓${c.reset} ${strength}`);
-  }
+function printMapValidation(validation) {
+  const { metrics, receipt } = validation;
+  console.log(`${c.green}VALID${c.reset} ${c.dim}${receipt.slice(0, 12)}${c.reset}`);
+  console.log(
+    `  ${c.green}✓${c.reset} ${metrics.claims} claims · ${metrics.evidence} evidence · ${metrics.sources} sources`,
+  );
+  console.log(
+    `  ${c.cyan}↯${c.reset} ${metrics.contradictions} contradictions · ${metrics.unknowns} explicit unknowns`,
+  );
 }
 
 export async function run(argv) {
   const [command = "help", ...rest] = argv;
   if (command === "--version" || command === "-v") {
-    console.log("0.1.0");
+    console.log("0.2.0");
     return;
   }
   if (command === "help" || command === "--help" || command === "-h") {
@@ -115,27 +114,44 @@ export async function run(argv) {
     return;
   }
 
-  if (command === "score") {
+  if (command === "map" || command === "render") {
     const file = flags._[0];
-    if (!file) throw new Error("Pass a file path, or - to read stdin.");
-    const text = file === "-" ? await readStdin() : await readFile(file, "utf8");
-    if (!text.trim()) throw new Error("Input is empty.");
-    const result = analyze(text);
-    if (flags.json) console.log(JSON.stringify(result, null, 2));
-    else printAnalysis(result);
+    if (!file) throw new Error("Pass a .json evidence map.");
+    const inputFile = resolve(file);
+    const { map, validation } = await loadMap(inputFile);
+    const outputFile = resolve(
+      flags.out || inputFile.replace(/(?:\.doubt)?\.json$/i, ".html"),
+    );
+    await writeFile(outputFile, renderMap(map, validation));
+    if (flags.json) {
+      console.log(JSON.stringify({ input: inputFile, output: outputFile, ...validation }, null, 2));
+    } else {
+      printMapValidation(validation);
+      console.log(`  ${c.cyan}map${c.reset} ${outputFile}`);
+    }
+    return;
+  }
+
+  if (command === "validate" || command === "check") {
+    const file = flags._[0];
+    if (!file) throw new Error("Pass a .json evidence map.");
+    const { validation } = await loadMap(resolve(file));
+    if (flags.json) console.log(JSON.stringify(validation, null, 2));
+    else printMapValidation(validation);
     return;
   }
 
   if (command === "demo") {
-    const result = { before: analyze(before), after: analyze(after) };
+    const { map, validation } = await loadMap(demoMap);
+    const outputFile = resolve(flags.out || "doubt-demo.html");
+    await writeFile(outputFile, renderMap(map, validation));
+    const result = { input: demoMap, output: outputFile, ...validation };
     if (flags.json) {
       console.log(JSON.stringify(result, null, 2));
       return;
     }
-    console.log(`${c.red}without doubt${c.reset}\n${before}\n`);
-    printAnalysis(result.before);
-    console.log(`\n${c.green}with doubt${c.reset}\n${after}\n`);
-    printAnalysis(result.after);
+    printMapValidation(validation);
+    console.log(`  ${c.cyan}demo${c.reset} ${outputFile}`);
     return;
   }
 
