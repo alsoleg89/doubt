@@ -1,7 +1,7 @@
 {
   "name": "doubt-ai",
-  "version": "0.1.0",
-  "description": "Give your AI healthy doubt. A portable anti-sycophancy skill and local epistemic linter.",
+  "version": "0.2.0",
+  "description": "Turn contested questions into interactive, source-grounded evidence maps.",
   "type": "module",
   "license": "MIT",
   "author": "Oleg Alshaev",
@@ -17,21 +17,29 @@
     "ai",
     "agents",
     "agent-skills",
-    "anti-sycophancy",
+    "argument-mapping",
+    "decision-making",
+    "evidence-map",
+    "fact-checking",
+    "knowledge-graph",
+    "research",
+    "source-grounding",
+    "verification",
     "claude-code",
     "codex",
     "copilot",
     "cursor",
     "gemini",
-    "llm",
-    "prompt-engineering"
+    "llm"
   ],
   "bin": {
     "doubt": "bin/doubt.js"
   },
   "files": [
+    "benchmarks",
     "bin",
     "docs/demo.svg",
+    "examples",
     "src",
     "skill",
     "README.md",
@@ -41,10 +49,12 @@
     "node": ">=18"
   },
   "scripts": {
-    "demo": "node bin/doubt.js demo",
-    "lint": "node --check bin/doubt.js && node --check src/cli.js && node --check src/analyze.js && node --check src/install.js",
+    "demo": "node bin/doubt.js demo --out examples/what-should-doubt-become.html",
+    "benchmark": "node benchmarks/evidence-contract.mjs",
+    "benchmark:check": "node benchmarks/evidence-contract.mjs --check-only",
+    "lint": "node --check bin/doubt.js && node --check src/cli.js && node --check src/map.js && node --check src/render-map.js && node --check src/install.js",
     "test": "node --test",
-    "check": "npm run lint && npm test",
+    "check": "npm run lint && npm test && npm run benchmark:check",
     "prepack": "npm run check"
   }
 }

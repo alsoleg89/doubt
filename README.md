@@ -2,144 +2,182 @@
 
 # Doubt
 
-### Your AI is too agreeable. Give it healthy doubt.
+### See what supports a conclusion, what contradicts it, and what is still missing.
 
-**A portable Agent Skill that challenges bad premises, calibrates confidence, and asks for evidence
-before saying “done.”**
+**An Agent Skill and zero-dependency CLI for source-grounded, interactive evidence maps.**
 
-[![MIT license](https://img.shields.io/badge/license-MIT-6ee7b7.svg)](LICENSE)
-[![Node 18+](https://img.shields.io/badge/node-%E2%89%A518-8b5cf6.svg)](package.json)
-[![Zero dependencies](https://img.shields.io/badge/dependencies-0-22d3ee.svg)](package.json)
-[![No telemetry](https://img.shields.io/badge/telemetry-none-f472b6.svg)](SECURITY.md)
+[![MIT license](https://img.shields.io/badge/license-MIT-a8ec67.svg)](LICENSE)
+[![Node 18+](https://img.shields.io/badge/node-%E2%89%A518-83b9ff.svg)](package.json)
+[![Zero dependencies](https://img.shields.io/badge/runtime_dependencies-0-ff806e.svg)](package.json)
+[![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 
-<img src="docs/demo.svg" alt="Doubt turns an agreeable, unsupported answer scoring 22 into a calibrated answer scoring 100" width="100%">
+<img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
 
 </div>
 
-AI assistants are optimized to be helpful. Too often, “helpful” means accepting the premise,
-mirroring confidence, and polishing a conclusion that should have been challenged.
+AI research tools usually end with prose. Prose is good at sounding settled:
+support and contradiction blur together, missing evidence becomes a footnote,
+and a citation may merely mention the topic.
 
-Doubt adds one small behavior layer:
+Doubt produces a different artifact:
 
-> Find the load-bearing claim. Try to break it. Verify in proportion to consequence. Then keep
-> moving.
+- one falsifiable question and one provisional position;
+- atomic claims, sourced observations, and explicit unknowns;
+- typed `supports`, `contradicts`, `qualifies`, and `missing` edges;
+- a dated URL or local path plus a section, page, timestamp, or line locator for
+  every evidence node;
+- one self-contained HTML file that stays inspectable without an account,
+  server, or CDN.
 
-It works with Claude Code, Codex, GitHub Copilot, Cursor, Gemini CLI, and any client that supports
-the open Agent Skills format.
+## Try the real map
 
-## Install
+```bash
+npx doubt-ai demo --out doubt-demo.html
+```
+
+The command renders the same decision used to choose Doubt's product direction:
+
+> Is repository-to-launch-artifacts the strongest path to a 5,000-star
+> open-source project?
+
+Open `doubt-demo.html`, select an evidence card, and the exact source locator
+appears beside the reasoning graph. The canonical editable input is
+[plain JSON](examples/what-should-doubt-become.json); the generated
+[self-contained HTML](examples/what-should-doubt-become.html) has no runtime
+dependencies.
+
+## Give the workflow to your agent
 
 ```bash
 npx doubt-ai init --agent all
 ```
 
-Or install only the portable standard location:
-
-```bash
-npx doubt-ai init
-```
-
-No model key. No runtime service. No telemetry. Zero dependencies.
-
-## What changes
-
-Without Doubt:
-
-> You're absolutely right! Microservices are definitely the best choice. They will always make the
-> system more scalable.
-
-With Doubt:
-
-> The premise needs pressure-testing. Independent deploys help when teams and release cycles are
-> genuinely independent, but nothing here shows that service coupling is the current bottleneck.
-> Start with a modular monolith under that assumption; extract a service when operational evidence
-> justifies the boundary.
-
-Doubt is not a “disagree with the user” prompt. It focuses skepticism on claims that can change the
-decision, and stays out of the way for ordinary preferences and low-risk work.
-
-## Use it
-
-The skill activates on research, architecture decisions, debugging, reviews, factual claims, and
-completion checks. Invoke it explicitly when you want a hard pass:
+Then ask:
 
 ```text
-Use $doubt to pressure-test this migration plan.
-Use $doubt to verify the claims in this implementation summary.
-Use $doubt to find the assumption most likely to reverse this decision.
+Use $doubt to map whether we should replace our current auth provider.
+Preserve contrary evidence and show the exact source region behind every edge.
 ```
 
-You can also lint a saved answer locally:
+The skill works with Claude Code, Codex, GitHub Copilot, Cursor, Gemini CLI, and
+clients that support the open Agent Skills layout. It uses the research and
+browsing capabilities the agent already has; Doubt does not proxy prompts or
+require a model key.
+
+## Render your own
 
 ```bash
-doubt score answer.md
-cat answer.md | doubt score -
+npx doubt-ai validate decision.doubt.json
+npx doubt-ai map decision.doubt.json --out decision.html
 ```
 
 ```text
-D 58/100  2 epistemic smells found.
-  ▲ line 1  Opens with automatic agreement instead of testing the premise.
-  ▲ line 8  Makes a completion claim without nearby machine-produced evidence.
-  ✓ Names an assumption, limitation, or unverified claim.
+VALID f7ed8660b891
+  ✓ 4 claims · 5 evidence · 5 sources
+  ↯ 2 contradictions · 1 explicit unknowns
+  map /path/to/decision.html
 ```
 
-The linter is deliberately heuristic. It catches review smells; it does not pretend to determine
-truth.
+Validation fails closed when:
+
+- evidence has no source;
+- a source has no date, URL, bounded locator, or substantive excerpt;
+- evidence or sources are decorative and unused;
+- an edge points to a missing node or lacks a reasoning note;
+- the position has no incoming support, contradiction, qualification, or gap;
+- a map invents confidence percentages without a calibration method.
+
+Each valid map receives a SHA-256 receipt over canonicalized JSON. Change the
+reasoning record and the receipt changes.
+
+## Adversarial benchmark
+
+```bash
+npm run benchmark
+```
+
+The published [evidence-contract report](benchmarks/results/latest.md) mutates
+the dogfood map to introduce unsourced evidence, missing locators, thin and
+oversized excerpts, dangling edges, invented confidence, decorative sources,
+an unsupported position, and embedded markup. Every case names the invariant
+that must fire.
+
+This benchmark measures structural traceability and safe rendering. It does not
+pretend to measure whether a source is true or whether an AI extracted it
+faithfully.
+
+## The evidence contract
+
+```json
+{
+  "nodes": [
+    {
+      "id": "observed-result",
+      "type": "evidence",
+      "label": "Observed result",
+      "text": "The focused acceptance suite passed.",
+      "sourceId": "test-run"
+    }
+  ],
+  "edges": [
+    {
+      "from": "observed-result",
+      "to": "current-position",
+      "relation": "supports",
+      "note": "The suite exercises the promised narrow behavior."
+    }
+  ],
+  "sources": [
+    {
+      "id": "test-run",
+      "title": "Acceptance test output",
+      "url": "./test-output.txt",
+      "publisher": "Local test runner",
+      "date": "2026-07-30",
+      "locator": "Summary line 42",
+      "excerpt": "The focused suite completed with 18 passing checks and zero failures."
+    }
+  ]
+}
+```
+
+Read the complete [map schema](skill/doubt/references/map-schema.md) and
+[evidence ladder](skill/doubt/references/evidence-ladder.md).
+
+## Why it is not another research chatbot
+
+| Typical output | What gets lost | Doubt |
+| --- | --- | --- |
+| Cited prose answer | Disagreement is flattened into a narrative | Keeps contrary and qualifying edges visible |
+| Knowledge graph | Related concepts can look like evidence | Requires a plain-language entailment note |
+| Argument-map platform | The reasoning lives in an account or database | Canonical JSON plus portable HTML |
+| Diagram generator | A beautiful graph can still be unsourced | Refuses evidence without a bounded source region |
+| Confidence score | Precision can be invented | Represents the specific unknown instead |
+
+The renderer is deterministic. The AI may propose the map; it cannot make an
+invalid evidence record pass the validator.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `doubt init --agent all` | Install the skill for all supported agents |
-| `doubt init --agent codex,claude` | Install for selected agents |
-| `doubt init --global` | Install into your user-level skill directory |
-| `doubt doctor --agent all` | Detect missing or locally modified installs |
-| `doubt score <file\|->` | Flag epistemic smells in an answer |
-| `doubt demo` | Run the built-in before/after |
+| `doubt map <file.json> --out <file.html>` | Validate and render an interactive map |
+| `doubt validate <file.json>` | Check the evidence contract without rendering |
+| `doubt demo --out <file.html>` | Render the included dogfood map |
+| `doubt init --agent all` | Install the map-building skill |
+| `doubt doctor --agent all` | Detect missing or locally modified skill copies |
 
-Existing skill files are never overwritten unless you pass `--force`.
-
-## The protocol
-
-1. Find the one to three load-bearing claims.
-2. Distinguish **observed**, **sourced**, **inferred**, **assumed**, and **unknown**.
-3. Attack the premise before polishing the answer.
-4. Verify current and consequential claims with current evidence.
-5. State what would change the conclusion.
-6. Continue under an explicit assumption when more certainty is not worth its cost.
-
-Read the full [skill](skill/doubt/SKILL.md) and
-[evidence ladder](skill/doubt/references/evidence-ladder.md).
-
-## Supported agents
-
-| Agent | Project install path used by Doubt |
-| --- | --- |
-| Agent Skills standard | `.agents/skills/doubt` |
-| Claude Code | `.claude/skills/doubt` |
-| Codex | `.agents/skills/doubt` |
-| GitHub Copilot | `.agents/skills/doubt` |
-| Cursor | `.agents/skills/doubt` |
-| Gemini CLI | `.agents/skills/doubt` |
-
-`--agent all` therefore writes only two copies: the shared `.agents` location and Claude's
-`.claude` location. Vendor-specific aliases such as `--agent copilot` remain available when a team
-prefers its native directory. The skill itself is plain Markdown and remains useful if your agent
-uses a different discovery path—copy `skill/doubt` to the location your client documents.
-
-## Why this is different
-
-- **Not a fact-checking agent.** Doubt improves the reasoning posture of the agent you already use.
-- **Not a security scanner.** It targets bad epistemics, not malware signatures.
-- **Not endless hedging.** It names the decisive uncertainty and still recommends an action.
-- **Not provider middleware.** Nothing proxies prompts or reads API keys.
-- **Not another framework.** The whole behavior layer is inspectable Markdown.
+Existing skills are never overwritten unless `--force` is passed.
 
 ## Privacy and trust
 
-The installer copies static files. The linter reads only the file or stdin you pass it. Doubt does
-not execute installed skill content, call a model, upload text, or collect telemetry. Run
-`doubt doctor` to compare installed copies with the bundled canonical skill.
+The renderer reads only the JSON file you pass and writes the requested HTML.
+The installer copies static skill files. No telemetry, background service,
+remote runtime, model call, or hidden network request is used.
+
+A valid map proves structural traceability, not truth. A source can still be
+wrong, stale, or misinterpreted; that is why source regions, edge notes,
+contradictions, and unknowns remain visible for review.
 
 See [SECURITY.md](SECURITY.md) for the threat model.
 
@@ -149,31 +187,19 @@ See [SECURITY.md](SECURITY.md) for the threat model.
 git clone https://github.com/alsoleg89/doubt.git
 cd doubt
 npm test
-node bin/doubt.js demo
+npm run demo
 ```
 
-Doubt uses only Node.js built-ins. The test suite covers the analyzer, CLI, installer, and integrity
-check.
+Doubt uses Node.js built-ins only. Tests cover schema invariants,
+content-addressed receipts, self-contained rendering, the CLI, and skill
+installation.
 
-Contributions are welcome—especially concrete before/after failures, false-positive fixtures, and
-adaptations for non-coding decisions. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Roadmap
-
-- A public, reproducible cross-model sycophancy benchmark.
-- Editor diagnostics with line-level remediation.
-- Signed skill manifests and update pinning.
-- Domain packs for research, product decisions, incident response, and code completion claims.
-- Community-contributed calibration scenarios.
-
-## One honest caveat
-
-A skill cannot guarantee truthful model behavior. Doubt raises the cost of confident nonsense by
-making evidence, assumptions, and disconfirmation part of the workflow. The included linter is a
-review aid, not a truth oracle.
+Contributions are welcome—especially real contested questions, adversarial map
+fixtures, source-locator adapters, and accessibility improvements. Start with
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 <div align="center">
 
-If Doubt saves you from one beautifully argued bad decision, consider starring the repo.
+**If an answer matters, make its evidence navigable.**
 
 </div>

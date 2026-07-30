@@ -1,39 +1,40 @@
 # Evidence ladder
 
-Use the strongest evidence that is practical for the decision. Higher is not automatically better
-if it is stale, irrelevant, or does not test the claimed behavior.
+Use the strongest evidence practical for the decision. A higher class can still
+be stale, irrelevant, or too broad for the nearby claim.
 
-1. **Direct current observation** — a reproduced behavior, current command output, or inspected
-   primary artifact.
-2. **Authoritative primary source** — official documentation, law, specification, dataset, or
-   first-party statement.
-3. **Independent corroboration** — multiple competent sources with distinct evidence.
-4. **Strong inference** — a conclusion that follows from observed facts with explicit assumptions.
-5. **Weak proxy** — a related metric, anecdote, benchmark, or test that does not exercise the exact
-   claim.
-6. **Unsupported assertion** — confidence, repetition, or polished language without evidence.
+1. **Direct current observation** — reproduced behavior, current command output,
+   inspected artifact, or measured result.
+2. **Authoritative primary source** — official specification, dataset, law,
+   documentation, first-party repository, or original research.
+3. **Independent corroboration** — competent sources with distinct underlying
+   evidence.
+4. **Explicit inference** — a conclusion whose premises and assumptions are
+   visible in the map.
+5. **Weak proxy** — related metric, benchmark, anecdote, or test that does not
+   exercise the exact claim.
+6. **Unsupported assertion** — confidence, repetition, or polished language
+   without evidence.
 
-## Completion claims
+## Source-region test
 
-Match each claim to evidence from the current state:
+Before creating an evidence node, answer:
 
-| Claim | Good evidence | Common counterfeit |
+- What exact sentence, table, command output, page, section, or line range is
+  being relied on?
+- Does it entail the node text, or merely discuss the same subject?
+- Is its date and version appropriate for the claim?
+- Is the evidence independent, or copied from another cited source?
+- What context would reverse or narrow the interpretation?
+
+If the exact region cannot be located, create an `unknown` node instead of an
+evidence node.
+
+## Edge test
+
+| Relation | Use when | Common counterfeit |
 | --- | --- | --- |
-| Tests pass | Fresh test-run exit code and summary | A previous run or “tests should pass” |
-| Bug fixed | Reproduction fails before and passes after | Code inspection alone |
-| UI works | Rendered interaction at relevant viewport | Source code compiles |
-| API compatible | Contract or integration tests | Matching function names |
-| Deployment healthy | Current health/readiness signal | Successful build |
-| Fact is current | Dated authoritative source | Model memory |
-
-## Verification decision
-
-Verify when at least one is true:
-
-- The claim controls safety, money, access, deployment, or irreversible work.
-- The fact is likely to have changed.
-- A wrong premise would reverse the recommendation.
-- The user requested exactness, sources, or proof.
-- Verification is cheap compared with the cost of being wrong.
-
-Otherwise, name the assumption and continue.
+| `supports` | The source increases reason to accept the target | Topical similarity |
+| `contradicts` | Both cannot hold under the same scope and conditions | Different dates or populations |
+| `qualifies` | The source narrows scope, strength, or applicability | Hiding inconvenient evidence |
+| `missing` | A specific absent fact blocks or could reverse the target | Generic “more research needed” |

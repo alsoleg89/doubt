@@ -1,4 +1,4 @@
 interface:
   display_name: "Doubt"
-  short_description: "Give your AI healthy doubt and better judgment"
-  default_prompt: "Use $doubt to challenge the load-bearing assumptions and verify the claims in this plan."
+  short_description: "Map claims, contradictions, and exact sources"
+  default_prompt: "Use $doubt to turn this contested question into a source-grounded interactive evidence map."

@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping AI be less confidently wrong.
+Thanks for helping make consequential answers inspectable.
 
 ## Start here
 
@@ -10,8 +10,13 @@ Thanks for helping AI be less confidently wrong.
 4. Add or update a test.
 5. Run `npm run check` before opening a pull request.
 
-For skill changes, include a concrete prompt and the before/after behavior you observed. For linter
-rules, include both a true-positive and a false-positive fixture. We prefer narrow rules with a
-clear remediation over broad “AI-ish language” detection.
+For schema or validator changes, include both a map that must pass and the
+smallest adversarial map that must fail. For renderer changes, generate a
+self-contained example and check desktop, mobile, filters, edge focus, and
+source-region navigation. For skill changes, include a concrete input question
+and the resulting `.doubt.json`.
+
+Do not loosen a fail-closed invariant merely to accept model output. Improve the
+skill or error message first.
 
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).

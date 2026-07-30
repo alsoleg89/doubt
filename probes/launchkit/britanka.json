@@ -1,0 +1,23 @@
+{
+  "category": "Private build · local proof",
+  "command": "Open the repository and follow the quick start",
+  "description": "A source-controlled project with a reproducible local workflow.",
+  "docFiles": 0,
+  "features": [
+    "Repository facts remain inspectable instead of being replaced by generated claims",
+    "The launch artifact is self-contained, responsive, and editable",
+    "No source code or telemetry leaves the machine"
+  ],
+  "files": 110,
+  "generatedAt": "2026-07-30",
+  "headline": "Britanka Review",
+  "languages": [],
+  "name": "Britanka Review PaWPZD",
+  "subhead": "PaWPZD",
+  "testFiles": 0,
+  "provenance": {
+    "packageJson": true,
+    "readme": false,
+    "repository": "/Users/alsoleg/Documents/Playground/britanka-review-paWPZD"
+  }
+}

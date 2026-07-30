@@ -1,24 +1,26 @@
-name: Analyzer rule
-description: Propose a precise epistemic smell
-title: "[rule] "
-labels: ["rule", "needs-evidence"]
+name: Evidence contract
+description: Propose a precise map invariant or source adapter
+title: "[contract] "
+labels: ["evidence-contract", "needs-evidence"]
 body:
   - type: textarea
-    id: claim
+    id: failure
     attributes:
       label: Failure pattern
-      description: What concrete bad behavior should the rule catch?
+      description: What invalid or misleading map should Doubt reject?
     validations:
       required: true
   - type: textarea
-    id: positives
+    id: failing
     attributes:
-      label: True-positive examples
+      label: Minimal failing map
+      description: Paste the smallest JSON fixture that demonstrates the problem.
     validations:
       required: true
   - type: textarea
-    id: negatives
+    id: valid
     attributes:
-      label: False-positive examples to avoid
+      label: Valid map that must keep working
+      description: Show the nearest legitimate case so the rule does not overreach.
     validations:
       required: true

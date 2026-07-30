@@ -3,6 +3,6 @@
 ## Evidence
 
 - [ ] `npm run check`
-- [ ] I included a before/after prompt for skill behavior changes.
-- [ ] I included true-positive and false-positive coverage for analyzer rules.
+- [ ] I included passing and failing fixtures for evidence-contract changes.
+- [ ] I rendered and inspected desktop/mobile output for renderer changes.
 - [ ] No user data or telemetry leaves the machine.

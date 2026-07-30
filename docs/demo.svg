@@ -1,60 +1,113 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
-  <title id="title">Doubt before and after demo</title>
-  <desc id="desc">A terminal-style comparison showing an agreeable answer scoring 22 and a calibrated answer scoring 100.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="800" viewBox="0 0 1400 800" role="img" aria-labelledby="title desc">
+  <title id="title">Doubt evidence map</title>
+  <desc id="desc">A source-grounded decision map with a current position, supporting evidence, a contradiction, an unknown, and exact source regions.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#09090b"/>
-      <stop offset="0.55" stop-color="#15112a"/>
-      <stop offset="1" stop-color="#071c24"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0d0e"/>
+      <stop offset="1" stop-color="#101314"/>
     </linearGradient>
-    <linearGradient id="brand" x1="0" x2="1">
-      <stop stop-color="#a78bfa"/>
-      <stop offset="1" stop-color="#22d3ee"/>
+    <linearGradient id="position" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a251a"/>
+      <stop offset="1" stop-color="#111416"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="18"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity=".32"/>
     </filter>
   </defs>
-  <rect width="1200" height="660" rx="26" fill="url(#bg)"/>
-  <circle cx="1020" cy="100" r="140" fill="#22d3ee" opacity=".08" filter="url(#glow)"/>
-  <circle cx="180" cy="570" r="170" fill="#8b5cf6" opacity=".09" filter="url(#glow)"/>
-  <rect x="22" y="22" width="1156" height="616" rx="18" fill="none" stroke="#ffffff" stroke-opacity=".1"/>
 
-  <circle cx="54" cy="54" r="6" fill="#fb7185"/>
-  <circle cx="76" cy="54" r="6" fill="#fbbf24"/>
-  <circle cx="98" cy="54" r="6" fill="#6ee7b7"/>
-  <text x="600" y="60" fill="#71717a" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">doubt demo</text>
+  <rect width="1400" height="800" rx="24" fill="url(#bg)"/>
+  <path d="M0 82H1400M1010 0V800" stroke="#252b28"/>
 
-  <text x="64" y="126" fill="#fb7185" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700">WITHOUT DOUBT</text>
-  <text x="64" y="164" fill="#e4e4e7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">
-    <tspan x="64" dy="0">You're absolutely right! Microservices are definitely</tspan>
-    <tspan x="64" dy="27">the best choice. They will always make the system</tspan>
-    <tspan x="64" dy="27">more scalable. This is production-ready.</tspan>
-  </text>
-  <rect x="64" y="265" width="478" height="10" rx="5" fill="#27272a"/>
-  <rect x="64" y="265" width="105" height="10" rx="5" fill="#fb7185"/>
-  <text x="64" y="312" fill="#fb7185" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" font-weight="800">F  22/100</text>
-  <text x="64" y="344" fill="#a1a1aa" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">automatic agreement · absolutes · unsupported claim</text>
+  <text x="52" y="52" fill="#eef0e7" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="800">Doubt</text>
+  <text x="118" y="51" fill="#a8ec67" font-family="Arial,sans-serif" font-size="24" font-weight="800">↯</text>
+  <text x="650" y="50" fill="#8e9690" font-family="ui-monospace,monospace" font-size="11" letter-spacing="2">EVIDENCE SNAPSHOT · SELF-CONTAINED HTML</text>
 
-  <line x1="600" y1="112" x2="600" y2="574" stroke="#ffffff" stroke-opacity=".1"/>
+  <text x="52" y="132" fill="#a8ec67" font-family="ui-monospace,monospace" font-size="12" font-weight="700" letter-spacing="2">DECISION UNDER PRESSURE</text>
+  <text x="52" y="190" fill="#eef0e7" font-family="Inter,Arial,sans-serif" font-size="48" font-weight="800" letter-spacing="-2">Should we ship this</text>
+  <text x="52" y="244" fill="#eef0e7" font-family="Inter,Arial,sans-serif" font-size="48" font-weight="800" letter-spacing="-2">as the core product?</text>
+  <path d="M640 166V246" stroke="#a8ec67" stroke-width="3"/>
+  <text x="662" y="184" fill="#c8cec9" font-family="Inter,Arial,sans-serif" font-size="16">Ship the evidence-map core.</text>
+  <text x="662" y="211" fill="#8e9690" font-family="Inter,Arial,sans-serif" font-size="14">Keep launch artifacts as a module;</text>
+  <text x="662" y="234" fill="#8e9690" font-family="Inter,Arial,sans-serif" font-size="14">preserve the missing human-pull test.</text>
 
-  <text x="658" y="126" fill="#6ee7b7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700">WITH DOUBT</text>
-  <text x="658" y="164" fill="#e4e4e7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">
-    <tspan x="658" dy="0">The premise needs pressure-testing.</tspan>
-    <tspan x="658" dy="34" fill="#a1a1aa">What holds</tspan>
-    <tspan fill="#e4e4e7">  Independent deploys can help.</tspan>
-    <tspan x="658" dy="28" fill="#a1a1aa">What may be wrong</tspan>
-    <tspan x="658" dy="25" fill="#e4e4e7">No evidence shows coupling is the bottleneck.</tspan>
-    <tspan x="658" dy="34" fill="#a1a1aa">Verdict</tspan>
-    <tspan x="658" dy="25" fill="#e4e4e7">Start modular. Extract only with evidence.</tspan>
-  </text>
-  <rect x="658" y="392" width="478" height="10" rx="5" fill="#27272a"/>
-  <rect x="658" y="392" width="478" height="10" rx="5" fill="url(#brand)"/>
-  <text x="658" y="449" fill="#6ee7b7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" font-weight="800">A  100/100</text>
-  <text x="658" y="481" fill="#a1a1aa" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">assumption named · uncertainty bounded · action preserved</text>
+  <g font-family="ui-monospace,monospace">
+    <rect x="52" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
+    <text x="72" y="315" fill="#eef0e7" font-size="24" font-weight="700">4</text>
+    <text x="72" y="337" fill="#8e9690" font-size="10" letter-spacing="1.5">CLAIMS</text>
+    <rect x="248" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
+    <text x="268" y="315" fill="#eef0e7" font-size="24" font-weight="700">5</text>
+    <text x="268" y="337" fill="#8e9690" font-size="10" letter-spacing="1.5">EVIDENCE</text>
+    <rect x="444" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
+    <text x="464" y="315" fill="#eef0e7" font-size="24" font-weight="700">2</text>
+    <text x="464" y="337" fill="#8e9690" font-size="10" letter-spacing="1.5">TENSIONS</text>
+    <rect x="640" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
+    <text x="660" y="315" fill="#eef0e7" font-size="24" font-weight="700">1</text>
+    <text x="660" y="337" fill="#8e9690" font-size="10" letter-spacing="1.5">UNKNOWN</text>
+  </g>
 
-  <rect x="64" y="554" width="1072" height="54" rx="12" fill="#ffffff" fill-opacity=".04" stroke="#ffffff" stroke-opacity=".08"/>
-  <text x="92" y="588" fill="#71717a" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">$</text>
-  <text x="116" y="588" fill="#e4e4e7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">npx doubt-ai init --agent all</text>
-  <text x="1106" y="588" fill="#22d3ee" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">zero dependencies</text>
+  <path d="M299 494C330 520 355 533 392 560" fill="none" stroke="#a8ec67" stroke-width="2" opacity=".72"/>
+  <path d="M500 494C468 521 446 535 412 560" fill="none" stroke="#ff806e" stroke-width="2" stroke-dasharray="7 6" opacity=".8"/>
+  <path d="M701 494C640 531 559 548 432 575" fill="none" stroke="#eac96f" stroke-width="2" stroke-dasharray="2 7" opacity=".76"/>
+
+  <g filter="url(#shadow)" font-family="Inter,Arial,sans-serif">
+    <rect x="52" y="392" width="350" height="104" rx="14" fill="url(#position)" stroke="#3d493d"/>
+    <text x="72" y="419" fill="#8e9690" font-family="ui-monospace,monospace" font-size="10" letter-spacing="1.5">POSITION</text>
+    <text x="72" y="452" fill="#eef0e7" font-size="18" font-weight="700">Source-grounded maps are the core.</text>
+    <text x="72" y="478" fill="#8e9690" font-size="13">The verdict has incoming reasoning.</text>
+
+    <rect x="420" y="392" width="278" height="104" rx="14" fill="#111416" stroke="#ff806e"/>
+    <text x="440" y="419" fill="#ff806e" font-family="ui-monospace,monospace" font-size="10" letter-spacing="1.5">CONTRADICTS</text>
+    <text x="440" y="452" fill="#eef0e7" font-size="18" font-weight="700">The shape is not uncontested.</text>
+    <text x="440" y="478" fill="#8e9690" font-size="13">Direct competitors already exist.</text>
+
+    <rect x="716" y="392" width="278" height="104" rx="14" fill="#111416" stroke="#eac96f" stroke-dasharray="5 5"/>
+    <text x="736" y="419" fill="#eac96f" font-family="ui-monospace,monospace" font-size="10" letter-spacing="1.5">UNKNOWN</text>
+    <text x="736" y="452" fill="#eef0e7" font-size="18" font-weight="700">Reader preference is untested.</text>
+    <text x="736" y="478" fill="#8e9690" font-size="13">This could change the decision.</text>
+
+    <rect x="225" y="560" width="410" height="132" rx="14" fill="#111416" stroke="#a8ec67"/>
+    <text x="247" y="588" fill="#a8ec67" font-family="ui-monospace,monospace" font-size="10" letter-spacing="1.5">EVIDENCE · SUPPORTS</text>
+    <text x="247" y="624" fill="#eef0e7" font-size="19" font-weight="700">Verifiable diagram skills already cross 5k.</text>
+    <text x="247" y="651" fill="#8e9690" font-size="13">Every evidence card opens a dated source region.</text>
+    <text x="247" y="676" fill="#a8ec67" font-family="ui-monospace,monospace" font-size="11">↗ GitHub · README: product description</text>
+  </g>
+
+  <g font-family="ui-monospace,monospace">
+    <text x="1040" y="48" fill="#8e9690" font-size="11" letter-spacing="1.7">REASONING EDGES</text>
+    <path d="M1040 70H1350" stroke="#252b28"/>
+
+    <text x="1040" y="110" fill="#8e9690" font-size="10">market-proof</text>
+    <rect x="1157" y="93" width="75" height="24" rx="5" fill="#a8ec67"/>
+    <text x="1168" y="109" fill="#0b0d0e" font-size="10" font-weight="700">supports</text>
+    <text x="1260" y="110" fill="#8e9690" font-size="10">position</text>
+    <text x="1040" y="139" fill="#667069" font-size="10">Adjacent artifacts have crossed the target.</text>
+
+    <path d="M1040 162H1350" stroke="#252b28"/>
+    <text x="1040" y="196" fill="#8e9690" font-size="10">competition</text>
+    <rect x="1157" y="179" width="92" height="24" rx="5" fill="#ff806e"/>
+    <text x="1166" y="195" fill="#0b0d0e" font-size="10" font-weight="700">contradicts</text>
+    <text x="1270" y="196" fill="#8e9690" font-size="10">position</text>
+    <text x="1040" y="225" fill="#667069" font-size="10">The product shape is not uncontested.</text>
+
+    <path d="M1040 248H1350" stroke="#252b28"/>
+    <text x="1040" y="282" fill="#8e9690" font-size="10">human-pull</text>
+    <rect x="1157" y="265" width="63" height="24" rx="5" fill="#eac96f"/>
+    <text x="1166" y="281" fill="#0b0d0e" font-size="10" font-weight="700">missing</text>
+    <text x="1260" y="282" fill="#8e9690" font-size="10">position</text>
+    <text x="1040" y="311" fill="#667069" font-size="10">A domain-reader comparison is still absent.</text>
+
+    <text x="1040" y="380" fill="#8e9690" font-size="11" letter-spacing="1.7">EXACT SOURCE REGION</text>
+    <path d="M1040 402H1350" stroke="#252b28"/>
+    <text x="1040" y="442" fill="#8e9690" font-size="10">GITHUB · 2026-07-30</text>
+    <text x="1040" y="476" fill="#eef0e7" font-family="Inter,Arial,sans-serif" font-size="17" font-weight="700">Archify</text>
+    <text x="1040" y="501" fill="#83b9ff" font-size="10">README: repository description</text>
+    <text x="1040" y="538" fill="#aeb5b0" font-family="Inter,Arial,sans-serif" font-size="13">“Beautiful, verifiable architecture,</text>
+    <text x="1040" y="559" fill="#aeb5b0" font-family="Inter,Arial,sans-serif" font-size="13">workflow, sequence, data-flow, and</text>
+    <text x="1040" y="580" fill="#aeb5b0" font-family="Inter,Arial,sans-serif" font-size="13">lifecycle diagrams.”</text>
+    <text x="1040" y="620" fill="#a8ec67" font-size="11">OPEN SOURCE REGION ↗</text>
+
+    <path d="M1040 676H1350" stroke="#252b28"/>
+    <text x="1040" y="706" fill="#59615c" font-size="9">receipt · f7ed8660b891…</text>
+    <text x="1040" y="731" fill="#59615c" font-size="9">5 sources · 2 tensions · 1 unknown</text>
+  </g>
 </svg>

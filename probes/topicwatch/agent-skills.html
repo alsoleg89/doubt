@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>topic:agent-skills created:&gt;2026-01-01 — TopicWatch</title>
+  <style>
+    :root { color-scheme: dark; --bg:#f1efe7; --ink:#161716; --muted:#696a65; --line:#c9c7bd; --hot:#ff5c35; --lime:#c7f36a; }
+    * { box-sizing:border-box; }
+    html { background:var(--bg); }
+    body { margin:0; color:var(--ink); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .shell { width:min(1280px,calc(100% - 44px)); margin:auto; padding:28px 0 70px; }
+    nav { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:18px; }
+    .brand { font-size:20px; font-weight:850; letter-spacing:-.05em; }
+    .brand i { color:var(--hot); font-style:normal; }
+    .stamp { font:10px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+    header { display:grid; grid-template-columns:1.25fr .75fr; gap:60px; padding:65px 0 48px; }
+    .kicker { color:var(--hot); font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.13em; text-transform:uppercase; }
+    h1 { font-size:clamp(48px,6.6vw,94px); line-height:.93; letter-spacing:-.075em; margin:16px 0 0; max-width:900px; }
+    .signal { align-self:end; padding:18px; border:1px solid var(--ink); background:var(--lime); box-shadow:8px 8px 0 var(--ink); }
+    .signal span { display:block; font:10px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.11em; }
+    .signal strong { display:block; margin:9px 0; font-size:28px; letter-spacing:-.05em; }
+    .signal p { margin:0; color:#3e403b; font-size:13px; line-height:1.45; }
+    .controls { display:flex; gap:7px; flex-wrap:wrap; padding:17px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .controls button { cursor:pointer; border:1px solid var(--line); background:transparent; color:var(--muted); border-radius:999px; padding:7px 11px; font-size:11px; }
+    .controls button.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+    .repo { display:grid; grid-template-columns:52px minmax(0,1fr) 150px 100px; gap:22px; align-items:center; padding:24px 0; border-bottom:1px solid var(--line); transition:opacity .18s; }
+    .repo.hidden { display:none; }
+    .rank { font:12px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted); }
+    .repo-head { display:flex; align-items:center; gap:10px; }
+    .repo-head a { color:var(--ink); font-weight:790; font-size:18px; letter-spacing:-.025em; text-decoration:none; }
+    .repo-head span { color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:3px 7px; font-size:10px; }
+    .repo p { margin:8px 0; color:#565851; line-height:1.4; font-size:13px; max-width:760px; }
+    .tags { display:flex; gap:5px; flex-wrap:wrap; }
+    .tags i { color:#777970; font:10px ui-monospace,SFMono-Regular,Menlo,monospace; font-style:normal; }
+    .momentum strong { display:block; color:var(--hot); font-size:26px; letter-spacing:-.04em; }
+    .momentum span { color:var(--muted); font:9px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; }
+    .bar { height:3px; background:#d8d5cb; margin-top:9px; }
+    .bar i { display:block; height:100%; background:var(--hot); }
+    .stats { display:flex; flex-direction:column; gap:4px; text-align:right; font-size:11px; color:var(--muted); }
+    .stats b { color:var(--ink); }
+    footer { display:flex; justify-content:space-between; color:var(--muted); font:10px ui-monospace,SFMono-Regular,Menlo,monospace; padding-top:24px; }
+    @media(max-width:800px) {
+      header { grid-template-columns:1fr; gap:26px; }
+      .repo { grid-template-columns:34px 1fr; }
+      .momentum,.stats { grid-column:2; text-align:left; }
+      .stats { flex-direction:row; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav><div class="brand">TopicWatch<i>●</i></div><div class="stamp">GitHub API snapshot · 2026-07-30T20:41:17.263Z</div></nav>
+    <header>
+      <div><span class="kicker">Live open-source signal</span><h1>topic:agent-skills created:&gt;2026-01-01</h1></div>
+      <aside class="signal"><span>Fastest mover</span><strong>DietrichGebert/ponytail</strong><p>1891 stars/day across its first 49 days.</p></aside>
+    </header>
+    <div class="controls"><button class="active" data-language="all">All</button><button data-language="JavaScript">JavaScript</button><button data-language="TypeScript">TypeScript</button><button data-language="Mixed">Mixed</button><button data-language="Python">Python</button><button data-language="Go">Go</button><button data-language="Rust">Rust</button><button data-language="HTML">HTML</button></div>
+    <section>
+        <article class="repo" data-language="JavaScript">
+          <div class="rank">01</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noreferrer">DietrichGebert/ponytail</a>
+              <span>JavaScript</span>
+            </div>
+            <p>Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.</p>
+            <div class="tags"><i>agent-skills</i><i>ai-agents</i><i>claude</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>1891</strong><span>stars / day</span>
+            <div class="bar"><i style="width:100%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 92,328</b>
+            <span>49d old</span>
+            <span>5,078 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="TypeScript">
+          <div class="rank">02</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/nexu-io/open-design" target="_blank" rel="noreferrer">nexu-io/open-design</a>
+              <span>TypeScript</span>
+            </div>
+            <p>🎨 The open-source Claude Design alternative. 🖥️ Local-first desktop app. 🖼️ Your coding agent becomes the design engine: prototypes, landing pages, dashboards, slides, images &amp; video — real files, HTML/PDF/PPTX/MP4 export. 🤖 Claude Code / Codex / Cursor / Gemini / OpenCode / Qwen &amp; 20+ CLIs via BYOK.</p>
+            <div class="tags"><i>agent-skills</i><i>ai-agents</i><i>ai-design</i><i>byok</i></div>
+          </div>
+          <div class="momentum">
+            <strong>883.3</strong><span>stars / day</span>
+            <div class="bar"><i style="width:47%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 82,746</b>
+            <span>94d old</span>
+            <span>9,570 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="JavaScript">
+          <div class="rank">03</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">addyosmani/agent-skills</a>
+              <span>JavaScript</span>
+            </div>
+            <p>Production-grade engineering skills for AI coding agents.</p>
+            <div class="tags"><i>agent-skills</i><i>antigravity</i><i>claude-code</i><i>codex</i></div>
+          </div>
+          <div class="momentum">
+            <strong>490.9</strong><span>stars / day</span>
+            <div class="bar"><i style="width:26%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 81,005</b>
+            <span>165d old</span>
+            <span>8,741 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Mixed">
+          <div class="rank">04</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noreferrer">VoltAgent/awesome-openclaw-skills</a>
+              <span>Mixed</span>
+            </div>
+            <p>The awesome collection of OpenClaw skills. 5,400+ skills filtered and categorized from the official OpenClaw Skills Registry.🦞</p>
+            <div class="tags"><i>agent-skills</i><i>awesome</i><i>awesome-list</i><i>awesome-lists</i></div>
+          </div>
+          <div class="momentum">
+            <strong>276.8</strong><span>stars / day</span>
+            <div class="bar"><i style="width:15%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 51,619</b>
+            <span>186d old</span>
+            <span>4,977 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">05</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/sickn33/agentic-awesome-skills" target="_blank" rel="noreferrer">sickn33/agentic-awesome-skills</a>
+              <span>Python</span>
+            </div>
+            <p>AAS Core is the local, agent-first control plane for complete catalog discovery, agent-owned selection, stack validation, and planning, backed by 1,987+ agentic skills. Includes CLI, local MCP, catalog, plugins, and Workbench.</p>
+            <div class="tags"><i>agent-skills</i><i>agentic-skills</i><i>ai-agent-skills</i><i>ai-agents</i></div>
+          </div>
+          <div class="momentum">
+            <strong>224.2</strong><span>stars / day</span>
+            <div class="bar"><i style="width:12%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 44,187</b>
+            <span>197d old</span>
+            <span>6,507 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Go">
+          <div class="rank">06</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noreferrer">alibaba/open-code-review</a>
+              <span>Go</span>
+            </div>
+            <p>Open-source &amp; free — Battle-tested at Alibaba&#039;s scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in fine-tuned ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI &amp; Anthropic compatible.</p>
+            <div class="tags"><i>agent</i><i>agent-skills</i><i>code-review</i><i>code-review-assistant</i></div>
+          </div>
+          <div class="momentum">
+            <strong>224.2</strong><span>stars / day</span>
+            <div class="bar"><i style="width:12%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 16,537</b>
+            <span>74d old</span>
+            <span>1,114 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Rust">
+          <div class="rank">07</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/googleworkspace/cli" target="_blank" rel="noreferrer">googleworkspace/cli</a>
+              <span>Rust</span>
+            </div>
+            <p>Google Workspace CLI — one command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service. Includes AI agent skills.</p>
+            <div class="tags"><i>agent-skills</i><i>ai-agent</i><i>automation</i><i>cli</i></div>
+          </div>
+          <div class="momentum">
+            <strong>200.5</strong><span>stars / day</span>
+            <div class="bar"><i style="width:11%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 30,076</b>
+            <span>150d old</span>
+            <span>1,758 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">08</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/microsoft/SkillOpt" target="_blank" rel="noreferrer">microsoft/SkillOpt</a>
+              <span>Python</span>
+            </div>
+            <p>SkillOpt is a text-space optimizer that trains reusable natural-language skills for frozen LLM agents through trajectory-driven edits, validation-gated updates, and deployable best_skill.md artifacts.</p>
+            <div class="tags"><i>agent-skills</i><i>self-evolving-agents</i></div>
+          </div>
+          <div class="momentum">
+            <strong>183.8</strong><span>stars / day</span>
+            <div class="bar"><i style="width:10%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 15,361</b>
+            <span>84d old</span>
+            <span>1,417 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">09</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/blader/humanizer" target="_blank" rel="noreferrer">blader/humanizer</a>
+              <span>Python</span>
+            </div>
+            <p>Agent skill that removes signs of AI-generated writing from text</p>
+            <div class="tags"><i>agent-skills</i><i>ai-writing</i><i>claude-code</i><i>codex</i></div>
+          </div>
+          <div class="momentum">
+            <strong>166.3</strong><span>stars / day</span>
+            <div class="bar"><i style="width:9%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 32,203</b>
+            <span>194d old</span>
+            <span>2,932 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Mixed">
+          <div class="rank">10</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/phuryn/pm-skills" target="_blank" rel="noreferrer">phuryn/pm-skills</a>
+              <span>Mixed</span>
+            </div>
+            <p>PM Skills Marketplace: 100+ agentic skills, commands, and plugins — from discovery to strategy, execution, launch, and growth.</p>
+            <div class="tags"><i>agent-skill-repository</i><i>agent-skills</i><i>agentic-skills</i><i>claude-code-marketplace</i></div>
+          </div>
+          <div class="momentum">
+            <strong>163.6</strong><span>stars / day</span>
+            <div class="bar"><i style="width:9%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 24,683</b>
+            <span>151d old</span>
+            <span>2,575 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">11</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/KKKKhazix/khazix-skills" target="_blank" rel="noreferrer">KKKKhazix/khazix-skills</a>
+              <span>Python</span>
+            </div>
+            <p>数字生命卡兹克开源的 AI Skills 合集 | Agent Skills: leader（帮你定义目标）, neat-freak 洁癖, hv-analysis, khazix-writer &amp; more — Claude Code, Codex &amp; 40+ agents</p>
+            <div class="tags"><i>agent-skills</i><i>ai-agents</i><i>claude</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>162.6</strong><span>stars / day</span>
+            <div class="bar"><i style="width:9%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 18,793</b>
+            <span>116d old</span>
+            <span>2,089 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">12</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/OthmanAdi/planning-with-files" target="_blank" rel="noreferrer">OthmanAdi/planning-with-files</a>
+              <span>Python</span>
+            </div>
+            <p>Persistent file-based planning for AI coding agents and long-running tasks. Crash-proof markdown plans, session recovery after /clear and compaction, per-turn re-injection against context rot, deterministic completion gate. Manus-style. Claude Code, Codex, Cursor, Kiro, OpenCode and 60+ agents via the Agent Skills standard.</p>
+            <div class="tags"><i>agent-skills</i><i>autonomous-agents</i><i>claude</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>124</strong><span>stars / day</span>
+            <div class="bar"><i style="width:7%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 25,857</b>
+            <span>209d old</span>
+            <span>2,168 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="TypeScript">
+          <div class="rank">13</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/JimLiu/baoyu-skills" target="_blank" rel="noreferrer">JimLiu/baoyu-skills</a>
+              <span>TypeScript</span>
+            </div>
+            <p>No repository description.</p>
+            <div class="tags"><i>agent-skills</i><i>claude-skills</i><i>codex-skills</i><i>openclaw-skills</i></div>
+          </div>
+          <div class="momentum">
+            <strong>122.6</strong><span>stars / day</span>
+            <div class="bar"><i style="width:6%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 24,362</b>
+            <span>199d old</span>
+            <span>2,712 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="HTML">
+          <div class="rank">14</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/nexu-io/html-anything" target="_blank" rel="noreferrer">nexu-io/html-anything</a>
+              <span>HTML</span>
+            </div>
+            <p>✨ The agentic HTML editor — your local AI agent writes the HTML, you ship it. 🚀 75 Skills × 9 Surfaces (magazine · deck · poster · XHS / tweet · prototype · data report · Hyperframes) 🛡️ Sandboxed preview · 📤 1-click to WeChat / X / Zhihu / HTML / PNG 🔑 Zero API key — Claude Code / Cursor / Codex / Gemini / Copilot / OpenCode / Qwen / Aider.</p>
+            <div class="tags"><i>agent-skills</i><i>agentic</i><i>ai-agents</i><i>ai-design</i></div>
+          </div>
+          <div class="momentum">
+            <strong>99.6</strong><span>stars / day</span>
+            <div class="bar"><i style="width:5%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 8,016</b>
+            <span>80d old</span>
+            <span>786 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">15</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/AgriciDaniel/claude-obsidian" target="_blank" rel="noreferrer">AgriciDaniel/claude-obsidian</a>
+              <span>Python</span>
+            </div>
+            <p>Self-organizing AI second brain for Obsidian + Claude Code. Drop any source and Claude reads, links, and files it into one connected knowledge graph of plain Markdown you own. AI note-taking, personal knowledge management (PKM), and an open-source Notion alternative. Based on Karpathy&#039;s LLM Wiki pattern.</p>
+            <div class="tags"><i>agent-skills</i><i>ai-note-taking</i><i>ai-second-brain</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>88.5</strong><span>stars / day</span>
+            <div class="bar"><i style="width:5%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 10,127</b>
+            <span>114d old</span>
+            <span>1,179 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="HTML">
+          <div class="rank">16</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/tt-a1i/archify" target="_blank" rel="noreferrer">tt-a1i/archify</a>
+              <span>HTML</span>
+            </div>
+            <p>Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export.</p>
+            <div class="tags"><i>agent-skills</i><i>anthropic</i><i>architecture-diagram</i><i>claude-skill</i></div>
+          </div>
+          <div class="momentum">
+            <strong>76.6</strong><span>stars / day</span>
+            <div class="bar"><i style="width:4%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 8,163</b>
+            <span>107d old</span>
+            <span>620 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="JavaScript">
+          <div class="rank">17</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/jnMetaCode/superpowers-zh" target="_blank" rel="noreferrer">jnMetaCode/superpowers-zh</a>
+              <span>JavaScript</span>
+            </div>
+            <p>🦸 AI 编程超能力 · 中文增强版 — superpowers（116k+ ⭐）完整汉化 + 6 个中国原创 skills，让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 16 款 AI 编程工具真正会干活</p>
+            <div class="tags"><i>agent-skills</i><i>agentic-coding</i><i>ai-coding</i><i>chinese</i></div>
+          </div>
+          <div class="momentum">
+            <strong>55.4</strong><span>stars / day</span>
+            <div class="bar"><i style="width:3%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 7,358</b>
+            <span>133d old</span>
+            <span>710 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">18</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/aden-hive/hive" target="_blank" rel="noreferrer">aden-hive/hive</a>
+              <span>Python</span>
+            </div>
+            <p>Multi-Agent Harness for Production AI</p>
+            <div class="tags"><i>agent</i><i>agent-framework</i><i>agent-skills</i><i>anthropic</i></div>
+          </div>
+          <div class="momentum">
+            <strong>54.1</strong><span>stars / day</span>
+            <div class="bar"><i style="width:3%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 10,817</b>
+            <span>200d old</span>
+            <span>5,667 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">19</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/Agents365-ai/drawio-skill" target="_blank" rel="noreferrer">Agents365-ai/drawio-skill</a>
+              <span>Python</span>
+            </div>
+            <p>Generate draw.io diagrams from natural language — 11 presets (UML, SysML/MBSE, BPMN, network, C4…), 36 tools: codebase/CI/infra-to-diagram, image→editable diagram, mind maps, build-up animation, exec-view compression, click-through runbooks, PR diff bot. Vision self-check, 10,000+ shapes. Exports PNG/SVG/PDF/JPG.</p>
+            <div class="tags"><i>agent-skills</i><i>architecture-diagram</i><i>bpmn</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>46.4</strong><span>stars / day</span>
+            <div class="bar"><i style="width:2%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 6,923</b>
+            <span>149d old</span>
+            <span>519 forks</span>
+          </div>
+        </article>
+        <article class="repo" data-language="Python">
+          <div class="rank">20</div>
+          <div class="repo-main">
+            <div class="repo-head">
+              <a href="https://github.com/AgriciDaniel/claude-ads" target="_blank" rel="noreferrer">AgriciDaniel/claude-ads</a>
+              <span>Python</span>
+            </div>
+            <p>Claude-first paid-media operations skill for Claude Code across 12 ad platforms (Google, Meta, YouTube, LinkedIn, TikTok, Microsoft, Apple, Amazon, Reddit, Pinterest, Snapchat, X): source-grounded audits, deterministic scoring, versioned JSON reports, and capability-gated account changes.</p>
+            <div class="tags"><i>agent-skills</i><i>ai</i><i>ai-marketing</i><i>claude-code</i></div>
+          </div>
+          <div class="momentum">
+            <strong>45.5</strong><span>stars / day</span>
+            <div class="bar"><i style="width:2%"></i></div>
+          </div>
+          <div class="stats">
+            <b>★ 7,705</b>
+            <span>169d old</span>
+            <span>1,138 forks</span>
+          </div>
+        </article></section>
+    <footer><span>12,209 matching repositories</span><span>Sorted by lifetime star velocity · not a causal growth metric</span></footer>
+  </div>
+  <script>
+    document.querySelectorAll("[data-language]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".controls button").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const language = button.dataset.language;
+        document.querySelectorAll(".repo").forEach((repo) => {
+          repo.classList.toggle("hidden", language !== "all" && repo.dataset.language !== language);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
