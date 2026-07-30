@@ -15,7 +15,7 @@ const c = {
 };
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const demoMap = resolve(root, "examples", "what-should-doubt-become.json");
+const demoMap = resolve(root, "examples", "what-should-doubt-become.doubt.json");
 
 const help = `doubt — turn contested questions into source-grounded evidence maps
 

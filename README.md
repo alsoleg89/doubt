@@ -45,7 +45,7 @@ The command renders the same decision used to choose Doubt's product direction:
 
 Open `doubt-demo.html`, select an evidence card, and the exact source locator
 appears beside the reasoning graph. The canonical editable input is
-[plain JSON](examples/what-should-doubt-become.json); the generated
+[plain JSON](examples/what-should-doubt-become.doubt.json); the generated
 [self-contained HTML](examples/what-should-doubt-become.html) has no runtime
 dependencies.
 
@@ -98,6 +98,27 @@ Validation fails closed when:
 
 Each valid map receives a SHA-256 receipt over canonicalized JSON. Change the
 reasoning record and the receipt changes.
+
+## Gate evidence maps in CI
+
+Add one reusable Action to validate every `*.doubt.json` file in a repository:
+
+```yaml
+name: Evidence contract
+on: [push, pull_request]
+
+jobs:
+  doubt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: alsoleg89/doubt@v0.2.0
+```
+
+The Action fails the check with file-level annotations and writes receipts,
+claim/evidence counts, and every violated invariant to the job summary. It uses
+the checked-in validator directly—no package install, model key, account, or
+network call.
 
 ## Adversarial benchmark
 

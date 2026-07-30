@@ -13,6 +13,8 @@
   edge focus, mobile layout, and exact source-region cards.
 - Add the portable `$doubt` Agent Skill for Claude Code, Codex, Copilot,
   Cursor, Gemini CLI, and the open Agent Skills layout.
+- Add a reusable GitHub Action that validates `*.doubt.json` maps and writes
+  receipts and invariant failures to the job summary.
 - Add a 12-case adversarial evidence-contract benchmark.
 - Add the public dogfood map that records why this product direction was
   selected.
