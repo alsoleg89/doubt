@@ -36,6 +36,7 @@
     "doubt": "bin/doubt.js"
   },
   "files": [
+    "CHANGELOG.md",
     "benchmarks",
     "bin",
     "docs/demo.svg",
