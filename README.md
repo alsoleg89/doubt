@@ -10,6 +10,9 @@
 [![Node 18+](https://img.shields.io/badge/node-%E2%89%A518-83b9ff.svg)](package.json)
 [![Zero dependencies](https://img.shields.io/badge/runtime_dependencies-0-ff806e.svg)](package.json)
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
+[![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
+
+[**Open the live evidence map →**](https://alsoleg89.github.io/doubt/)
 
 <img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
 
@@ -45,6 +48,12 @@ appears beside the reasoning graph. The canonical editable input is
 [plain JSON](examples/what-should-doubt-become.json); the generated
 [self-contained HTML](examples/what-should-doubt-become.html) has no runtime
 dependencies.
+
+The public map is also the product decision record: it preserves the evidence
+that killed two earlier directions and the human-preference test that is still
+missing. The broader selection process started with
+[105 AI open-source wedges](docs/category-research-2026.md) and narrowed them
+through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md).
 
 ## Give the workflow to your agent
 
