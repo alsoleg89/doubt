@@ -39,6 +39,10 @@ star counts, user counts, or performance claims without current evidence.
 > positions, and invented confidence percentages. A deterministic renderer then
 > emits one interactive HTML file with no CDN or server.
 >
+> The same contract ships as a reusable GitHub Action: it finds
+> `*.doubt.json` maps, annotates invalid files, and writes content receipts and
+> evidence counts to the job summary without installing a package.
+>
 > I dogfooded it on the decision that selected this project from 105 AI OSS
 > wedges. The map keeps the strongest objection and the still-missing human
 > preference test visible:
@@ -70,6 +74,9 @@ star counts, user counts, or performance claims without current evidence.
 > whether the evidence contract passes. The output is one interactive HTML file
 > you can keep in git or share without an account.
 >
+> There is also a reusable Action for enforcing the contract in pull requests:
+> `uses: alsoleg89/doubt@v0.2.0`.
+>
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >
 > Source: https://github.com/alsoleg89/doubt
@@ -90,10 +97,12 @@ star counts, user counts, or performance claims without current evidence.
    locator. Decorative citations fail validation.
 5. The renderer emits one self-contained HTML file. No account, backend, model
    key, CDN, or telemetry.
-6. I used it to record why I rejected two other product directions—and kept the
+6. The reusable GitHub Action validates every `*.doubt.json` map in CI and
+   leaves file annotations plus a receipt in the job summary.
+7. I used it to record why I rejected two other product directions—and kept the
    missing human-pull test visible. Live map:
    https://alsoleg89.github.io/doubt/
-7. Repo + 12-case adversarial contract benchmark:
+8. Repo + 12-case adversarial contract benchmark:
    https://github.com/alsoleg89/doubt
 
 ## Product Hunt
