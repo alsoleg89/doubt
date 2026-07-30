@@ -1,0 +1,27 @@
+name: Doubt evidence contract
+description: Validate source-grounded evidence maps in pull requests and CI.
+author: Oleg Alshaev
+
+branding:
+  icon: git-pull-request
+  color: green
+
+inputs:
+  path:
+    description: File or directory containing *.doubt.json maps.
+    required: false
+    default: .
+  require-maps:
+    description: Fail when no evidence maps are found.
+    required: false
+    default: "true"
+
+outputs:
+  count:
+    description: Number of evidence maps validated.
+  receipts:
+    description: JSON object mapping files to SHA-256 evidence receipts.
+
+runs:
+  using: node20
+  main: action/index.js

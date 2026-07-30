@@ -1,6 +1,6 @@
 # Evidence-contract benchmark
 
-Generated: 2026-07-30T21:00:47.645Z
+Generated: 2026-07-30T21:16:16.515Z
 
 **12/12 cases passed (100%).**
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-30T21:00:47.645Z",
+  "generatedAt": "2026-07-30T21:16:16.515Z",
   "subject": "Doubt evidence-contract validator and renderer",
   "methodology": "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; the markup case checks escaped visible HTML and embedded JSON.",
   "summary": {

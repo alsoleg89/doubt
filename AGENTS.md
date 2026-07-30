@@ -11,7 +11,7 @@ core local-first, provider-independent, and fail-closed on source traceability.
 - `npm run lint` — syntax-check executable source files.
 - `npm run check` — run all release checks.
 - `npm run demo` — render the public dogfood evidence map.
-- `node bin/doubt.js validate examples/what-should-doubt-become.json` — inspect
+- `node bin/doubt.js validate examples/what-should-doubt-become.doubt.json` — inspect
   the canonical example.
 
 ## Design constraints

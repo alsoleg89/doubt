@@ -6,7 +6,7 @@ import { inspectMap } from "../src/map.js";
 import { renderMap } from "../src/render-map.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const exampleFile = path.join(root, "examples", "what-should-doubt-become.json");
+const exampleFile = path.join(root, "examples", "what-should-doubt-become.doubt.json");
 const outputDir = path.join(root, "benchmarks", "results");
 const writeResults = !process.argv.includes("--check-only");
 
