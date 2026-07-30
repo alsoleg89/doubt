@@ -13,6 +13,7 @@ function jsonForScript(value) {
 
 export function renderMap(map, validation) {
   const { metrics, receipt } = validation;
+  const nodeLabels = new Map(map.nodes.map((node) => [node.id, node.label]));
   const nodes = map.nodes
     .map((node, index) => {
       const source = node.sourceId
@@ -38,9 +39,9 @@ export function renderMap(map, validation) {
       (edge) => `
         <li class="${escapeHtml(edge.relation)}">
           <button data-edge="${escapeHtml(edge.from)}|${escapeHtml(edge.to)}">
-            <span>${escapeHtml(edge.from)}</span>
+            <span>${escapeHtml(nodeLabels.get(edge.from) || edge.from)}</span>
             <b>${escapeHtml(edge.relation)}</b>
-            <span>${escapeHtml(edge.to)}</span>
+            <span>${escapeHtml(nodeLabels.get(edge.to) || edge.to)}</span>
           </button>
           <p>${escapeHtml(edge.note)}</p>
         </li>`,
@@ -75,6 +76,12 @@ export function renderMap(map, validation) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Doubt evidence maps">
+  <meta name="description" content="${escapeHtml(map.verdict)}">
+  <meta name="theme-color" content="#0b0d0e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${escapeHtml(map.title)} — Doubt">
+  <meta property="og:description" content="${escapeHtml(map.verdict)}">
+  <meta name="twitter:card" content="summary">
   <title>${escapeHtml(map.title)} — Doubt</title>
   <style>
     :root {
