@@ -1,6 +1,6 @@
 {
   "name": "doubt-ai",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Turn contested questions into interactive, source-grounded evidence maps.",
   "type": "module",
   "license": "MIT",
@@ -48,6 +48,7 @@
     "scripts/sync-github-skill.mjs",
     "src",
     "skill",
+    "skills/doubt",
     "README.md",
     "LICENSE"
   ],

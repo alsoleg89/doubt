@@ -5,18 +5,24 @@ import { join } from "node:path";
 import test from "node:test";
 import {
   compareSkillMirror,
+  compareSkillMirrors,
   syncSkillMirror,
 } from "../scripts/sync-github-skill.mjs";
 
-test("keeps the GitHub-native skill byte-identical to the canonical payload", async () => {
-  const result = await compareSkillMirror();
-  assert.deepEqual(result, {
-    ok: true,
-    files: 4,
-    missing: [],
-    unexpected: [],
-    changed: [],
-  });
+test("keeps repository skill layouts byte-identical to the canonical payload", async () => {
+  const result = await compareSkillMirrors();
+  assert.equal(result.ok, true);
+  assert.equal(result.files, 4);
+  assert.equal(result.mirrors.length, 2);
+  for (const mirror of result.mirrors) {
+    assert.deepEqual(mirror.result, {
+      ok: true,
+      files: 4,
+      missing: [],
+      unexpected: [],
+      changed: [],
+    });
+  }
 });
 
 test("detects drift and rebuilds a GitHub skill mirror", async () => {

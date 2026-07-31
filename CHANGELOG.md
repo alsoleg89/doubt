@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.3.1 — Verified GitHub CLI install
+
+- Add the `skills/doubt` remote-publisher layout required by `gh skill`, with
+  clean preview/install coverage against the latest tagged release.
+
 ## 0.3.0 — Evidence maps readers can test
 
 - Add a preregistered five-topic reader study comparing interactive evidence
