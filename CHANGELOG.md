@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Add a preregistered five-topic reader study comparing interactive evidence
+  maps with hand-edited cited memos built from the same frozen sources.
+- Add deterministic local condition assignment, answer shuffling, anonymous
+  JSON export, and a fail-closed result analyzer with a ten-session stopping
+  rule.
+- Publish the self-contained reader study through GitHub Pages without
+  analytics, telemetry, accounts, or network submission.
+
 ## 0.2.1 — Discoverable Agent Skill
 
 - Publish a deterministic, digest-pinned Agent Skill archive through the

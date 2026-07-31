@@ -14,6 +14,8 @@
 
 [**Open the live evidence map →**](https://alsoleg89.github.io/doubt/)
 ·
+[**Take the map-vs-memo study →**](https://alsoleg89.github.io/doubt/benchmark/)
+·
 [**Bring a contested question →**](https://github.com/alsoleg89/doubt/discussions/4)
 
 <img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
@@ -140,6 +142,31 @@ that must fire.
 This benchmark measures structural traceability and safe rendering. It does not
 pretend to measure whether a source is true or whether an AI extracted it
 faithfully.
+
+## Reader benchmark — recruiting
+
+The structural benchmark does not answer the product question: does an
+interactive evidence map actually help a reader more than cited prose?
+
+[**Take the five-topic map-vs-memo study →**](https://alsoleg89.github.io/doubt/benchmark/)
+
+The [protocol](benchmarks/map-vs-memo/protocol.md) was committed before data
+collection. Each reader sees five technical decisions, alternating between a
+Doubt map and a hand-edited cited memo built from the same frozen sources. The
+study measures position, contradiction, qualification, unknown, and exact
+source-region recall.
+
+It runs entirely in the browser and downloads one anonymous result JSON. It
+does not request a name or email and never submits data over the network. The
+first analysis is locked until ten complete reader sessions; neutral and
+negative results will be published.
+
+Build or validate the study locally:
+
+```bash
+npm run benchmark:reader
+npm run benchmark:reader:check
+```
 
 ## The evidence contract
 

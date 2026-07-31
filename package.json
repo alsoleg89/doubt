@@ -57,9 +57,12 @@
     "discovery": "node scripts/build-skill-discovery.mjs",
     "benchmark": "node benchmarks/evidence-contract.mjs",
     "benchmark:check": "node benchmarks/evidence-contract.mjs --check-only",
-    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/map.js && node --check src/render-map.js && node --check src/install.js",
+    "benchmark:reader": "node benchmarks/map-vs-memo/study.mjs",
+    "benchmark:reader:check": "node benchmarks/map-vs-memo/study.mjs --check-only",
+    "benchmark:reader:analyze": "node benchmarks/map-vs-memo/analyze.mjs",
+    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/map.js && node --check src/render-map.js && node --check src/install.js && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs",
     "test": "node --test",
-    "check": "npm run lint && npm test && npm run benchmark:check",
+    "check": "npm run lint && npm test && npm run benchmark:check && npm run benchmark:reader:check",
     "prepack": "npm run check"
   }
 }

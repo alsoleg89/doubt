@@ -25,11 +25,12 @@ jobs:
       - uses: actions/configure-pages@v6
       - name: Prepare self-contained demo
         run: |
-          mkdir -p _site/examples _site/probes/launchkit
+          mkdir -p _site/examples _site/probes/launchkit _site/benchmark
           cp site/index.html _site/index.html
           cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html
           cp examples/what-should-doubt-become.doubt.json _site/examples/what-should-doubt-become.doubt.json
           cp probes/launchkit/britanka.html _site/probes/launchkit/britanka.html
+          node benchmarks/map-vs-memo/study.mjs --out _site/benchmark/index.html
           node scripts/build-skill-discovery.mjs _site
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v5
