@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0 — Evidence maps readers can test
+
 - Add a preregistered five-topic reader study comparing interactive evidence
   maps with hand-edited cited memos built from the same frozen sources.
 - Add deterministic local condition assignment, answer shuffling, anonymous
