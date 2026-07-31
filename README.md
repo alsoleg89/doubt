@@ -9,6 +9,7 @@
 [![MIT license](https://img.shields.io/badge/license-MIT-a8ec67.svg)](LICENSE)
 [![Node 18+](https://img.shields.io/badge/node-%E2%89%A518-83b9ff.svg)](package.json)
 [![npm version](https://img.shields.io/npm/v/doubt-ai.svg)](https://www.npmjs.com/package/doubt-ai)
+[![Agent Skill](https://skills.sh/b/alsoleg89/doubt)](https://skills.sh/alsoleg89/doubt/doubt)
 [![Zero dependencies](https://img.shields.io/badge/runtime_dependencies-0-ff806e.svg)](package.json)
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
