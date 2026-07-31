@@ -159,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.7.0
+      - uses: alsoleg89/doubt@v0.7.1
 ```
 
 The Action fails the check with file-level annotations and writes receipts,
@@ -170,7 +170,7 @@ network call.
 Known negative fixtures can remain committed without weakening the gate:
 
 ```yaml
-      - uses: alsoleg89/doubt@v0.7.0
+      - uses: alsoleg89/doubt@v0.7.1
         with:
           exclude: benchmarks/expected-failures
 ```

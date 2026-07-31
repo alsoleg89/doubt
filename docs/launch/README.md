@@ -124,7 +124,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > you can keep in git or share without an account.
 >
 > There is also a reusable Action for enforcing the contract in pull requests:
-> `uses: alsoleg89/doubt@v0.7.0`.
+> `uses: alsoleg89/doubt@v0.7.1`.
 >
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >

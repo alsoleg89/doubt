@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1 — Focused public surface
+
+- Remove abandoned product-probe research, generated examples, and public-site
+  links so the repository and npm package expose only the evidence-map product.
+- Replace the internal product-direction benchmark topic with the current
+  Agent Skills vs MCP decision map while preserving the five-topic protocol.
+
 ## 0.7.0 — Verifiable sources and readable briefs
 
 - Add explicit, fail-closed `doubt verify` source retrieval with normalized
