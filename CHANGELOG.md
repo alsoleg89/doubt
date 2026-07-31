@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.1 — Portable share links
+
 - Add local-only playground share links that encode a valid map in the URL
   fragment, restore it in a fresh tab, and fall back to the address bar when
   clipboard access is unavailable.

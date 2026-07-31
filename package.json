@@ -1,6 +1,6 @@
 {
   "name": "doubt-ai",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Turn contested questions into interactive, source-grounded evidence maps.",
   "type": "module",
   "license": "MIT",

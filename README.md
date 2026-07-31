@@ -162,7 +162,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.4.0
+      - uses: alsoleg89/doubt@v0.4.1
 ```
 
 The Action fails the check with file-level annotations and writes receipts,
