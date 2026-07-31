@@ -3,6 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { buildSkillArchive } from "../../scripts/build-skill-discovery.mjs";
+import { inspectMap } from "../../src/map.js";
 
 const benchmarkDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(benchmarkDir, "..", "..");
@@ -158,7 +159,37 @@ async function existingPathFinding(resultFile, relativePath, label) {
   }
 }
 
-async function validateFile(file, expectedSkillDigest) {
+async function validatePassArtifact(run) {
+  if (
+    !["direct", "implicit"].includes(run.promptId)
+    || run.outcome !== "pass"
+    || run.artifactPath === null
+  ) {
+    return [];
+  }
+
+  const artifact = path.resolve(repoRoot, run.artifactPath);
+  try {
+    const report = inspectMap(JSON.parse(await readFile(artifact, "utf8")));
+    if (!report.valid) {
+      return [
+        `${run.promptId}.artifactPath is not a valid Doubt evidence map `
+        + `(${report.findings.length} findings)`,
+      ];
+    }
+    if (report.receipt !== run.evidenceReceipt) {
+      return [
+        `${run.promptId}.evidenceReceipt does not match artifact receipt `
+        + `(${report.receipt})`,
+      ];
+    }
+    return [];
+  } catch (error) {
+    return [`${run.promptId}.artifactPath could not be verified: ${error.message}`];
+  }
+}
+
+export async function validatePortabilityResultFile(file, expectedSkillDigest) {
   const result = JSON.parse(await readFile(file, "utf8"));
   const findings = validatePortabilityResult(result, { expectedSkillDigest });
   if (findings.length === 0) {
@@ -167,6 +198,11 @@ async function validateFile(file, expectedSkillDigest) {
         const finding = await existingPathFinding(file, run[field], `${run.promptId}.${field}`);
         if (finding) findings.push(finding);
       }
+    }
+  }
+  if (findings.length === 0) {
+    for (const run of result.runs) {
+      findings.push(...await validatePassArtifact(run));
     }
   }
   return findings;
@@ -199,7 +235,7 @@ async function main() {
   let failed = 0;
   for (const file of files) {
     try {
-      const findings = await validateFile(file, expectedSkillDigest);
+      const findings = await validatePortabilityResultFile(file, expectedSkillDigest);
       if (findings.length === 0) {
         process.stdout.write(`PASS ${path.relative(repoRoot, file)}\n`);
       } else {

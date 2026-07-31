@@ -13,6 +13,8 @@
   on npm, with a clean Registry install and CLI smoke test.
 - Submit Doubt to two Agent Skill catalogs with mergeable pull requests ready
   for maintainer review.
+- Publish the first real portability result from GitHub Copilot CLI 1.0.77,
+  preserving direct/negative passes and the invalid implicit artifact as a fail.
 
 ## 0.5.0 — Agent Skills portability benchmark
 

@@ -45,6 +45,13 @@
       "sourceId": "copilot-skills"
     },
     {
+      "id": "copilot-benchmark",
+      "type": "evidence",
+      "label": "Copilot run: 2/3",
+      "text": "Copilot CLI 1.0.77 passed direct activation and the negative control, but its implicit run created an invalid artifact without running the requested validator or reporting a receipt.",
+      "sourceId": "copilot-result"
+    },
+    {
       "id": "cursor-support",
       "type": "evidence",
       "label": "Cursor",
@@ -79,8 +86,8 @@
     {
       "id": "cross-client-benchmark",
       "type": "unknown",
-      "label": "Missing benchmark",
-      "text": "No committed public suite yet runs the same non-trivial skill prompts across all five clients and compares discovery, activation, tool use, and final artifacts."
+      "label": "Four clients missing",
+      "text": "The shared suite now has one committed Copilot result, but Claude Code, Codex, Cursor, and Gemini CLI still lack comparable submitted runs."
     }
   ],
   "edges": [
@@ -169,6 +176,12 @@
       "note": "Gemini inserts an explicit consent step before a discovered skill activates."
     },
     {
+      "from": "copilot-benchmark",
+      "to": "behavior-differences",
+      "relation": "supports",
+      "note": "The same skill passed explicit activation but failed the implicit artifact contract in Copilot CLI."
+    },
+    {
       "from": "host-differences",
       "to": "portable-core",
       "relation": "contradicts",
@@ -197,6 +210,12 @@
       "to": "portable-deployment",
       "relation": "supports",
       "note": "Per-host acceptance tests are necessary when behavior is not standardized."
+    },
+    {
+      "from": "copilot-benchmark",
+      "to": "portable-deployment",
+      "relation": "supports",
+      "note": "The preserved implicit failure demonstrates why per-host validation must accompany a shared payload."
     },
     {
       "from": "portable-core",
@@ -253,6 +272,15 @@
       "date": "2026-07-31",
       "locator": "About agent skills; supported surfaces; project and personal locations",
       "excerpt": "GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations."
+    },
+    {
+      "id": "copilot-result",
+      "title": "Doubt portability result: GitHub Copilot CLI 1.0.77",
+      "url": "../benchmarks/skill-portability/results/github-copilot-1.0.77.json",
+      "publisher": "Doubt portability benchmark",
+      "date": "2026-07-31",
+      "locator": "runs[0] direct; runs[1] implicit; runs[2] negative",
+      "excerpt": "Direct passed after Copilot repaired three validator findings; implicit failed with three invalid source URLs and no receipt; negative passed without skill activation or an evidence-map artifact."
     },
     {
       "id": "cursor-skills",

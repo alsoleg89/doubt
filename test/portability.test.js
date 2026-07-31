@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { validatePortabilityResult } from "../benchmarks/skill-portability/validate.mjs";
+import {
+  validatePortabilityResult,
+  validatePortabilityResultFile,
+} from "../benchmarks/skill-portability/validate.mjs";
 
 const benchmarkDir = path.resolve("benchmarks/skill-portability");
 
@@ -81,6 +85,27 @@ test("a passing negative probe rejects activation or an artifact", async () => {
   const findings = validatePortabilityResult(result);
   assert.equal(
     findings.includes("runs.negative pass requires no observed activation and no artifact"),
+    true,
+  );
+});
+
+test("a passing map run must match the committed artifact receipt", async () => {
+  const submitted = path.join(
+    benchmarkDir,
+    "results",
+    "github-copilot-1.0.77.json",
+  );
+  const result = JSON.parse(await readFile(submitted, "utf8"));
+  const cwd = await mkdtemp(path.join(tmpdir(), "doubt-portability-result-"));
+  const tampered = path.join(cwd, "tampered.json");
+  result.runs.find((run) => run.promptId === "direct").evidenceReceipt = "a".repeat(64);
+  await writeFile(tampered, `${JSON.stringify(result, null, 2)}\n`);
+
+  const findings = await validatePortabilityResultFile(tampered, result.skillDigest);
+  assert.equal(
+    findings.some((finding) => finding.startsWith(
+      "direct.evidenceReceipt does not match artifact receipt",
+    )),
     true,
   );
 });

@@ -9,5 +9,13 @@ Use `../result.example.json` as the template and run:
 npm run benchmark:portability
 ```
 
-No client results are bundled yet. An empty directory is an explicit zero
-baseline, not evidence of portability.
+## Current results
+
+| Client | Version | Direct | Implicit | Negative |
+|---|---|---:|---:|---:|
+| GitHub Copilot CLI | 1.0.77 | pass | fail | pass |
+
+The implicit failure is preserved as observed: Copilot discovered and activated
+the skill, but did not run the requested validator and left three invalid source
+URLs in the generated artifact. See the machine-readable result and sanitized
+raw sessions for the full evidence trail.

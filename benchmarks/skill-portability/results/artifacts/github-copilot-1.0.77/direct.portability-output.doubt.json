@@ -1,0 +1,137 @@
+{
+  "title": "Auto-merge AI-generated dependency updates — Project Northstar (next 4-week cycle)",
+  "question": "Should Project Northstar enable automatic merging for AI-generated dependency updates during the next release cycle (four weeks)?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Enable automatic merging only for low-risk, patch-level dependency updates that match the controlled-replay conditions, after adding signed provenance and rollback drills; do not enable blanket auto-merge for all AI-generated updates during the next cycle.",
+  "nodes": [
+    {
+      "id": "position-auto-merge",
+      "type": "position",
+      "label": "Provisional position",
+      "text": "Enable automatic merging only for low-risk, patch-level dependency updates that match the controlled-replay conditions, after adding signed provenance and rollback drills; do not enable blanket auto-merge for all AI-generated updates during the next cycle."
+    },
+    {
+      "id": "evidence-r1",
+      "type": "evidence",
+      "label": "Controlled replay results (R1)",
+      "text": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits. The two failures were detected before merge by the required checks.",
+      "sourceId": "source-reliability",
+      "claim": "Most low-risk patches passed tests in replay"
+    },
+    {
+      "id": "evidence-r2",
+      "type": "evidence",
+      "label": "Replay boundary (R2)",
+      "text": "The replay did not include major-version updates, packages with install scripts, or changes that modified authentication and authorization code.",
+      "sourceId": "source-reliability",
+      "claim": "Replay excluded higher-risk update classes"
+    },
+    {
+      "id": "evidence-s1",
+      "type": "evidence",
+      "label": "Missing signed provenance (S1)",
+      "text": "The fixture has no signed provenance record for generated pull-request descriptions. A reviewer therefore cannot verify from the description alone which model, prompt, or retrieved advisory produced a recommendation.",
+      "sourceId": "source-security"
+    },
+    {
+      "id": "evidence-s2",
+      "type": "evidence",
+      "label": "Proposed rule scope (S2)",
+      "text": "The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory.",
+      "sourceId": "source-security"
+    },
+    {
+      "id": "evidence-o1",
+      "type": "evidence",
+      "label": "Review queue delay (O1)",
+      "text": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle.",
+      "sourceId": "source-operations"
+    },
+    {
+      "id": "evidence-o2",
+      "type": "evidence",
+      "label": "No rollback drill recorded (O2)",
+      "text": "No rollback drill has been recorded for an automatically merged dependency update. The fixture contains no measurement of recovery time after a bad merge.",
+      "sourceId": "source-operations"
+    },
+    {
+      "id": "unknown-recovery-time",
+      "type": "unknown",
+      "label": "Unknown recovery time after bad auto-merge",
+      "text": "No measurement of recovery time after a bad automatically merged dependency update exists in the fixture; the operational cost and recovery time are therefore unknown and could change the decision."
+    }
+  ],
+  "edges": [
+    {
+      "from": "evidence-r1",
+      "to": "position-auto-merge",
+      "relation": "supports",
+      "note": "High pass rate in the synthetic replay (18/20) increases reason to allow auto-merge for low-risk, patch-level updates that match replay conditions."
+    },
+    {
+      "from": "evidence-r2",
+      "to": "position-auto-merge",
+      "relation": "qualifies",
+      "note": "Replay explicitly excluded major-version updates, install-script packages, and auth-related changes, so auto-merge should be limited to the classes included in the replay."
+    },
+    {
+      "from": "evidence-s1",
+      "to": "position-auto-merge",
+      "relation": "contradicts",
+      "note": "Absence of signed provenance means automated merges could proceed without verifiable origin information, which contradicts enabling auto-merge without additional provenance controls."
+    },
+    {
+      "from": "evidence-s2",
+      "to": "position-auto-merge",
+      "relation": "contradicts",
+      "note": "The proposed rule does not exclude packages with install scripts or auth-dir changes; allowing those would contradict a safe auto-merge policy."
+    },
+    {
+      "from": "evidence-o1",
+      "to": "position-auto-merge",
+      "relation": "supports",
+      "note": "Median 31-hour review wait for routine patch updates supports automating merges for routine low-risk patches to reduce delay."
+    },
+    {
+      "from": "evidence-o2",
+      "to": "unknown-recovery-time",
+      "relation": "supports",
+      "note": "No recorded rollback drill is the evidence underlying the unknown: there is no measurement of recovery time after a bad merge."
+    },
+    {
+      "from": "unknown-recovery-time",
+      "to": "position-auto-merge",
+      "relation": "missing",
+      "note": "Absent recovery-time measurements could reverse or narrow the decision; without them, risk of automatic merging is incompletely assessed."
+    }
+  ],
+  "sources": [
+    {
+      "id": "source-reliability",
+      "title": "Reliability observations",
+      "url": "./sources/reliability.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "locator": "Region R1 (lines describing controlled replay) and R2 (replay boundary)",
+      "excerpt": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits. The two failures were detected before merge by the required checks. The replay did not include major-version updates, packages with install scripts, or changes that modified authentication and authorization code."
+    },
+    {
+      "id": "source-security",
+      "title": "Security observations",
+      "url": "./sources/security.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "locator": "Region S1 (unresolved provenance) and S2 (protected surface)",
+      "excerpt": "The fixture has no signed provenance record for generated pull-request descriptions. A reviewer therefore cannot verify from the description alone which model, prompt, or retrieved advisory produced a recommendation. The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory."
+    },
+    {
+      "id": "source-operations",
+      "title": "Operations observations",
+      "url": "./sources/operations.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "locator": "Region O1 (review queue) and O2 (missing rollback evidence)",
+      "excerpt": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle. No rollback drill has been recorded for an automatically merged dependency update. The fixture contains no measurement of recovery time after a bad merge."
+    }
+  ]
+}

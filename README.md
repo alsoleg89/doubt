@@ -97,8 +97,6 @@ that killed two earlier directions and the human-preference test that is still
 missing. The broader selection process started with
 [105 AI open-source wedges](docs/category-research-2026.md) and narrowed them
 through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md).
-The current [acquisition funnel](docs/acquisition-funnel.md) records the honest
-traffic baseline, star-conversion scenarios, and stage gates toward broad adoption.
 
 ## Give the workflow to your agent
 
@@ -209,13 +207,16 @@ npm run benchmark:portability
 
 Results require exact client versions, relevant configuration, sanitized raw
 output, generated artifacts, and receipts. A contributor can submit one client;
-failures and blocked runs are valid evidence. The baseline is zero submitted
-clients, and a single-client result may not claim behavioral equivalence.
+failures and blocked runs are valid evidence. The first submitted result is
+[GitHub Copilot CLI 1.0.77](benchmarks/skill-portability/results/github-copilot-1.0.77.json):
+direct **pass**, implicit **fail**, and negative **pass**. The failure is
+preserved with its invalid artifact and raw transcript; one client may not claim
+cross-client behavioral equivalence.
 
-[**Claim one client →**](https://alsoleg89.github.io/doubt/#contribute):
+[**Run a remaining client →**](https://alsoleg89.github.io/doubt/#contribute):
 [Claude Code](https://github.com/alsoleg89/doubt/issues/11),
 [Codex](https://github.com/alsoleg89/doubt/issues/12),
-[GitHub Copilot](https://github.com/alsoleg89/doubt/issues/15),
+[GitHub Copilot result](benchmarks/skill-portability/results/github-copilot-1.0.77.json),
 [Cursor](https://github.com/alsoleg89/doubt/issues/14), or
 [Gemini CLI](https://github.com/alsoleg89/doubt/issues/13).
 
