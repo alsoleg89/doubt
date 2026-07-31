@@ -62,9 +62,10 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(home, />Test Agent Skills portability<\/a>/);
   assert.match(home, /id="contribute"/);
   assert.match(home, /1\/5 clients benchmarked/);
-  for (const issue of [11, 12, 15, 14, 13]) {
+  for (const issue of [11, 12, 14, 13]) {
     assert.match(home, new RegExp(`github\\.com\\/alsoleg89\\/doubt\\/issues\\/${issue}`));
   }
+  assert.match(home, /Completed · 2\/3/);
   assert.match(home, /One client is enough/);
   assert.match(page, /sandbox="allow-scripts allow-popups"/);
   assert.doesNotMatch(page, /allow-same-origin/);

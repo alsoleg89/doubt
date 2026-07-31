@@ -11,6 +11,8 @@
 - Expand the adversarial evidence-contract benchmark from 12 to 20 cases.
 - Add Action exclusions for intentionally failing fixtures and deterministic
   cross-version skill archives so the Node matrix remains reproducible.
+- Remove five abandoned product-probe directories from `main`; preserve their
+  research evidence through immutable links to the `v0.6.0` tag.
 
 - Add a public five-client contribution queue that connects the Pages gallery,
   README, and contributor guide to scoped good-first benchmark issues.

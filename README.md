@@ -222,8 +222,10 @@ output, generated artifacts, and receipts. A contributor can submit one client;
 failures and blocked runs are valid evidence. The first submitted result is
 [GitHub Copilot CLI 1.0.77](benchmarks/skill-portability/results/github-copilot-1.0.77.json):
 direct **pass**, implicit **fail**, and negative **pass**. The failure is
-preserved with its invalid artifact and raw transcript; one client may not claim
-cross-client behavioral equivalence.
+preserved with its artifact and raw transcript; even though v0.6 now accepts
+its absolute local paths, the agent never ran or reported the required
+validation, so the historical run is not relabeled as a pass. One client may
+not claim cross-client behavioral equivalence.
 
 [**Run a remaining client →**](https://alsoleg89.github.io/doubt/#contribute):
 [Claude Code](https://github.com/alsoleg89/doubt/issues/11),

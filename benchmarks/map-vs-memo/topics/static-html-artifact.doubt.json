@@ -106,7 +106,7 @@
       "publisher": "Doubt",
       "date": "2026-07-31",
       "locator": "Section: Prepare self-contained demo",
-      "excerpt": "The workflow copies the site index, evidence-map HTML, map JSON, and a LaunchKit probe into one static artifact before deploying GitHub Pages.",
+      "excerpt": "The workflow copies the site index, evidence-map HTML, map JSON, benchmark, playground, and skill discovery files into one static artifact before deploying GitHub Pages.",
       "retrievedAt": "2026-07-31"
     },
     {
