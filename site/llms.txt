@@ -5,7 +5,7 @@
 
 Repository: https://github.com/alsoleg89/doubt
 License: MIT
-Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.7.1
+Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.8.0
 
 ## Core contract
 
@@ -27,7 +27,7 @@ Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.7.1
 - Agent Skills portability map: https://alsoleg89.github.io/doubt/examples/agent-skills-portability.html
 - Agent Skills vs MCP map: https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html
 - Reader benchmark: https://alsoleg89.github.io/doubt/benchmark/
-- Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.7.1/benchmarks/skill-portability/README.md
+- Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.8.0/benchmarks/skill-portability/README.md
 
 ## Installation
 
@@ -43,7 +43,7 @@ CLI:
 
 GitHub Action:
 
-    uses: alsoleg89/doubt@v0.7.1
+    uses: alsoleg89/doubt@v0.8.0
 
 ## Scope limits
 

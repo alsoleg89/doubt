@@ -125,7 +125,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > you can keep in git or share without an account.
 >
 > There is also a reusable Action for enforcing the contract in pull requests:
-> `uses: alsoleg89/doubt@v0.7.1`.
+> `uses: alsoleg89/doubt@v0.8.0`.
 >
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >
@@ -178,10 +178,10 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
    contract, and Pages deployment to pass; then check the live homepage, both
    examples, playground, reader benchmark, sitemap, and `llms.txt`.
 3. Build the final tarball with `npm pack`, publish that exact file to npm, and
-   verify `npm view doubt-ai@0.7.1 version`, `npx --yes doubt-ai@0.7.1 --version`,
+   verify `npm view doubt-ai@0.8.0 version`, `npx --yes doubt-ai@0.8.0 --version`,
    and a clean `demo` plus `validate` smoke test.
-4. Push only tag `v0.7.1`. Wait for the Release workflow and verify that the
-   GitHub Release contains the npm tarball and the 0.7.1 changelog section.
+4. Push only tag `v0.8.0`. Wait for the Release workflow and verify that the
+   GitHub Release contains the npm tarball and the 0.8.0 changelog section.
 5. Push the prepared `awesome-copilot` contribution branch and open its catalog
    PR only after the pinned npm version resolves. Recheck the two existing
    ready catalog PRs for maintainer feedback.

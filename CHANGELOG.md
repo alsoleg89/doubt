@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.8.0 — Offline Agent Skill validation
+
+- Bundle the exact zero-dependency evidence contract and validator inside the
+  Doubt Agent Skill so clients can produce real receipts without npm registry
+  or network access.
+- Fail closed in the skill instructions: a file hash, node count, JSON parse,
+  or unverified assertion can no longer be reported as successful validation.
+- Publish a controlled Codex CLI before/after portability result: direct and
+  implicit prompts move from fail to pass while the negative control stays
+  pass, with sanitized raw sessions and independently verified artifacts.
+
 ## 0.7.1 — Focused public surface
 
 - Remove retired experiments, generated decision artifacts, and obsolete site
