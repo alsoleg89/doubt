@@ -2,10 +2,12 @@
 
 ## 0.7.1 — Focused public surface
 
-- Remove abandoned product-probe research, generated examples, and public-site
-  links so the repository and npm package expose only the evidence-map product.
-- Replace the internal product-direction benchmark topic with the current
-  Agent Skills vs MCP decision map while preserving the five-topic protocol.
+- Remove retired experiments, generated decision artifacts, and obsolete site
+  links so the repository and npm package expose one coherent product.
+- Focus the public gallery and five-topic reader study on current evidence-map
+  examples, including the Agent Skills vs MCP decision map.
+- Add a fail-closed release preflight that aligns the version, tag, public
+  metadata, Action pins, npm tarball inventory, and GitHub release notes.
 
 ## 0.7.0 — Verifiable sources and readable briefs
 

@@ -69,9 +69,11 @@
     "benchmark:reader:check": "node benchmarks/map-vs-memo/study.mjs --check-only",
     "benchmark:reader:analyze": "node benchmarks/map-vs-memo/analyze.mjs",
     "benchmark:portability": "node benchmarks/skill-portability/validate.mjs",
-    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/share-link.js && node --check src/verify.js && node --check src/install.js && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs && node --check benchmarks/skill-portability/validate.mjs",
+    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/share-link.js && node --check src/verify.js && node --check src/install.js && node --check scripts/release-notes.mjs && node --check scripts/release-preflight.mjs && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs && node --check benchmarks/skill-portability/validate.mjs",
     "test": "node --test",
     "check": "npm run lint && npm run skill:check && npm test && npm run benchmark:check && npm run benchmark:reader:check && npm run benchmark:portability",
+    "release:check": "npm run check && node scripts/release-preflight.mjs",
+    "release:notes": "node scripts/release-notes.mjs",
     "prepack": "npm run check"
   }
 }

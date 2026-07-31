@@ -169,15 +169,24 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > Copilot, Cursor, or Gemini; validate the canonical JSON locally; share one
 > self-contained HTML artifact.
 
-## Launch order
+## Release and launch order
 
-1. Create the public GitHub repository and push `main`.
-2. Enable GitHub Pages with GitHub Actions and verify the live map.
-3. Publish the current `doubt-ai` version and verify `npx doubt-ai demo`.
-4. Tag the same version; verify the GitHub Release tarball and CI matrix.
-5. Post Show HN after the live demo, npm package, release, and repository links
-   all resolve.
-6. Post one technically adapted version to the most relevant developer
+1. Run `npm run release:check`. It must validate the full suite, the version and
+   local tag, public metadata and Action pins, and the npm tarball inventory.
+2. Push `main` without pushing tags. Wait for the Node 18/20/22 matrix, evidence
+   contract, and Pages deployment to pass; then check the live homepage, both
+   examples, playground, reader benchmark, sitemap, and `llms.txt`.
+3. Build the final tarball with `npm pack`, publish that exact file to npm, and
+   verify `npm view doubt-ai@0.7.1 version`, `npx --yes doubt-ai@0.7.1 --version`,
+   and a clean `demo` plus `validate` smoke test.
+4. Push only tag `v0.7.1`. Wait for the Release workflow and verify that the
+   GitHub Release contains the npm tarball and the 0.7.1 changelog section.
+5. Push the prepared `awesome-copilot` contribution branch and open its catalog
+   PR only after the pinned npm version resolves. Recheck the two existing
+   ready catalog PRs for maintainer feedback.
+6. Post Show HN only after the live demo, npm package, GitHub Release, Action
+   tag, and repository links all resolve.
+7. Post one technically adapted version to the most relevant developer
    community; do not cross-post identical copy simultaneously.
-7. Turn substantive feedback into public issues and ship the first response
+8. Turn substantive feedback into public issues and ship the first response
    release before expanding distribution.
