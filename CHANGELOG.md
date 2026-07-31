@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.5.0 — Agent Skills portability benchmark
+
 - Add a six-source portability map comparing the shared Agent Skills core with
   the discovery, invocation, consent, permission, metadata, and distribution
   differences across Claude Code, Codex, Copilot, Cursor, and Gemini CLI.
