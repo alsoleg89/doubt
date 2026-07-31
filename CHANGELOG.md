@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Replace the internal dogfood headline in the repository visual with a
+  product-first 1280×640 social card grounded in the Agent Skills vs MCP map.
+
 ## 0.3.1 — Verified GitHub CLI install
 
 - Add the `skills/doubt` remote-publisher layout required by `gh skill`, with
