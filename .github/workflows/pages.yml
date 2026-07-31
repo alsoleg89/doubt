@@ -21,8 +21,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
       - name: Prepare self-contained demo
         run: |
           mkdir -p _site/examples _site/probes/launchkit
@@ -30,9 +30,9 @@ jobs:
           cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html
           cp examples/what-should-doubt-become.doubt.json _site/examples/what-should-doubt-become.doubt.json
           cp probes/launchkit/britanka.html _site/probes/launchkit/britanka.html
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

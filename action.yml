@@ -23,5 +23,5 @@ outputs:
     description: JSON object mapping files to SHA-256 evidence receipts.
 
 runs:
-  using: node20
+  using: node24
   main: action/index.js
