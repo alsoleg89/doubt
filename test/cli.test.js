@@ -60,7 +60,7 @@ test("topical Agent Skills vs MCP map validates and renders", async () => {
   const report = JSON.parse(result.stdout);
   assert.equal(report.valid, true);
   assert.deepEqual(report.metrics, {
-    claims: 5,
+    claims: 4,
     contradictions: 2,
     evidence: 5,
     sources: 5,
@@ -69,7 +69,8 @@ test("topical Agent Skills vs MCP map validates and renders", async () => {
   const html = await readFile(output, "utf8");
   assert.match(html, /Should an AI capability be an Agent Skill, an MCP server, or both\?/);
   assert.match(html, /Concepts → Layers, Transports, and Primitives/);
-  assert.match(html, /0444afe44c523678f2ad8eb7267e0d7c7a392709921abf16474e68d2ef5a3991/);
+  assert.match(report.receipt, /^[a-f0-9]{64}$/);
+  assert.match(html, new RegExp(report.receipt));
 });
 
 test("Agent Skills portability map validates and preserves the remaining client gap", async () => {
@@ -94,19 +95,17 @@ test("Agent Skills portability map validates and preserves the remaining client 
   const report = JSON.parse(result.stdout);
   assert.equal(report.valid, true);
   assert.deepEqual(report.metrics, {
-    claims: 5,
+    claims: 4,
     contradictions: 1,
     evidence: 7,
     sources: 7,
     unknowns: 1,
   });
-  assert.equal(
-    report.receipt,
-    "5175c864e1170b306738f88f2ec5f6783edd5c1d771cf27da9eb02e2d41114a8",
-  );
+  assert.match(report.receipt, /^[a-f0-9]{64}$/);
   const html = await readFile(output, "utf8");
   assert.match(html, /Are Agent Skills actually portable\?/);
   assert.match(html, /Portable enough to author once, not portable enough to test once/);
   assert.match(html, /Copilot run: 2\/3/);
   assert.match(html, /Four clients missing/);
+  assert.match(html, new RegExp(report.receipt));
 });

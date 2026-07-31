@@ -95,8 +95,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/README.md",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Quick start and rendered output",
-      "excerpt": "The renderer emits one interactive HTML file. Open it locally, keep it in git, or publish it as a static artifact; no account, backend, model key, CDN, or telemetry is required."
+      "locator": "Section: Quick start and rendered output",
+      "excerpt": "The renderer emits one interactive HTML file. Open it locally, keep it in git, or publish it as a static artifact; no account, backend, model key, CDN, or telemetry is required.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "pages-source",
@@ -104,8 +105,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/.github/workflows/pages.yml",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Prepare self-contained demo",
-      "excerpt": "The workflow copies the site index, evidence-map HTML, map JSON, and a LaunchKit probe into one static artifact before deploying GitHub Pages."
+      "locator": "Section: Prepare self-contained demo",
+      "excerpt": "The workflow copies the site index, evidence-map HTML, map JSON, and a LaunchKit probe into one static artifact before deploying GitHub Pages.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "renderer-source",
@@ -113,8 +115,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/src/render-map.js",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Client script: selectNode, drawConnections, filters",
-      "excerpt": "The generated client script selects source regions, dims unrelated nodes and edges, redraws SVG connections, and filters claim, evidence, and unknown cards."
+      "locator": "Section: Client script: selectNode, drawConnections, filters",
+      "excerpt": "The generated client script selects source regions, dims unrelated nodes and edges, redraws SVG connections, and filters claim, evidence, and unknown cards.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

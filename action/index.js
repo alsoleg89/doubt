@@ -8,11 +8,16 @@ import {
 } from "../src/action.js";
 
 const inputPath = process.env.INPUT_PATH || ".";
+const exclude = (process.env.INPUT_EXCLUDE || "")
+  .split(/[\n,]/)
+  .map((value) => value.trim())
+  .filter(Boolean)
+  .map((value) => resolve(process.cwd(), value));
 const requireMaps = (process.env["INPUT_REQUIRE-MAPS"] || "true").toLowerCase() !== "false";
 const root = resolve(process.cwd(), inputPath);
 
 try {
-  const files = await findEvidenceMaps(root);
+  const files = await findEvidenceMaps(root, { exclude });
   if (requireMaps && files.length === 0) {
     throw new Error(`No *.doubt.json maps found under ${inputPath}.`);
   }

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { createHash } from "node:crypto";
-import { gzipSync } from "node:zlib";
 import {
   lstat,
   mkdir,
@@ -48,6 +47,39 @@ function tarHeader(path, size) {
   header[154] = 0;
   header[155] = 0x20;
   return header;
+}
+
+function crc32(buffer) {
+  let crc = 0xffffffff;
+  for (const byte of buffer) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) {
+      crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+    }
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function deterministicGzip(buffer) {
+  const header = Buffer.from([0x1f, 0x8b, 0x08, 0x00, 0, 0, 0, 0, 0x00, 0xff]);
+  const blocks = [];
+  if (buffer.length === 0) {
+    blocks.push(Buffer.from([0x01, 0x00, 0x00, 0xff, 0xff]));
+  } else {
+    for (let offset = 0; offset < buffer.length; offset += 0xffff) {
+      const chunk = buffer.subarray(offset, Math.min(offset + 0xffff, buffer.length));
+      const block = Buffer.alloc(5 + chunk.length);
+      block[0] = offset + chunk.length >= buffer.length ? 0x01 : 0x00;
+      block.writeUInt16LE(chunk.length, 1);
+      block.writeUInt16LE((~chunk.length) & 0xffff, 3);
+      chunk.copy(block, 5);
+      blocks.push(block);
+    }
+  }
+  const trailer = Buffer.alloc(8);
+  trailer.writeUInt32LE(crc32(buffer), 0);
+  trailer.writeUInt32LE(buffer.length >>> 0, 4);
+  return Buffer.concat([header, ...blocks, trailer]);
 }
 
 async function collectFiles(root, current = root) {
@@ -105,7 +137,7 @@ async function buildArchive(files) {
     }
   }
   chunks.push(Buffer.alloc(1024));
-  return gzipSync(Buffer.concat(chunks), { level: 9, mtime: 0 });
+  return deterministicGzip(Buffer.concat(chunks));
 }
 
 export async function buildSkillArchive() {

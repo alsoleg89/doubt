@@ -20,7 +20,7 @@ const outcomes = new Set(["pass", "fail", "blocked", "not-run"]);
 const observations = new Set(["observed", "not-observed", "unknown"]);
 const consentValues = new Set(["requested", "not-requested", "not-applicable", "unknown"]);
 const receiptPattern = /^[a-f0-9]{64}$/;
-const placeholderPattern = /REPLACE_WITH|^0{64}$/;
+const placeholderPattern = /REPLACE_WITH|^0{40}$|^0{64}$/;
 
 function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -82,6 +82,11 @@ export function validatePortabilityResult(result, options = {}) {
     add("skillDigest still contains a placeholder");
   } else if (expectedSkillDigest && result.skillDigest !== expectedSkillDigest) {
     add(`skillDigest does not match the canonical payload (${expectedSkillDigest})`);
+  }
+  if (!/^[a-f0-9]{40}$/.test(result.skillCommit || "")) {
+    add("skillCommit must be a full lowercase 40-character Git commit");
+  } else if (!allowPlaceholders && placeholderPattern.test(result.skillCommit)) {
+    add("skillCommit still contains a placeholder");
   }
   if (result.behavioralEquivalenceClaimed !== false) {
     add("behavioralEquivalenceClaimed must be false for a single-client result");
@@ -235,7 +240,7 @@ async function main() {
   let failed = 0;
   for (const file of files) {
     try {
-      const findings = await validatePortabilityResultFile(file, expectedSkillDigest);
+      const findings = await validatePortabilityResultFile(file);
       if (findings.length === 0) {
         process.stdout.write(`PASS ${path.relative(repoRoot, file)}\n`);
       } else {
@@ -248,7 +253,7 @@ async function main() {
     }
   }
   process.stdout.write(`${files.length - failed}/${files.length} submitted portability results valid.\n`);
-  process.stdout.write(`Canonical skill digest: ${expectedSkillDigest}\n`);
+  process.stdout.write(`Current canonical skill digest: ${expectedSkillDigest}\n`);
   if (failed > 0) process.exitCode = 1;
 }
 

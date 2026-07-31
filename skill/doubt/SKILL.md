@@ -16,7 +16,7 @@ that has not been sourced.
    the map is testing.
 2. **Collect current source regions.** Prefer direct observations and primary
    sources. For each item, preserve the URL or local path, publisher, date,
-   section/page/line locator, and a short excerpt that can be checked in
+   retrieval date, section/page/line locator, and a short excerpt that can be checked in
    context. Read [references/evidence-ladder.md](references/evidence-ladder.md)
    when source quality is disputed.
 3. **Atomize the reasoning.** Create only four node types:
@@ -56,7 +56,8 @@ A finished map must satisfy all of these:
 
 - exactly one position has incoming reasoning;
 - every evidence node names a source and participates in an edge;
-- every source has a dated, bounded region and is used;
+- every source has a publication date, retrieval date, bounded region, and is used;
+- every non-position node has a directed path to the position, without cycles;
 - the map contains contrary or qualifying evidence when the source set contains
   it;
 - unresolved decision-changing facts appear as `unknown` nodes;

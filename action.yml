@@ -11,6 +11,10 @@ inputs:
     description: File or directory containing *.doubt.json maps.
     required: false
     default: .
+  exclude:
+    description: Comma- or newline-separated files or directories to exclude from discovery.
+    required: false
+    default: ""
   require-maps:
     description: Fail when no evidence maps are found.
     required: false

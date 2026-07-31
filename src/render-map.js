@@ -13,6 +13,9 @@ function jsonForScript(value) {
 
 export function renderMap(map, validation) {
   const { metrics, receipt } = validation;
+  const label = (count, singular, plural = `${singular}s`) => (
+    count === 1 ? singular : plural
+  );
   const nodeLabels = new Map(map.nodes.map((node) => [node.id, node.label]));
   const nodes = map.nodes
     .map((node, index) => {
@@ -58,6 +61,7 @@ export function renderMap(map, validation) {
           </div>
           <h3>${escapeHtml(source.title)}</h3>
           <p class="locator">${escapeHtml(source.locator)}</p>
+          <p class="retrieved">Retrieved ${escapeHtml(source.retrievedAt)}</p>
           <blockquote>${escapeHtml(source.excerpt)}</blockquote>
           <a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article>`,
@@ -315,6 +319,11 @@ export function renderMap(map, validation) {
       font: 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
       margin: -4px 0 12px;
     }
+    .retrieved {
+      color: var(--muted);
+      font-size: 11px;
+      margin: -6px 0 10px;
+    }
     blockquote { margin: 0 0 15px; color: #aeb5b0; font-size: 13px; line-height: 1.5; }
     .source a { color: var(--support); font-size: 12px; text-decoration: none; }
     .empty { color: var(--muted); font-size: 13px; line-height: 1.5; }
@@ -368,11 +377,11 @@ export function renderMap(map, validation) {
         <div class="verdict">${escapeHtml(map.verdict)}</div>
       </header>
       <section class="metrics">
-        <div class="metric"><strong>${metrics.claims}</strong><span>claims</span></div>
+        <div class="metric"><strong>${metrics.claims}</strong><span>${label(metrics.claims, "claim")}</span></div>
         <div class="metric"><strong>${metrics.evidence}</strong><span>evidence</span></div>
-        <div class="metric"><strong>${metrics.sources}</strong><span>sources</span></div>
-        <div class="metric"><strong>${metrics.contradictions}</strong><span>tensions</span></div>
-        <div class="metric"><strong>${metrics.unknowns}</strong><span>unknowns</span></div>
+        <div class="metric"><strong>${metrics.sources}</strong><span>${label(metrics.sources, "source")}</span></div>
+        <div class="metric"><strong>${metrics.contradictions}</strong><span>${label(metrics.contradictions, "tension")}</span></div>
+        <div class="metric"><strong>${metrics.unknowns}</strong><span>${label(metrics.unknowns, "unknown")}</span></div>
       </section>
       <div class="toolbar" aria-label="Filter map">
         <button class="active" data-filter="all">All</button>

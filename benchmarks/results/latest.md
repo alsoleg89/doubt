@@ -1,8 +1,8 @@
 # Evidence-contract benchmark
 
-Generated: 2026-07-30T21:16:16.515Z
+Generated: 2026-07-31T10:46:34.321Z
 
-**12/12 cases passed (100%).**
+**20/20 cases passed (100%).**
 
 | Case | Expected | Observed | Result |
 | --- | --- | --- | --- |
@@ -10,12 +10,20 @@ Generated: 2026-07-30T21:16:16.515Z
 | `unsourced-evidence` | `unsourced-evidence` | `unsourced-evidence, unused-source` | PASS |
 | `invented-confidence` | `false-precision` | `false-precision` | PASS |
 | `missing-source-locator` | `source-field` | `source-field` | PASS |
+| `unbounded-source-locator` | `source-locator` | `source-locator` | PASS |
+| `malformed-source-date` | `source-date` | `source-date` | PASS |
+| `future-source-date` | `future-source-date` | `future-source-date, retrieval-before-source` | PASS |
+| `missing-retrieval-date` | `source-field` | `source-field` | PASS |
 | `thin-source-region` | `thin-excerpt` | `thin-excerpt` | PASS |
 | `oversized-source-region` | `oversized-excerpt` | `oversized-excerpt` | PASS |
-| `dangling-reasoning-edge` | `unknown-node` | `unknown-node` | PASS |
+| `repeated-filler-excerpt` | `low-information-excerpt` | `low-information-excerpt` | PASS |
+| `dangling-reasoning-edge` | `unknown-node` | `unknown-node, disconnected-node` | PASS |
 | `unknown-relation` | `edge-relation` | `edge-relation` | PASS |
 | `decorative-unused-source` | `unused-source` | `unused-source` | PASS |
-| `decorative-unused-evidence` | `unused-evidence` | `unused-evidence` | PASS |
+| `duplicate-reasoning-edge` | `duplicate-edge` | `duplicate-edge` | PASS |
+| `disconnected-reasoning-subgraph` | `disconnected-node` | `unused-evidence, disconnected-node` | PASS |
+| `reasoning-cycle` | `reasoning-cycle` | `reasoning-cycle` | PASS |
+| `decorative-unused-evidence` | `unused-evidence` | `unused-evidence, disconnected-node` | PASS |
 | `unsupported-position` | `unsupported-position` | `unused-evidence, unsupported-position` | PASS |
 | `embedded-markup` | `escaped` | `escaped` | PASS |
 

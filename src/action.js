@@ -1,5 +1,5 @@
 import { readdir, stat } from "node:fs/promises";
-import { relative, resolve } from "node:path";
+import { relative, resolve, sep } from "node:path";
 import { inspectMap } from "./map.js";
 import { readFile } from "node:fs/promises";
 
@@ -14,11 +14,15 @@ export function escapeWorkflowCommand(value) {
     .replaceAll(",", "%2C");
 }
 
-export async function findEvidenceMaps(target) {
+export async function findEvidenceMaps(target, options = {}) {
   const absolute = resolve(target);
+  const excluded = (options.exclude || []).map((item) => resolve(item));
+  const isExcluded = (path) => excluded.some(
+    (item) => path === item || path.startsWith(`${item}${sep}`),
+  );
   const targetStat = await stat(absolute);
   if (targetStat.isFile()) {
-    return absolute.endsWith(".doubt.json") ? [absolute] : [];
+    return absolute.endsWith(".doubt.json") && !isExcluded(absolute) ? [absolute] : [];
   }
 
   const found = [];
@@ -27,6 +31,7 @@ export async function findEvidenceMaps(target) {
     for (const entry of entries) {
       if (entry.isDirectory() && SKIP_DIRECTORIES.has(entry.name)) continue;
       const path = resolve(directory, entry.name);
+      if (isExcluded(path)) continue;
       if (entry.isDirectory()) await visit(path);
       else if (entry.isFile() && entry.name.endsWith(".doubt.json")) found.push(path);
     }

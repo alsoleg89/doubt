@@ -51,6 +51,7 @@ function fixture() {
         url: "./test-output.txt",
         publisher: "Local test runner",
         date: "2026-07-30",
+        retrievedAt: "2026-07-30T12:00:00Z",
         locator: "Summary line 42",
         excerpt:
           "The focused acceptance suite completed with 18 passing checks and zero failed checks.",
@@ -67,12 +68,97 @@ test("valid map produces a stable content receipt", () => {
   assert.match(first.receipt, /^[a-f0-9]{64}$/);
   assert.equal(first.receipt, second.receipt);
   assert.deepEqual(first.metrics, {
-    claims: 1,
+    claims: 0,
     contradictions: 0,
     evidence: 1,
     sources: 1,
     unknowns: 1,
   });
+});
+
+test("map rejects junk and future dates plus unbounded locators", () => {
+  const map = fixture();
+  map.sources[0].date = "3026-99-99";
+  map.sources[0].retrievedAt = "yesterday-ish";
+  map.sources[0].locator = "see somewhere";
+  const rules = inspectMap(map).findings.map((item) => item.rule);
+  assert.equal(rules.includes("source-date"), true);
+  assert.equal(rules.includes("retrieval-date"), true);
+  assert.equal(rules.includes("source-locator"), true);
+
+  map.sources[0].date = "2026-07-31";
+  map.sources[0].retrievedAt = "2026-07-31";
+  assert.equal(
+    inspectMap(map).findings.some((item) => item.rule === "future-source-date"),
+    true,
+  );
+});
+
+test("map rejects repeated filler disguised as a substantive excerpt", () => {
+  const map = fixture();
+  map.sources[0].excerpt = "a".repeat(42);
+  assert.equal(
+    inspectMap(map).findings.some((item) => item.rule === "low-information-excerpt"),
+    true,
+  );
+});
+
+test("map accepts bounded locator forms and absolute local paths", () => {
+  for (const locator of ["p. 7", "§ 2.1", "L12-L18", "00:04:31", "Section: Results"]) {
+    const map = fixture();
+    map.sources[0].url = "/tmp/evidence.txt";
+    map.sources[0].locator = locator;
+    assert.equal(validateMap(map).valid, true);
+  }
+});
+
+test("map rejects duplicate edges, cycles, and nodes disconnected from the position", () => {
+  const map = fixture();
+  map.nodes.push(
+    {
+      id: "isolated-a",
+      type: "evidence",
+      label: "Isolated A",
+      text: "This evidence only participates in an isolated cycle.",
+      sourceId: "run",
+    },
+    {
+      id: "isolated-b",
+      type: "evidence",
+      label: "Isolated B",
+      text: "This evidence only participates in an isolated cycle.",
+      sourceId: "run",
+    },
+  );
+  map.edges.push(
+    {
+      from: "isolated-a",
+      to: "isolated-b",
+      relation: "qualifies",
+      note: "A qualifies B without connecting either node to the position.",
+    },
+    {
+      from: "isolated-b",
+      to: "isolated-a",
+      relation: "qualifies",
+      note: "B qualifies A without connecting either node to the position.",
+    },
+    { ...map.edges[0] },
+  );
+  const rules = inspectMap(map).findings.map((item) => item.rule);
+  assert.equal(rules.includes("duplicate-edge"), true);
+  assert.equal(rules.includes("disconnected-node"), true);
+  assert.equal(rules.includes("reasoning-cycle"), true);
+});
+
+test("receipt covers the recorded excerpt and retrieval time", () => {
+  const original = fixture();
+  const changedExcerpt = fixture();
+  const changedRetrieval = fixture();
+  changedExcerpt.sources[0].excerpt += " Additional recorded context.";
+  changedRetrieval.sources[0].retrievedAt = "2026-07-30T12:00:01Z";
+  assert.notEqual(validateMap(original).receipt, validateMap(changedExcerpt).receipt);
+  assert.notEqual(validateMap(original).receipt, validateMap(changedRetrieval).receipt);
 });
 
 test("map fails closed on unsourced evidence", () => {

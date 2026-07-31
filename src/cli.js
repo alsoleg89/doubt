@@ -59,12 +59,15 @@ function options(args) {
 
 function printMapValidation(validation) {
   const { metrics, receipt } = validation;
+  const plural = (count, singular, pluralForm = `${singular}s`) => (
+    count === 1 ? singular : pluralForm
+  );
   console.log(`${c.green}VALID${c.reset} ${c.dim}${receipt.slice(0, 12)}${c.reset}`);
   console.log(
-    `  ${c.green}✓${c.reset} ${metrics.claims} claims · ${metrics.evidence} evidence · ${metrics.sources} sources`,
+    `  ${c.green}✓${c.reset} ${metrics.claims} ${plural(metrics.claims, "claim")} · ${metrics.evidence} evidence · ${metrics.sources} ${plural(metrics.sources, "source")}`,
   );
   console.log(
-    `  ${c.cyan}↯${c.reset} ${metrics.contradictions} contradictions · ${metrics.unknowns} explicit unknowns`,
+    `  ${c.cyan}↯${c.reset} ${metrics.contradictions} ${plural(metrics.contradictions, "contradiction")} · ${metrics.unknowns} explicit ${plural(metrics.unknowns, "unknown")}`,
   );
 }
 

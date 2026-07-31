@@ -83,7 +83,7 @@
         "paragraphs": [
           "Current position. Keep the validator, renderer, installer, and Action on Node built-ins until a measured workflow justifies adding a dependency.",
           "This is already part of the contributor contract: Doubt is defined as a zero-dependency Node CLI and portable Agent Skill, with a local-first and provider-independent core [S1].",
-          "The current implementation is not merely aspirational. Its evidence-contract suite passes all twelve committed structural and rendering mutations [S2]. That result is qualified: the same report says it does not measure source truth or faithful extraction.",
+          "The current implementation is not merely aspirational. Its evidence-contract suite passes all twenty committed structural and rendering mutations [S2]. That result is qualified: the same report says it does not measure source truth or faithful extraction.",
           "The strongest counterpressure is maintenance. The repository owns its document layout, styling, graph drawing, filtering, and source-panel interaction inside the built-in renderer [S3]. A dependency might eventually replace a meaningful part of that surface.",
           "The missing evidence is a threshold test: no observed user workflow yet shows that a dependency removes enough complexity to offset installation and supply-chain cost."
         ]
@@ -113,7 +113,7 @@
         },
         {
           "id": "qualification",
-          "prompt": "What qualifies the 12/12 benchmark result?",
+          "prompt": "What qualifies the 20/20 benchmark result?",
           "options": [
             "It covers structural traceability and safe rendering, not source truth.",
             "It was run only on a hosted service.",
@@ -224,7 +224,7 @@
         "title": "Source-region policy memo",
         "paragraphs": [
           "Current position. Keep exact locators and bounded excerpts as a fail-closed requirement, while describing the guarantee as traceability rather than truth.",
-          "The validator requires title, publisher, date, URL, locator, and excerpt for every source, and it rejects excerpts outside its bounded size range [S1]. Deterministic mutations cover a missing locator, a thin excerpt, and an oversized excerpt [S2].",
+          "The validator requires valid publication and retrieval dates, a safe URL or local path, a bounded locator, and a substantive excerpt [S1]. Deterministic mutations cover malformed dates, unbounded locators, and invalid excerpts [S2].",
           "The strongest counterpressure is overinterpretation. Public documentation explicitly says the suite does not establish whether a source is true or whether an AI extracted it faithfully [S3].",
           "The rule is therefore qualified: a well-bounded quotation can still be misleading, stale, or unrelated to the reasoning edge attached to it.",
           "The most important missing evidence is entailment. Doubt does not yet deterministically establish that the bounded excerpt supports the evidence text and edge note."

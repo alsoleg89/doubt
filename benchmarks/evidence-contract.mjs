@@ -54,6 +54,34 @@ const cases = [
     },
   },
   {
+    id: "unbounded-source-locator",
+    expected: "source-locator",
+    mutate(map) {
+      map.sources[0].locator = "see somewhere";
+    },
+  },
+  {
+    id: "malformed-source-date",
+    expected: "source-date",
+    mutate(map) {
+      map.sources[0].date = "3026-99-99";
+    },
+  },
+  {
+    id: "future-source-date",
+    expected: "future-source-date",
+    mutate(map) {
+      map.sources[0].date = "3026-01-01";
+    },
+  },
+  {
+    id: "missing-retrieval-date",
+    expected: "source-field",
+    mutate(map) {
+      delete map.sources[0].retrievedAt;
+    },
+  },
+  {
     id: "thin-source-region",
     expected: "thin-excerpt",
     mutate(map) {
@@ -65,6 +93,13 @@ const cases = [
     expected: "oversized-excerpt",
     mutate(map) {
       map.sources[0].excerpt = "x".repeat(501);
+    },
+  },
+  {
+    id: "repeated-filler-excerpt",
+    expected: "low-information-excerpt",
+    mutate(map) {
+      map.sources[0].excerpt = "a".repeat(42);
     },
   },
   {
@@ -91,9 +126,46 @@ const cases = [
         url: "https://example.com/decorative",
         publisher: "Example",
         date: "2026-07-30",
-        locator: "Section 1",
+        retrievedAt: "2026-07-30",
+        locator: "Section: Overview",
         excerpt: "This source is deliberately not connected to any evidence node in the map.",
       });
+    },
+  },
+  {
+    id: "duplicate-reasoning-edge",
+    expected: "duplicate-edge",
+    mutate(map) {
+      map.edges.push({ ...map.edges[0] });
+    },
+  },
+  {
+    id: "disconnected-reasoning-subgraph",
+    expected: "disconnected-node",
+    mutate(map) {
+      const evidence = map.nodes.find((node) => node.type === "evidence");
+      map.edges = map.edges.filter((edge) => edge.from !== evidence.id);
+    },
+  },
+  {
+    id: "reasoning-cycle",
+    expected: "reasoning-cycle",
+    mutate(map) {
+      const [first, second] = map.nodes.filter((node) => node.type === "claim");
+      map.edges.push(
+        {
+          from: first.id,
+          to: second.id,
+          relation: "qualifies",
+          note: "The first claim qualifies the second claim.",
+        },
+        {
+          from: second.id,
+          to: first.id,
+          relation: "qualifies",
+          note: "The second claim qualifies the first claim.",
+        },
+      );
     },
   },
   {
@@ -157,7 +229,7 @@ const report = {
   generatedAt: new Date().toISOString(),
   subject: "Doubt evidence-contract validator and renderer",
   methodology:
-    "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; the markup case checks escaped visible HTML and embedded JSON.",
+    "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; graph cases cover reachability, duplication, and cycles; the markup case checks escaped visible HTML and embedded JSON.",
   summary: {
     passed,
     total: results.length,

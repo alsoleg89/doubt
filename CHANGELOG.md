@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased
+## 0.6.0 — Evidence snapshots and graph integrity
+
+- Reject malformed or future source dates and unbounded locators; accept safe
+  absolute local paths as documented.
+- Require `retrievedAt` and bind each receipt to explicit excerpt hashes and
+  retrieval times while documenting that mutable URL bytes are not attested.
+- Reject duplicate edges, directed cycles, and reasoning nodes without a path
+  to the position; count claims without inflating them with the position node.
+- Expand the adversarial evidence-contract benchmark from 12 to 20 cases.
+- Add Action exclusions for intentionally failing fixtures and deterministic
+  cross-version skill archives so the Node matrix remains reproducible.
 
 - Add a public five-client contribution queue that connects the Pages gallery,
   README, and contributor guide to scoped good-first benchmark issues.
@@ -14,7 +24,7 @@
 - Submit Doubt to two Agent Skill catalogs with mergeable pull requests ready
   for maintainer review.
 - Publish the first real portability result from GitHub Copilot CLI 1.0.77,
-  preserving direct/negative passes and the invalid implicit artifact as a fail.
+  preserving direct/negative passes and the implicit no-validation run as a fail.
 
 ## 0.5.0 — Agent Skills portability benchmark
 

@@ -14,14 +14,14 @@
       "id": "locator-rule",
       "type": "evidence",
       "label": "Enforced fields",
-      "text": "Every source must include a locator and excerpt, and undersized or oversized excerpts fail validation.",
+      "text": "Every source must include valid publication and retrieval dates, a bounded locator, and a substantive excerpt.",
       "sourceId": "validator-source"
     },
     {
       "id": "mutation-proof",
       "type": "evidence",
       "label": "Adversarial coverage",
-      "text": "Committed mutations verify missing locators, thin excerpts, and oversized excerpts are rejected.",
+      "text": "Committed mutations verify malformed dates, unbounded locators, and invalid excerpts are rejected.",
       "sourceId": "benchmark-source"
     },
     {
@@ -83,8 +83,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/src/map.js",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Source validation loop",
-      "excerpt": "Each source must provide title, publisher, date, URL, locator, and excerpt. Excerpts shorter than 40 or longer than 500 characters produce findings."
+      "locator": "Section: Source validation loop",
+      "excerpt": "Each source must provide valid publication and retrieval dates, a safe URL or local path, a bounded locator, and a 40–500 character excerpt.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "benchmark-source",
@@ -92,8 +93,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/benchmarks/evidence-contract.mjs",
       "publisher": "Doubt benchmark",
       "date": "2026-07-30",
-      "locator": "missing-source-locator, thin-source-region, oversized-source-region",
-      "excerpt": "The deterministic suite deletes a locator, replaces an excerpt with Too short, and creates a 501-character excerpt; each mutation names the validator rule that must fire."
+      "locator": "Section: source-date, source-locator, thin-excerpt, oversized-excerpt cases",
+      "excerpt": "The deterministic suite mutates source dates and locators, replaces an excerpt with Too short, and creates a 501-character excerpt; every invariant must fire.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "readme-source",
@@ -101,8 +103,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/README.md",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Adversarial benchmark scope note",
-      "excerpt": "This benchmark measures structural traceability and safe rendering. It does not pretend to measure whether a source is true or whether an AI extracted it faithfully."
+      "locator": "Section: Adversarial benchmark scope note",
+      "excerpt": "This benchmark measures structural traceability and safe rendering. It does not pretend to measure whether a source is true or whether an AI extracted it faithfully.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

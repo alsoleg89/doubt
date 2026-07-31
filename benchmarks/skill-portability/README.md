@@ -20,7 +20,7 @@ they are not claims about a real project.
 ## Run one client
 
 1. Record the exact client version, operating system, model, permission mode,
-   install path, and relevant configuration.
+   install path, relevant configuration, and full Git commit of the tested skill.
 2. Copy `fixture/` into a new empty working directory.
 3. Install the unmodified `skills/doubt/` payload using the client's documented
    repository-local mechanism.
@@ -35,9 +35,10 @@ they are not claims about a real project.
 npm run benchmark:portability
 ```
 
-The command prints the canonical deterministic skill-archive digest. Copy that
-exact 64-character value into `skillDigest`; submitted results with any other
-payload digest fail validation.
+The command prints the current canonical deterministic skill-archive digest.
+Copy that exact 64-character value into `skillDigest` and the full tested commit
+into `skillCommit`. Results keep those historical pins when the canonical skill
+later changes; the validator does not relabel an old run as testing new bytes.
 
 The validator requires all three prompt classes, exact metadata, relative
 artifact paths, and a 64-character receipt whenever one was produced. A

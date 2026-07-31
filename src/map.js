@@ -16,7 +16,17 @@ export {
 } from "./contract.js";
 
 function receiptFor(map) {
-  return createHash("sha256").update(canonicalJson(map)).digest("hex");
+  const sourceSnapshots = map.sources.map((source) => ({
+    id: source.id,
+    retrievedAt: source.retrievedAt,
+    excerptSha256: createHash("sha256").update(source.excerpt).digest("hex"),
+  }));
+  const payload = {
+    contract: "doubt-evidence-receipt-v1",
+    map,
+    sourceSnapshots,
+  };
+  return createHash("sha256").update(canonicalJson(payload)).digest("hex");
 }
 
 export function inspectMap(map) {

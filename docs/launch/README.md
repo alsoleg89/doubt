@@ -79,7 +79,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 >
 > Doubt is an Agent Skill plus a zero-dependency Node CLI. The agent produces a
 > typed JSON reasoning record; the validator rejects unsourced evidence,
-> missing source locators, decorative sources, dangling edges, unsupported
+> invalid source dates and locators, decorative sources, disconnected or cyclic edges, unsupported
 > positions, and invented confidence percentages. A deterministic renderer then
 > emits one interactive HTML file with no CDN or server.
 >
@@ -95,7 +95,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 >
 > Repo: https://github.com/alsoleg89/doubt
 >
-> The adversarial contract benchmark is 12/12, but its scope is deliberately
+> The adversarial contract benchmark is 20/20, but its scope is deliberately
 > narrow: it tests structural traceability and safe rendering, not whether a
 > source is true or an AI extracted it faithfully. I would especially value
 > feedback on the JSON contract and whether the map beats a cited memo for a
@@ -111,15 +111,15 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 
 > Doubt turns a contested question into a portable reasoning artifact:
 > claims, sourced observations, contradictions, qualifications, and explicit
-> unknowns. Every evidence node needs a date, URL or local path, exact
-> section/page/line locator, and a bounded excerpt.
+> unknowns. Every evidence node needs publication and retrieval dates, a URL or
+> local path, exact section/page/line locator, and a bounded excerpt.
 >
 > The AI proposes the map; a deterministic zero-dependency validator decides
 > whether the evidence contract passes. The output is one interactive HTML file
 > you can keep in git or share without an account.
 >
 > There is also a reusable Action for enforcing the contract in pull requests:
-> `uses: alsoleg89/doubt@v0.5.0`.
+> `uses: alsoleg89/doubt@v0.6.0`.
 >
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >
@@ -137,8 +137,8 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
    contested question into an interactive evidence map.
 3. Four node types: position, claim, evidence, unknown. Four edges: supports,
    contradicts, qualifies, missing.
-4. Every evidence node needs a dated source and exact section/page/line
-   locator. Decorative citations fail validation.
+4. Every evidence node needs publication and retrieval dates plus an exact
+   section/page/line locator. Decorative citations fail validation.
 5. The renderer emits one self-contained HTML file. No account, backend, model
    key, CDN, or telemetry.
 6. The reusable GitHub Action validates every `*.doubt.json` map in CI and

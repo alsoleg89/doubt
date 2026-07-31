@@ -39,7 +39,7 @@ Doubt produces a different artifact:
 - one falsifiable question and one provisional position;
 - atomic claims, sourced observations, and explicit unknowns;
 - typed `supports`, `contradicts`, `qualifies`, and `missing` edges;
-- a dated URL or local path plus a section, page, timestamp, or line locator for
+- a dated URL or local path, retrieval date, plus a section, page, timestamp, or line locator for
   every evidence node;
 - one self-contained HTML file that stays inspectable without an account,
   server, or CDN.
@@ -138,8 +138,8 @@ npx doubt-ai map decision.doubt.json --out decision.html
 ```
 
 ```text
-VALID f7ed8660b891
-  ✓ 4 claims · 5 evidence · 5 sources
+VALID ccfb781d43c6
+  ✓ 3 claims · 5 evidence · 5 sources
   ↯ 2 contradictions · 1 explicit unknowns
   map /path/to/decision.html
 ```
@@ -147,14 +147,17 @@ VALID f7ed8660b891
 Validation fails closed when:
 
 - evidence has no source;
-- a source has no date, URL, bounded locator, or substantive excerpt;
+- a source has no valid publication/retrieval date, safe location, bounded locator, or substantive excerpt;
 - evidence or sources are decorative and unused;
-- an edge points to a missing node or lacks a reasoning note;
+- an edge is duplicated, cyclic, points to a missing node, or lacks a reasoning note;
+- any reasoning node lacks a directed path to the position;
 - the position has no incoming support, contradiction, qualification, or gap;
-- a map invents confidence percentages without a calibration method.
+- a map invents unsupported confidence percentages.
 
-Each valid map receives a SHA-256 receipt over canonicalized JSON. Change the
-reasoning record and the receipt changes.
+Each valid map receives a SHA-256 receipt over the canonicalized reasoning
+record plus explicit hashes of every recorded excerpt and its `retrievedAt`
+value. The receipt proves what the map recorded and when it says the source was
+retrieved; it does not prove that a mutable URL still serves those same bytes.
 
 ## Gate evidence maps in CI
 
@@ -169,13 +172,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.5.0
+      - uses: alsoleg89/doubt@v0.6.0
 ```
 
 The Action fails the check with file-level annotations and writes receipts,
 claim/evidence counts, and every violated invariant to the job summary. It uses
 the checked-in validator directly—no package install, model key, account, or
 network call.
+
+Known negative fixtures can remain committed without weakening the gate:
+
+```yaml
+      - uses: alsoleg89/doubt@v0.6.0
+        with:
+          exclude: benchmarks/expected-failures
+```
 
 ## Adversarial benchmark
 
@@ -184,10 +195,11 @@ npm run benchmark
 ```
 
 The published [evidence-contract report](benchmarks/results/latest.md) mutates
-the dogfood map to introduce unsourced evidence, missing locators, thin and
-oversized excerpts, dangling edges, invented confidence, decorative sources,
-an unsupported position, and embedded markup. Every case names the invariant
-that must fire.
+the dogfood map to introduce unsourced evidence, malformed dates, missing or
+unbounded locators, thin, oversized, and repeated-filler excerpts, dangling and duplicate edges,
+disconnected subgraphs, cycles, invented confidence, decorative sources, an
+unsupported position, and embedded markup. Every case names the invariant that
+must fire.
 
 This benchmark measures structural traceability and safe rendering. It does not
 pretend to measure whether a source is true or whether an AI extracted it
@@ -273,6 +285,7 @@ npm run benchmark:reader:check
       "url": "./test-output.txt",
       "publisher": "Local test runner",
       "date": "2026-07-30",
+      "retrievedAt": "2026-07-30T12:00:00Z",
       "locator": "Summary line 42",
       "excerpt": "The focused suite completed with 18 passing checks and zero failures."
     }

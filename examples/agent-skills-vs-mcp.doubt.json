@@ -151,8 +151,9 @@
       "url": "https://agentskills.io/specification",
       "publisher": "Agent Skills",
       "date": "2026-07-31",
-      "locator": "Directory structure; allowed-tools; Progressive disclosure",
-      "excerpt": "A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required."
+      "locator": "Section: Directory structure; allowed-tools; Progressive disclosure",
+      "excerpt": "A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "github-skills",
@@ -160,8 +161,9 @@
       "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
       "publisher": "GitHub Docs",
       "date": "2026-07-31",
-      "locator": "About agent skills; supported clients and locations",
-      "excerpt": "GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes."
+      "locator": "Section: About agent skills; supported clients and locations",
+      "excerpt": "GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "skills-discovery",
@@ -169,8 +171,9 @@
       "url": "https://github.com/cloudflare/agent-skills-discovery-rfc",
       "publisher": "Cloudflare",
       "date": "2026-07-31",
-      "locator": "Changelog v0.2.0; Problem; Discovery Index",
-      "excerpt": "The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance."
+      "locator": "Section: Changelog v0.2.0; Problem; Discovery Index",
+      "excerpt": "The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "mcp-architecture-source",
@@ -178,8 +181,9 @@
       "url": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
       "publisher": "Model Context Protocol",
       "date": "2026-07-28",
-      "locator": "Concepts → Layers, Transports, and Primitives",
-      "excerpt": "MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports."
+      "locator": "Section: Concepts → Layers, Transports, and Primitives",
+      "excerpt": "MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "mcp-security-source",
@@ -187,8 +191,9 @@
       "url": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices",
       "publisher": "Model Context Protocol",
       "date": "2026-07-28",
-      "locator": "Attacks and Mitigations",
-      "excerpt": "The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks."
+      "locator": "Section: Attacks and Mitigations",
+      "excerpt": "The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

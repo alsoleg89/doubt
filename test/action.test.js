@@ -45,6 +45,7 @@ function validMap() {
         title: "Acceptance output",
         publisher: "Test runner",
         date: "2026-07-31",
+        retrievedAt: "2026-07-31",
         url: "./output.txt",
         locator: "Summary line 1",
         excerpt: "The acceptance suite completed with all focused checks passing.",
@@ -69,6 +70,17 @@ test("action discovers only evidence-map files and reports receipts", async () =
   assert.equal(result.valid.length, 1);
   assert.match(result.valid[0].receipt, /^[a-f0-9]{64}$/);
   assert.match(formatActionSummary(result), /Doubt evidence contract: PASS/);
+});
+
+test("action can exclude known negative fixtures from recursive discovery", async () => {
+  const root = await mkdtemp(join(tmpdir(), "doubt-action-"));
+  const negative = join(root, "benchmarks", "negative");
+  await mkdir(negative, { recursive: true });
+  await writeFile(join(root, "good.doubt.json"), JSON.stringify(validMap()));
+  await writeFile(join(negative, "expected-failure.doubt.json"), "{}");
+
+  const files = await findEvidenceMaps(root, { exclude: [negative] });
+  assert.deepEqual(files, [join(root, "good.doubt.json")]);
 });
 
 test("action preserves validator findings and escapes workflow commands", async () => {
@@ -96,5 +108,6 @@ test("repository dogfoods the published evidence-contract Action", async () => {
   assert.match(workflow, /name: Evidence contract/);
   assert.match(workflow, /- uses: \.\//);
   assert.match(workflow, /require-maps: "true"/);
+  assert.match(workflow, /exclude: benchmarks\/skill-portability\/results\/artifacts/);
   assert.match(readme, /actions\/workflows\/evidence\.yml\/badge\.svg/);
 });

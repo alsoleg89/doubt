@@ -13,6 +13,7 @@
     "os": "macOS 26.4 (25E246), arm64",
     "permissionMode": "All Copilot tools pre-approved; filesystem paths restricted to each synthetic fixture working directory; URLs limited to npm"
   },
+  "skillCommit": "a3fad736d8376e0828e304d0ec5f6635a0747f50",
   "skillDigest": "d97c1ee0ac0b58e56f33489671e2c6cff54805fb28db6675c774857d6038d6a7",
   "behavioralEquivalenceClaimed": false,
   "runs": [
@@ -30,9 +31,9 @@
         "bash(npx doubt-ai validate)"
       ],
       "artifactPath": "benchmarks/skill-portability/results/artifacts/github-copilot-1.0.77/direct.portability-output.doubt.json",
-      "evidenceReceipt": "c4f6761c7b225262b59c63e0ed321b6deba8346b1e97a4022f842d6d2da52517",
+      "evidenceReceipt": "f2e144fc3986059d90d877d30ebe880d16a48e8dd6714a17d3f964a6741eedc6",
       "rawOutputPath": "benchmarks/skill-portability/results/artifacts/github-copilot-1.0.77/direct.raw.md",
-      "notes": "Explicit $doubt activation was observed. The first validator run found three invalid source URLs; Copilot corrected all three and the second run passed. The committed artifact was independently revalidated with the same 64-character receipt."
+      "notes": "Explicit $doubt activation was observed. The first validator run found three invalid source URLs; Copilot corrected all three and the second run passed. The artifact was mechanically migrated after the run to add retrievedAt under the stricter evidence contract; the sanitized raw transcript remains unchanged."
     },
     {
       "promptId": "implicit",
@@ -48,7 +49,7 @@
       "artifactPath": "benchmarks/skill-portability/results/artifacts/github-copilot-1.0.77/implicit.portability-output.doubt.json",
       "evidenceReceipt": null,
       "rawOutputPath": "benchmarks/skill-portability/results/artifacts/github-copilot-1.0.77/implicit.raw.md",
-      "notes": "Copilot discovered and activated Doubt without its name in the prompt, then created an artifact but did not run the requested validator or report a receipt. Independent validation found three invalid source URL findings, so this run is recorded as fail rather than repaired after the session."
+      "notes": "Copilot discovered and activated Doubt without its name in the prompt, then created an artifact but did not run the requested validator or report a receipt. Under the tested v0.5 contract, independent validation found three source-url findings. v0.6 now accepts those absolute local paths, but the historical run remains fail because Copilot did not perform or report the required validation; it is not repaired into a pass after the session."
     },
     {
       "promptId": "negative",

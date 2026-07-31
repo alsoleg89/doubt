@@ -64,6 +64,16 @@ test("submitted portability result must match the canonical skill digest", async
   );
 });
 
+test("submitted portability results pin the full tested Git commit", async () => {
+  const result = await example();
+  result.skillCommit = "abc123";
+  const findings = validatePortabilityResult(result, { allowPlaceholders: true });
+  assert.equal(
+    findings.includes("skillCommit must be a full lowercase 40-character Git commit"),
+    true,
+  );
+});
+
 test("a passing negative probe rejects activation or an artifact", async () => {
   const result = await example();
   result.submittedAt = "2026-07-31T00:00:00.000Z";

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-30T21:16:16.515Z",
+  "generatedAt": "2026-07-31T10:46:34.321Z",
   "subject": "Doubt evidence-contract validator and renderer",
-  "methodology": "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; the markup case checks escaped visible HTML and embedded JSON.",
+  "methodology": "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; graph cases cover reachability, duplication, and cycles; the markup case checks escaped visible HTML and embedded JSON.",
   "summary": {
-    "passed": 12,
-    "total": 12,
+    "passed": 20,
+    "total": 20,
     "rate": 100
   },
   "results": [
@@ -34,6 +34,30 @@
       "passed": true
     },
     {
+      "id": "unbounded-source-locator",
+      "expected": "source-locator",
+      "observed": "source-locator",
+      "passed": true
+    },
+    {
+      "id": "malformed-source-date",
+      "expected": "source-date",
+      "observed": "source-date",
+      "passed": true
+    },
+    {
+      "id": "future-source-date",
+      "expected": "future-source-date",
+      "observed": "future-source-date, retrieval-before-source",
+      "passed": true
+    },
+    {
+      "id": "missing-retrieval-date",
+      "expected": "source-field",
+      "observed": "source-field",
+      "passed": true
+    },
+    {
       "id": "thin-source-region",
       "expected": "thin-excerpt",
       "observed": "thin-excerpt",
@@ -46,9 +70,15 @@
       "passed": true
     },
     {
+      "id": "repeated-filler-excerpt",
+      "expected": "low-information-excerpt",
+      "observed": "low-information-excerpt",
+      "passed": true
+    },
+    {
       "id": "dangling-reasoning-edge",
       "expected": "unknown-node",
-      "observed": "unknown-node",
+      "observed": "unknown-node, disconnected-node",
       "passed": true
     },
     {
@@ -64,9 +94,27 @@
       "passed": true
     },
     {
+      "id": "duplicate-reasoning-edge",
+      "expected": "duplicate-edge",
+      "observed": "duplicate-edge",
+      "passed": true
+    },
+    {
+      "id": "disconnected-reasoning-subgraph",
+      "expected": "disconnected-node",
+      "observed": "unused-evidence, disconnected-node",
+      "passed": true
+    },
+    {
+      "id": "reasoning-cycle",
+      "expected": "reasoning-cycle",
+      "observed": "reasoning-cycle",
+      "passed": true
+    },
+    {
       "id": "decorative-unused-evidence",
       "expected": "unused-evidence",
-      "observed": "unused-evidence",
+      "observed": "unused-evidence, disconnected-node",
       "passed": true
     },
     {

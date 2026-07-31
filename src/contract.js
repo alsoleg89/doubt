@@ -1,6 +1,17 @@
 export const NODE_TYPES = new Set(["position", "claim", "evidence", "unknown"]);
 export const RELATIONS = new Set(["supports", "contradicts", "qualifies", "missing"]);
 
+const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
+const ISO_UTC_TIMESTAMP = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,3})?Z$/;
+const LOCATOR_PATTERNS = [
+  /\bp(?:age)?\.?\s*\d+(?:\s*[-–]\s*\d+)?\b/i,
+  /§\s*[\p{L}\p{N}][\p{L}\p{N}._-]*/u,
+  /\bL\d+(?:\s*[-–]\s*L?\d+)?\b/i,
+  /\blines?\s+\d+(?:\s*[-–]\s*\d+)?\b/i,
+  /\b(?:\d{1,2}:)?\d{2}:\d{2}(?:\s*[-–]\s*(?:\d{1,2}:)?\d{2}:\d{2})?\b/,
+  /^(?:section|chapter|heading)\s*(?::|§)\s*\S.{1,}$/i,
+];
+
 export class MapValidationError extends Error {
   constructor(findings) {
     super(`Evidence map is invalid (${findings.length} ${findings.length === 1 ? "finding" : "findings"}).`);
@@ -27,6 +38,56 @@ function finding(path, rule, message) {
   return { path, rule, message };
 }
 
+function parseIsoDate(value) {
+  if (typeof value !== "string") return null;
+  const match = value.match(ISO_DATE);
+  if (!match) return null;
+  const [, year, month, day] = match.map(Number);
+  const time = Date.UTC(year, month - 1, day);
+  const date = new Date(time);
+  if (
+    date.getUTCFullYear() !== year
+    || date.getUTCMonth() !== month - 1
+    || date.getUTCDate() !== day
+  ) return null;
+  return time;
+}
+
+function retrievalDate(value) {
+  const date = parseIsoDate(value);
+  if (date !== null) return date;
+  if (typeof value !== "string") return null;
+  const match = value.match(ISO_UTC_TIMESTAMP);
+  if (!match) return null;
+  const [, year, month, day, hour, minute, second] = match.map(Number);
+  if (hour > 23 || minute > 59 || second > 59) return null;
+  const dayValue = parseIsoDate(
+    `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
+  );
+  return dayValue === null ? null : dayValue;
+}
+
+function boundedLocator(value) {
+  return typeof value === "string" && LOCATOR_PATTERNS.some((pattern) => pattern.test(value.trim()));
+}
+
+function sourceLocation(value) {
+  return typeof value === "string" && /^(?:https?:\/\/|file:\/\/|\.\.?[\\/]|[\\/]|[A-Za-z]:[\\/])/.test(value);
+}
+
+function substantiveExcerpt(value) {
+  if (typeof value !== "string") return false;
+  const symbols = value.toLowerCase().match(/[\p{L}\p{N}]/gu) || [];
+  return new Set(symbols).size >= 6;
+}
+
+function reaches(start, target, adjacency, seen = new Set()) {
+  if (start === target) return true;
+  if (seen.has(start)) return false;
+  seen.add(start);
+  return (adjacency.get(start) || []).some((next) => reaches(next, target, adjacency, seen));
+}
+
 export function inspectMapContract(map) {
   const findings = [];
   if (!map || typeof map !== "object" || Array.isArray(map)) {
@@ -42,6 +103,12 @@ export function inspectMapContract(map) {
     if (!map[key] || typeof map[key] !== "string") {
       findings.push(finding(`$.${key}`, "required-field", `${key} must be a non-empty string.`));
     }
+  }
+  const updatedAt = parseIsoDate(map.updatedAt);
+  if (typeof map.updatedAt === "string" && updatedAt === null) {
+    findings.push(
+      finding("$.updatedAt", "map-date", "updatedAt must be a real calendar date in YYYY-MM-DD format."),
+    );
   }
   if (!Array.isArray(map.nodes) || map.nodes.length === 0) {
     findings.push(finding("$.nodes", "required-nodes", "nodes must be a non-empty array."));
@@ -91,7 +158,7 @@ export function inspectMapContract(map) {
         finding(
           `${base}.confidence`,
           "false-precision",
-          "Remove confidence percentages unless the map documents a reproducible calibration method.",
+          "Confidence percentages are not supported; use an unknown or a qualified claim instead.",
         ),
       );
     }
@@ -110,19 +177,57 @@ export function inspectMapContract(map) {
     } else {
       sourceIds.add(source.id);
     }
-    for (const key of ["title", "publisher", "date", "url", "locator", "excerpt"]) {
+    for (const key of ["title", "publisher", "date", "retrievedAt", "url", "locator", "excerpt"]) {
       if (!source[key] || typeof source[key] !== "string") {
         findings.push(
           finding(`${base}.${key}`, "source-field", `${key} must be a non-empty string.`),
         );
       }
     }
-    if (
-      typeof source.url === "string" &&
-      !/^(https?:\/\/|\.\.?\/)/.test(source.url)
-    ) {
+    const sourceDate = parseIsoDate(source.date);
+    if (typeof source.date === "string" && sourceDate === null) {
       findings.push(
-        finding(`${base}.url`, "source-url", "Source URL must be http(s) or a relative path."),
+        finding(`${base}.date`, "source-date", "Source date must be a real calendar date in YYYY-MM-DD format."),
+      );
+    } else if (sourceDate !== null && updatedAt !== null && sourceDate > updatedAt) {
+      findings.push(
+        finding(`${base}.date`, "future-source-date", "Source date cannot be later than map.updatedAt."),
+      );
+    }
+    const retrievedAt = retrievalDate(source.retrievedAt);
+    if (typeof source.retrievedAt === "string" && retrievedAt === null) {
+      findings.push(
+        finding(
+          `${base}.retrievedAt`,
+          "retrieval-date",
+          "retrievedAt must be YYYY-MM-DD or an ISO UTC timestamp ending in Z.",
+        ),
+      );
+    } else if (retrievedAt !== null && updatedAt !== null && retrievedAt > updatedAt) {
+      findings.push(
+        finding(`${base}.retrievedAt`, "future-retrieval", "retrievedAt cannot be later than map.updatedAt."),
+      );
+    } else if (retrievedAt !== null && sourceDate !== null && retrievedAt < sourceDate) {
+      findings.push(
+        finding(`${base}.retrievedAt`, "retrieval-before-source", "retrievedAt cannot predate the source date."),
+      );
+    }
+    if (typeof source.url === "string" && !sourceLocation(source.url)) {
+      findings.push(
+        finding(
+          `${base}.url`,
+          "source-url",
+          "Source location must be http(s), file://, or a relative or absolute local path.",
+        ),
+      );
+    }
+    if (typeof source.locator === "string" && !boundedLocator(source.locator)) {
+      findings.push(
+        finding(
+          `${base}.locator`,
+          "source-locator",
+          "Locator must identify a bounded page, section, line range, or timestamp (for example p. 7, § 2.1, L12-L18, Section: Results, or 00:04:31).",
+        ),
       );
     }
     if (typeof source.excerpt === "string" && source.excerpt.trim().length < 40) {
@@ -143,9 +248,25 @@ export function inspectMapContract(map) {
         ),
       );
     }
+    if (
+      typeof source.excerpt === "string"
+      && source.excerpt.trim().length >= 40
+      && source.excerpt.trim().length <= 500
+      && !substantiveExcerpt(source.excerpt)
+    ) {
+      findings.push(
+        finding(
+          `${base}.excerpt`,
+          "low-information-excerpt",
+          "Source excerpt must contain varied, checkable content rather than repeated filler.",
+        ),
+      );
+    }
   }
 
   const incoming = new Map(nodes.filter((node) => node?.id).map((node) => [node.id, 0]));
+  const adjacency = new Map(nodes.filter((node) => node?.id).map((node) => [node.id, []]));
+  const uniqueEdges = new Set();
   for (const [index, edge] of edges.entries()) {
     const base = `$.edges[${index}]`;
     if (!edge || typeof edge !== "object" || Array.isArray(edge)) {
@@ -160,6 +281,14 @@ export function inspectMapContract(map) {
     }
     if (edge.from && edge.from === edge.to) {
       findings.push(finding(base, "self-edge", `Node ${edge.from} cannot point to itself.`));
+    }
+    const edgeKey = `${edge.from}\0${edge.to}\0${edge.relation}`;
+    if (uniqueEdges.has(edgeKey)) {
+      findings.push(
+        finding(base, "duplicate-edge", "Duplicate from/to/relation edges are not allowed."),
+      );
+    } else {
+      uniqueEdges.add(edgeKey);
     }
     if (!RELATIONS.has(edge.relation)) {
       findings.push(
@@ -176,6 +305,9 @@ export function inspectMapContract(map) {
       );
     }
     if (nodeIds.has(edge.to)) incoming.set(edge.to, (incoming.get(edge.to) || 0) + 1);
+    if (nodeIds.has(edge.from) && nodeIds.has(edge.to) && edge.from !== edge.to) {
+      adjacency.get(edge.from).push(edge.to);
+    }
   }
 
   for (const [index, node] of nodes.entries()) {
@@ -234,11 +366,49 @@ export function inspectMapContract(map) {
         "The position needs at least one incoming reasoning edge.",
       ),
     );
+  } else {
+    for (const [index, node] of nodes.entries()) {
+      if (!node?.id || node.id === positions[0].id) continue;
+      if (!reaches(node.id, positions[0].id, adjacency)) {
+        findings.push(
+          finding(
+            `$.nodes[${index}]`,
+            "disconnected-node",
+            `Node ${node.id} must have a directed reasoning path to the position.`,
+          ),
+        );
+      }
+    }
+  }
+
+  const visitState = new Map();
+  const cyclicNodes = new Set();
+  function visit(nodeId, stack = []) {
+    const state = visitState.get(nodeId) || 0;
+    if (state === 1) {
+      for (const member of stack.slice(stack.indexOf(nodeId))) cyclicNodes.add(member);
+      return;
+    }
+    if (state === 2) return;
+    visitState.set(nodeId, 1);
+    for (const next of adjacency.get(nodeId) || []) visit(next, [...stack, nodeId]);
+    visitState.set(nodeId, 2);
+  }
+  for (const nodeId of nodeIds) visit(nodeId);
+  for (const nodeId of cyclicNodes) {
+    const index = nodes.findIndex((node) => node?.id === nodeId);
+    findings.push(
+      finding(`$.nodes[${index}]`, "reasoning-cycle", `Node ${nodeId} participates in a reasoning cycle.`),
+    );
   }
 
   const metrics = {
-    claims: nodes.filter((node) => node?.type === "claim" || node?.type === "position").length,
-    contradictions: edges.filter((edge) => edge?.relation === "contradicts").length,
+    claims: nodes.filter((node) => node?.type === "claim").length,
+    contradictions: new Set(
+      edges
+        .filter((edge) => edge?.relation === "contradicts")
+        .map((edge) => `${edge.from}\0${edge.to}\0${edge.relation}`),
+    ).size,
     evidence: nodes.filter((node) => node?.type === "evidence").length,
     sources: sources.length,
     unknowns: nodes.filter((node) => node?.type === "unknown").length,

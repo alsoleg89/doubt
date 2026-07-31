@@ -83,8 +83,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/skill/doubt/SKILL.md",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Workflow and Evidence rules",
-      "excerpt": "Build a Doubt map when a consequential question has competing claims or meaningful missing evidence. Preserve disagreement instead of compressing it into a single confident paragraph."
+      "locator": "Section: Workflow and Evidence rules",
+      "excerpt": "Build a Doubt map when a consequential question has competing claims or meaningful missing evidence. Preserve disagreement instead of compressing it into a single confident paragraph.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "package-source",
@@ -92,8 +93,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/package.json",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "bin and files fields",
-      "excerpt": "The package maps the doubt executable to bin/doubt.js and includes action, benchmarks, examples, source, and skill directories in the published artifact."
+      "locator": "Section: bin and files fields",
+      "excerpt": "The package maps the doubt executable to bin/doubt.js and includes action, benchmarks, examples, source, and skill directories in the published artifact.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "discovery-source",
@@ -101,8 +103,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/scripts/build-skill-discovery.mjs",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "index schema and archive construction",
-      "excerpt": "The builder emits a schema_version 0.2 discovery index, a sha256 digest, and a root-level tar.gz archive containing the canonical skill payload."
+      "locator": "Section: index schema and archive construction",
+      "excerpt": "The builder emits a schema_version 0.2 discovery index, a sha256 digest, and a root-level tar.gz archive containing the canonical skill payload.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

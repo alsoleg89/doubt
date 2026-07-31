@@ -16,3 +16,4 @@ jobs:
       - uses: ./
         with:
           require-maps: "true"
+          exclude: benchmarks/skill-portability/results/artifacts

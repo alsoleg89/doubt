@@ -83,8 +83,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/AGENTS.md",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "Scope and Design constraints",
-      "excerpt": "Doubt is a zero-dependency Node.js CLI plus a portable Agent Skill. Keep the core local-first, provider-independent, and fail-closed on source traceability."
+      "locator": "Section: Scope and Design constraints",
+      "excerpt": "Doubt is a zero-dependency Node.js CLI plus a portable Agent Skill. Keep the core local-first, provider-independent, and fail-closed on source traceability.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "contract-report",
@@ -92,8 +93,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/benchmarks/results/latest.md",
       "publisher": "Doubt benchmark",
       "date": "2026-07-30",
-      "locator": "Summary and scope note",
-      "excerpt": "12/12 cases passed (100%). This benchmark measures structural traceability and safe rendering. It does not measure whether a source is true or whether an AI extracted it faithfully."
+      "locator": "Section: Summary and scope note",
+      "excerpt": "20/20 cases passed (100%). This benchmark measures structural traceability and safe rendering. It does not measure whether a source is true or whether an AI extracted it faithfully.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "renderer-source",
@@ -101,8 +103,9 @@
       "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/src/render-map.js",
       "publisher": "Doubt",
       "date": "2026-07-31",
-      "locator": "renderMap: style block and client script",
-      "excerpt": "The renderer emits the document style, evidence cards, reasoning edges, exact-source panel, filtering behavior, and SVG connection drawing from this built-in module."
+      "locator": "Section: renderMap: style block and client script",
+      "excerpt": "The renderer emits the document style, evidence cards, reasoning edges, exact-source panel, filtering behavior, and SVG connection drawing from this built-in module.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

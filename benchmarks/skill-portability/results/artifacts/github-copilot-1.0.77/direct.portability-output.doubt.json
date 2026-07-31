@@ -112,8 +112,9 @@
       "url": "./sources/reliability.md",
       "publisher": "Project Northstar fixture",
       "date": "2026-07-31",
-      "locator": "Region R1 (lines describing controlled replay) and R2 (replay boundary)",
-      "excerpt": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits. The two failures were detected before merge by the required checks. The replay did not include major-version updates, packages with install scripts, or changes that modified authentication and authorization code."
+      "locator": "Section: Region R1 (lines describing controlled replay) and R2 (replay boundary)",
+      "excerpt": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits. The two failures were detected before merge by the required checks. The replay did not include major-version updates, packages with install scripts, or changes that modified authentication and authorization code.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "source-security",
@@ -121,8 +122,9 @@
       "url": "./sources/security.md",
       "publisher": "Project Northstar fixture",
       "date": "2026-07-31",
-      "locator": "Region S1 (unresolved provenance) and S2 (protected surface)",
-      "excerpt": "The fixture has no signed provenance record for generated pull-request descriptions. A reviewer therefore cannot verify from the description alone which model, prompt, or retrieved advisory produced a recommendation. The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory."
+      "locator": "Section: Region S1 (unresolved provenance) and S2 (protected surface)",
+      "excerpt": "The fixture has no signed provenance record for generated pull-request descriptions. A reviewer therefore cannot verify from the description alone which model, prompt, or retrieved advisory produced a recommendation. The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "source-operations",
@@ -130,8 +132,9 @@
       "url": "./sources/operations.md",
       "publisher": "Project Northstar fixture",
       "date": "2026-07-31",
-      "locator": "Region O1 (review queue) and O2 (missing rollback evidence)",
-      "excerpt": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle. No rollback drill has been recorded for an automatically merged dependency update. The fixture contains no measurement of recovery time after a bad merge."
+      "locator": "Section: Region O1 (review queue) and O2 (missing rollback evidence)",
+      "excerpt": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle. No rollback drill has been recorded for an automatically merged dependency update. The fixture contains no measurement of recovery time after a bad merge.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }

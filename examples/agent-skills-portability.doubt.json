@@ -243,8 +243,9 @@
       "url": "https://agentskills.io/specification",
       "publisher": "Agent Skills",
       "date": "2026-07-31",
-      "locator": "Directory structure; SKILL.md format; Frontmatter",
-      "excerpt": "A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional."
+      "locator": "Section: Directory structure; SKILL.md format; Frontmatter",
+      "excerpt": "A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "claude-skills",
@@ -252,8 +253,9 @@
       "url": "https://code.claude.com/docs/en/skills",
       "publisher": "Anthropic",
       "date": "2026-07-31",
-      "locator": "Getting started; Where skills live; Frontmatter reference; Skill content lifecycle",
-      "excerpt": "Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context."
+      "locator": "Section: Getting started; Where skills live; Frontmatter reference; Skill content lifecycle",
+      "excerpt": "Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "codex-skills",
@@ -261,8 +263,9 @@
       "url": "https://learn.chatgpt.com/docs/build-skills",
       "publisher": "OpenAI",
       "date": "2026-07-31",
-      "locator": "How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata",
-      "excerpt": "Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata."
+      "locator": "Section: How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata",
+      "excerpt": "Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "copilot-skills",
@@ -270,8 +273,9 @@
       "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
       "publisher": "GitHub Docs",
       "date": "2026-07-31",
-      "locator": "About agent skills; supported surfaces; project and personal locations",
-      "excerpt": "GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations."
+      "locator": "Section: About agent skills; supported surfaces; project and personal locations",
+      "excerpt": "GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "copilot-result",
@@ -279,8 +283,9 @@
       "url": "../benchmarks/skill-portability/results/github-copilot-1.0.77.json",
       "publisher": "Doubt portability benchmark",
       "date": "2026-07-31",
-      "locator": "runs[0] direct; runs[1] implicit; runs[2] negative",
-      "excerpt": "Direct passed after Copilot repaired three validator findings; implicit failed with three invalid source URLs and no receipt; negative passed without skill activation or an evidence-map artifact."
+      "locator": "Section: runs[0] direct; runs[1] implicit; runs[2] negative",
+      "excerpt": "Direct passed after Copilot repaired three validator findings; implicit failed with three invalid source URLs and no receipt; negative passed without skill activation or an evidence-map artifact.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "cursor-skills",
@@ -288,8 +293,9 @@
       "url": "https://cursor.com/changelog/2-4",
       "publisher": "Cursor",
       "date": "2026-01-22",
-      "locator": "Skills",
-      "excerpt": "Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu."
+      "locator": "Section: Skills",
+      "excerpt": "Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu.",
+      "retrievedAt": "2026-07-31"
     },
     {
       "id": "gemini-skills",
@@ -297,8 +303,9 @@
       "url": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
       "publisher": "Google Gemini CLI",
       "date": "2026-04-30",
-      "locator": "Create your first skill; Verify discovery; How to use the skill; Manage skills",
-      "excerpt": "Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one."
+      "locator": "Section: Create your first skill; Verify discovery; How to use the skill; Manage skills",
+      "excerpt": "Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one.",
+      "retrievedAt": "2026-07-31"
     }
   ]
 }
