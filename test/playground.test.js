@@ -26,6 +26,20 @@ test("browser contract and Node wrapper agree on the public example", async () =
   assert.match(renderMap(map, { ...browser, receipt: expected }), new RegExp(expected.slice(0, 12)));
 });
 
+test("public preview metrics and receipt match the canonical map", async () => {
+  const [mapJson, preview] = await Promise.all([
+    readFile("examples/agent-skills-vs-mcp.doubt.json", "utf8"),
+    readFile("docs/demo.svg", "utf8"),
+  ]);
+  const report = validateMap(JSON.parse(mapJson));
+
+  assert.match(preview, new RegExp(`>${report.metrics.claims}<\\/text>\\s*<text[^>]*>CLAIMS<`));
+  assert.match(preview, new RegExp(`>${report.metrics.evidence}<\\/text>\\s*<text[^>]*>EVIDENCE<`));
+  assert.match(preview, new RegExp(`>${report.metrics.contradictions}<\\/text>\\s*<text[^>]*>TENSIONS<`));
+  assert.match(preview, new RegExp(`>${report.metrics.unknowns}<\\/text>\\s*<text[^>]*>UNKNOWN<`));
+  assert.match(preview, new RegExp(`receipt · ${report.receipt.slice(0, 12)}…`));
+});
+
 test("playground is local-only and loads browser-safe canonical modules", async () => {
   const [page, home, contract, shareLink, workflow, robots, sitemap, llms, indexNow, indexNowKey] = await Promise.all([
     readFile("site/playground/index.html", "utf8"),

@@ -32,7 +32,7 @@
 
   <g font-family="ui-monospace,monospace">
     <rect x="52" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
-    <text x="72" y="315" fill="#eef0e7" font-size="24" font-weight="700">5</text>
+    <text x="72" y="315" fill="#eef0e7" font-size="24" font-weight="700">4</text>
     <text x="72" y="337" fill="#8e9690" font-size="10" letter-spacing="1.5">CLAIMS</text>
     <rect x="248" y="282" width="188" height="72" rx="12" fill="#111416" stroke="#252b28"/>
     <text x="268" y="315" fill="#eef0e7" font-size="24" font-weight="700">5</text>
@@ -107,7 +107,7 @@
     <text x="1040" y="620" fill="#a8ec67" font-size="11">OPEN SOURCE REGION ↗</text>
 
     <path d="M1040 650H1350" stroke="#252b28"/>
-    <text x="1040" y="674" fill="#59615c" font-size="9">receipt · 0444afe44c52…</text>
+    <text x="1040" y="674" fill="#59615c" font-size="9">receipt · 621b1c851047…</text>
     <text x="1190" y="674" fill="#59615c" font-size="9">5 sources · 2 tensions · 1 unknown</text>
   </g>
 </svg>
