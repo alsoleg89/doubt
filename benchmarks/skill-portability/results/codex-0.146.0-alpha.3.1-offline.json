@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "doubt-agent-skills-portability-v1",
+  "submittedAt": "2026-07-31T14:53:53Z",
+  "client": {
+    "id": "codex",
+    "version": "0.146.0-alpha.3.1",
+    "model": "gpt-5.6-terra",
+    "installPath": ".agents/skills/doubt",
+    "configuration": "codex exec --ephemeral --ignore-user-config --ignore-rules --sandbox workspace-write --model gpt-5.6-terra"
+  },
+  "environment": {
+    "os": "macOS 26.4 (arm64)",
+    "permissionMode": "workspace-write; outbound network unavailable to model-run shell commands"
+  },
+  "skillCommit": "840a57e776e154354538c943e99c56d2c774f7d9",
+  "skillDigest": "257e6d00695be382fb5169e405e03ef64bedba634ca1d138082c47382b95f5c2",
+  "behavioralEquivalenceClaimed": false,
+  "runs": [
+    {
+      "promptId": "direct",
+      "outcome": "pass",
+      "discovery": "observed",
+      "activation": "observed",
+      "consent": "not-requested",
+      "tools": [
+        "shell",
+        "filesystem"
+      ],
+      "artifactPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1-offline/direct.portability-output.doubt.json",
+      "evidenceReceipt": "c6f4312f7941728881793510c86633e6b6badf478c2637171a61288e78a1eedd",
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1-offline/direct.raw.jsonl",
+      "notes": "Explicit invocation loaded the repository skill, created a connected evidence map from only the fixture, and ran the bundled offline validator successfully. An initial retry with the package CLI's unsupported --json flag failed, after which the client used the documented command; the final reported receipt exactly matches an independent validation of the committed artifact."
+    },
+    {
+      "promptId": "implicit",
+      "outcome": "pass",
+      "discovery": "observed",
+      "activation": "observed",
+      "consent": "not-requested",
+      "tools": [
+        "shell",
+        "filesystem"
+      ],
+      "artifactPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1-offline/implicit.portability-output.doubt.json",
+      "evidenceReceipt": "390c6439c2ac0b330016726bf838fc653d93510c8b8c46ef07bc256a8e0ee082",
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1-offline/implicit.raw.jsonl",
+      "notes": "Codex discovered and activated Doubt without its name in the prompt, created the requested artifact, and validated it with the bundled offline validator. The final reported receipt exactly matches an independent validation of the committed artifact."
+    },
+    {
+      "promptId": "negative",
+      "outcome": "pass",
+      "discovery": "not-observed",
+      "activation": "not-observed",
+      "consent": "not-applicable",
+      "tools": [
+        "shell"
+      ],
+      "artifactPath": null,
+      "evidenceReceipt": null,
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1-offline/negative.raw.jsonl",
+      "notes": "Codex read README.md, returned one sentence, did not activate Doubt, and created no evidence-map artifact."
+    }
+  ]
+}
