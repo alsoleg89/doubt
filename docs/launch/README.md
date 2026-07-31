@@ -21,6 +21,11 @@ star counts, user counts, or performance claims without current evidence.
 `fact-checking`, `knowledge-graph`, `research`, `source-grounding`,
 `claude-code`, `codex`
 
+**Social preview**
+
+Upload `docs/social-preview.png` in repository Settings → General → Social
+preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
+
 ## Hacker News
 
 **Title**
