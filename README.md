@@ -48,8 +48,10 @@ Doubt produces a different artifact:
 
 Paste or drop a `.doubt.json` file to run the same evidence-contract module used
 by the CLI, inspect exact findings, preview the interactive map, and download
-portable JSON or HTML. Validation, SHA-256 receipts, rendering, and downloads
-run in the tab; map content is never submitted over the network.
+portable JSON or HTML. Copy a share link to let another reader inspect the same
+map without an upload: the payload lives in the URL fragment, which browsers do
+not send in the HTTP request. Validation, SHA-256 receipts, rendering, and
+downloads run in the tab; map content is never submitted over the network.
 
 ## Explore the evidence maps
 
@@ -86,6 +88,8 @@ that killed two earlier directions and the human-preference test that is still
 missing. The broader selection process started with
 [105 AI open-source wedges](docs/category-research-2026.md) and narrowed them
 through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md).
+The current [acquisition funnel](docs/acquisition-funnel.md) records the honest
+traffic baseline, star-conversion scenarios, and stage gates toward broad adoption.
 
 ## Give the workflow to your agent
 

@@ -28,6 +28,16 @@ test("help documents the one-command install", () => {
   assert.match(result.stdout, /doubt map <file\.json>/);
 });
 
+test("version stays aligned with package metadata", async () => {
+  const result = spawnSync(process.execPath, ["bin/doubt.js", "--version"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  });
+  const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+  assert.equal(result.status, 0);
+  assert.equal(result.stdout.trim(), packageJson.version);
+});
+
 test("topical Agent Skills vs MCP map validates and renders", async () => {
   const cwd = await mkdtemp(join(tmpdir(), "doubt-topical-"));
   const output = join(cwd, "agent-skills-vs-mcp.html");

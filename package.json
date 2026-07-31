@@ -16,6 +16,7 @@
   "keywords": [
     "ai",
     "agents",
+    "ai-agents",
     "agent-skills",
     "argument-mapping",
     "decision-making",
@@ -30,7 +31,9 @@
     "copilot",
     "cursor",
     "gemini",
-    "llm"
+    "github-actions",
+    "llm",
+    "mcp"
   ],
   "bin": {
     "doubt": "bin/doubt.js"
@@ -65,7 +68,7 @@
     "benchmark:reader": "node benchmarks/map-vs-memo/study.mjs",
     "benchmark:reader:check": "node benchmarks/map-vs-memo/study.mjs --check-only",
     "benchmark:reader:analyze": "node benchmarks/map-vs-memo/analyze.mjs",
-    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/install.js && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs",
+    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/share-link.js && node --check src/install.js && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs",
     "test": "node --test",
     "check": "npm run lint && npm run skill:check && npm test && npm run benchmark:check && npm run benchmark:reader:check",
     "prepack": "npm run check"

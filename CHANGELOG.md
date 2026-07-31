@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add local-only playground share links that encode a valid map in the URL
+  fragment, restore it in a fresh tab, and fall back to the address bar when
+  clipboard access is unavailable.
+- Keep `doubt --version` aligned with package metadata and cover the release
+  contract with a regression test.
+
 ## 0.4.0 — Zero-install evidence playground
 
 - Replace the internal dogfood headline in the repository visual with a

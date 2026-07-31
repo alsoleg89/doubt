@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,6 +17,7 @@ const c = {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const demoMap = resolve(root, "examples", "what-should-doubt-become.doubt.json");
+const packageVersion = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")).version;
 
 const help = `doubt — turn contested questions into source-grounded evidence maps
 
@@ -69,7 +71,7 @@ function printMapValidation(validation) {
 export async function run(argv) {
   const [command = "help", ...rest] = argv;
   if (command === "--version" || command === "-v") {
-    console.log("0.2.1");
+    console.log(packageVersion);
     return;
   }
   if (command === "help" || command === "--help" || command === "-h") {

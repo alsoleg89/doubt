@@ -79,6 +79,8 @@
     }
     .result strong { display:block; font-size:12px; }
     .result span { color:var(--muted); font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .result a { display:block; margin-top:6px; color:var(--green); font-size:11px; font-weight:750; text-decoration:none; }
+    .result a:hover { text-decoration:underline; }
     .result.valid strong { color:var(--green); }
     .result.invalid strong { color:var(--red); }
     .receipt { text-align:right; overflow-wrap:anywhere; max-width:48%; }
@@ -129,7 +131,8 @@
     <div class="privacy">
       <strong>Your map stays in this tab.</strong> Validation, SHA-256 receipt,
       rendering, and downloads run locally. No account, telemetry, analytics,
-      or network submission.
+      or network submission. Share links carry the map after <code>#</code>,
+      which browsers do not send in the HTTP request.
     </div>
   </header>
   <main class="workbench">
@@ -139,6 +142,7 @@
         <button id="example" type="button">Load example</button>
         <label class="file-label" for="file">Open JSON</label>
         <input id="file" type="file" accept=".json,.doubt.json,application/json">
+        <button id="share" type="button" disabled>Copy share link</button>
         <button id="download-json" type="button" disabled>Download JSON</button>
         <button id="download-html" type="button" disabled>Download HTML</button>
       </div>
@@ -156,6 +160,7 @@
   <script type="module">
     import { canonicalJson, inspectMapContract } from "../assets/contract.js";
     import { renderMap } from "../assets/render-map.js";
+    import { buildShareUrl, decodeShareMap } from "../assets/share-link.js";
 
     const source = document.querySelector("#source");
     const result = document.querySelector("#result");
@@ -165,6 +170,7 @@
     const editorPanel = document.querySelector("#editor-panel");
     const downloadJson = document.querySelector("#download-json");
     const downloadHtml = document.querySelector("#download-html");
+    const share = document.querySelector("#share");
     const file = document.querySelector("#file");
     let current = { map: null, validation: null, html: null };
     let debounce;
@@ -198,6 +204,7 @@
       current = { map: null, validation: null, html: null };
       downloadJson.disabled = true;
       downloadHtml.disabled = true;
+      share.disabled = true;
       frame.removeAttribute("srcdoc");
       empty.hidden = false;
       result.className = "result invalid";
@@ -244,6 +251,7 @@
       empty.hidden = true;
       downloadJson.disabled = false;
       downloadHtml.disabled = false;
+      share.disabled = false;
       result.className = "result valid";
       result.replaceChildren();
 
@@ -253,7 +261,10 @@
       const detail = document.createElement("span");
       const metrics = complete.metrics;
       detail.textContent = `${metrics.claims} claims · ${metrics.evidence} evidence · ${metrics.sources} sources · ${metrics.contradictions} tensions · ${metrics.unknowns} unknowns`;
-      summary.append(title, detail);
+      const star = document.createElement("a");
+      star.href = "https://github.com/alsoleg89/doubt";
+      star.textContent = "Useful artifact? Star Doubt on GitHub ↗";
+      summary.append(title, detail, star);
       const digest = document.createElement("span");
       digest.className = "receipt";
       digest.textContent = `receipt · ${receipt}`;
@@ -283,8 +294,68 @@
       setTimeout(() => URL.revokeObjectURL(url), 0);
     }
 
+    async function copyText(value) {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+        return;
+      }
+      const helper = document.createElement("textarea");
+      helper.value = value;
+      helper.setAttribute("readonly", "");
+      helper.style.position = "fixed";
+      helper.style.opacity = "0";
+      document.body.append(helper);
+      helper.select();
+      const copied = document.execCommand("copy");
+      helper.remove();
+      if (!copied) throw new Error("Clipboard access is unavailable.");
+    }
+
+    async function copyShareLink() {
+      if (!current.map) return;
+      const original = share.textContent;
+      const link = buildShareUrl(location.href, current.map);
+      history.replaceState(null, "", link);
+      try {
+        await copyText(link);
+        share.textContent = "Link copied";
+      } catch (error) {
+        showFindings([
+          finding(
+            "$",
+            "share-link-copy",
+            `${error.message} The share link is ready in the address bar.`,
+          ),
+        ]);
+        share.textContent = "Link ready in address bar";
+      } finally {
+        setTimeout(() => {
+          share.textContent = original;
+        }, 1_500);
+      }
+    }
+
+    async function loadInitialMap() {
+      if (!location.hash) {
+        await loadExample();
+        return;
+      }
+      try {
+        const map = decodeShareMap(location.hash);
+        if (!map) {
+          await loadExample();
+          return;
+        }
+        source.value = JSON.stringify(map, null, 2);
+        await evaluateEditor();
+      } catch (error) {
+        setInvalid([finding("$", "share-link", `Could not open this share link: ${error.message}`)]);
+      }
+    }
+
     document.querySelector("#validate").addEventListener("click", evaluateEditor);
     document.querySelector("#example").addEventListener("click", loadExample);
+    share.addEventListener("click", copyShareLink);
     downloadJson.addEventListener("click", () => {
       if (!current.map) return;
       downloadText(
@@ -339,7 +410,7 @@
       await evaluateEditor();
     });
 
-    loadExample();
+    loadInitialMap();
   </script>
 </body>
 </html>
