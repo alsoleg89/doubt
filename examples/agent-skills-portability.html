@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Doubt evidence maps">
+  <meta name="description" content="Author one conservative Agent Skills core, but install and test it per host. SKILL.md, references, assets, and scripts are portable; discovery paths, invocation, consent, permissions, metadata, and distribution are not behaviorally identical.">
+  <meta name="theme-color" content="#0b0d0e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Are Agent Skills actually portable? — Doubt">
+  <meta property="og:description" content="Author one conservative Agent Skills core, but install and test it per host. SKILL.md, references, assets, and scripts are portable; discovery paths, invocation, consent, permissions, metadata, and distribution are not behaviorally identical.">
+  <meta name="twitter:card" content="summary">
+  <title>Are Agent Skills actually portable? — Doubt</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d0e;
+      --panel: #111416;
+      --ink: #eef0e7;
+      --muted: #8e9690;
+      --line: #252b28;
+      --support: #a8ec67;
+      --against: #ff806e;
+      --missing: #eac96f;
+      --claim: #83b9ff;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    .shell { display: grid; grid-template-columns: minmax(0, 1fr) 370px; min-height: 100vh; }
+    main { min-width: 0; padding: 30px clamp(24px, 4vw, 66px) 70px; }
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      border-left: 1px solid var(--line);
+      background: #0e1112;
+      padding: 28px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { font-weight: 820; letter-spacing: -.045em; font-size: 21px; }
+    .brand i { color: var(--support); font-style: normal; }
+    .nav-meta { display: flex; align-items: center; gap: 13px; }
+    .nav-meta a {
+      color: var(--muted);
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .nav-meta a:hover { color: var(--support); }
+    .date {
+      color: var(--muted);
+      font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+    header {
+      padding: 58px 0 42px;
+      display: grid;
+      grid-template-columns: 1fr minmax(260px, .6fr);
+      gap: 60px;
+    }
+    .kicker {
+      color: var(--support);
+      font: 700 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+    h1 {
+      margin: 15px 0 0;
+      font-size: clamp(41px, 5vw, 76px);
+      line-height: .98;
+      letter-spacing: -.065em;
+      max-width: 900px;
+    }
+    .verdict {
+      align-self: end;
+      color: #c8cec9;
+      font-size: 16px;
+      line-height: 1.55;
+      border-left: 2px solid var(--support);
+      padding-left: 18px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .metric { padding: 17px; background: var(--panel); border-right: 1px solid var(--line); }
+    .metric:last-child { border: 0; }
+    .metric strong { display: block; font-size: 27px; letter-spacing: -.05em; }
+    .metric span {
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .toolbar { display: flex; gap: 8px; margin: 22px 0 16px; flex-wrap: wrap; }
+    .toolbar button {
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    .toolbar button.active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+    .map-shell { position: relative; }
+    .connections {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .connection { fill: none; stroke-width: 1.5; opacity: .58; transition: opacity .18s; }
+    .connection.supports { stroke: var(--support); }
+    .connection.contradicts { stroke: var(--against); stroke-dasharray: 7 5; }
+    .connection.qualifies { stroke: var(--claim); }
+    .connection.missing { stroke: var(--missing); stroke-dasharray: 2 6; }
+    .connection.dim { opacity: .06; }
+    .map {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .node {
+      position: relative;
+      cursor: pointer;
+      text-align: left;
+      min-height: 190px;
+      border: 1px solid var(--line);
+      background: rgba(17, 20, 22, .96);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      animation: arrive .45s both;
+      animation-delay: var(--delay);
+      transition: transform .18s, border-color .18s, opacity .18s;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .18);
+    }
+    .node:hover, .node.selected { transform: translateY(-3px); border-color: #647168; }
+    .node.dim { opacity: .18; }
+    .node .type {
+      color: var(--muted);
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .node strong { margin: 35px 0 9px; font-size: 17px; letter-spacing: -.02em; }
+    .node .copy { color: #b7bdb8; line-height: 1.42; font-size: 13px; }
+    .source-chip {
+      margin-top: auto;
+      padding-top: 20px;
+      color: var(--support);
+      font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .node.position {
+      grid-column: span 2;
+      background: linear-gradient(140deg, rgba(168, 236, 103, .13), rgba(17, 20, 22, .97) 58%);
+    }
+    .node.position::after {
+      content: "VERDICT";
+      position: absolute;
+      right: 15px;
+      bottom: 11px;
+      font: 800 35px/1 ui-sans-serif;
+      letter-spacing: -.05em;
+      color: rgba(168, 236, 103, .07);
+    }
+    .node.unknown { border-style: dashed; }
+    .node.unknown .type { color: var(--missing); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(9px); } }
+    aside h2 {
+      font-size: 12px;
+      margin: 0 0 16px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .edge-list { list-style: none; margin: 0 0 38px; padding: 0; }
+    .edge-list li { border-top: 1px solid var(--line); padding: 12px 0; }
+    .edge-list button {
+      width: 100%;
+      cursor: pointer;
+      border: 0;
+      background: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 6px;
+      align-items: center;
+      color: #aeb4af;
+      text-align: left;
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .edge-list button span:last-child { text-align: right; }
+    .edge-list b {
+      padding: 4px 6px;
+      border-radius: 4px;
+      color: var(--bg);
+      background: var(--support);
+    }
+    .edge-list .contradicts b { background: var(--against); }
+    .edge-list .missing b { background: var(--missing); }
+    .edge-list .qualifies b { background: var(--claim); }
+    .edge-list p { margin: 7px 0 0; color: #717973; font-size: 11px; line-height: 1.4; }
+    .source { display: none; border-top: 1px solid var(--line); padding: 19px 0 8px; }
+    .source.visible { display: block; }
+    .source div {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+    }
+    .source h3 { font-size: 16px; line-height: 1.3; margin: 12px 0; }
+    .locator {
+      color: var(--claim);
+      font: 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin: -4px 0 12px;
+    }
+    blockquote { margin: 0 0 15px; color: #aeb5b0; font-size: 13px; line-height: 1.5; }
+    .source a { color: var(--support); font-size: 12px; text-decoration: none; }
+    .empty { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .receipt {
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: #59615c;
+      font: 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+    @media (max-width: 1150px) {
+      .shell { grid-template-columns: 1fr; }
+      aside { position: relative; height: auto; border-left: 0; border-top: 1px solid var(--line); }
+      header { grid-template-columns: 1fr; gap: 24px; }
+    }
+    @media (max-width: 760px) {
+      .map { grid-template-columns: 1fr; gap: 12px; }
+      .node.position { grid-column: auto; }
+      .connections { display: none; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric { border-bottom: 1px solid var(--line); }
+      .metric:nth-child(even) { border-right: 0; }
+      .metric:last-child { border-bottom: 0; }
+    }
+    @media (max-width: 520px) {
+      nav { align-items: flex-start; }
+      .nav-meta { flex-direction: column; align-items: flex-end; gap: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <main>
+      <nav>
+        <div class="brand">Doubt<i>↯</i></div>
+        <div class="nav-meta">
+          <a href="https://alsoleg89.github.io/doubt/playground/" target="_blank" rel="noreferrer">Make a map ↗</a>
+          <a href="https://github.com/alsoleg89/doubt" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <div class="date">Evidence snapshot · 2026-07-31</div>
+        </div>
+      </nav>
+      <header>
+        <div>
+          <span class="kicker">Decision under pressure</span>
+          <h1>Can one Agent Skill work across Claude Code, Codex, GitHub Copilot, Cursor, and Gemini CLI without client-specific forks?</h1>
+        </div>
+        <div class="verdict">Author one conservative Agent Skills core, but install and test it per host. SKILL.md, references, assets, and scripts are portable; discovery paths, invocation, consent, permissions, metadata, and distribution are not behaviorally identical.</div>
+      </header>
+      <section class="metrics">
+        <div class="metric"><strong>5</strong><span>claims</span></div>
+        <div class="metric"><strong>6</strong><span>evidence</span></div>
+        <div class="metric"><strong>6</strong><span>sources</span></div>
+        <div class="metric"><strong>1</strong><span>tensions</span></div>
+        <div class="metric"><strong>1</strong><span>unknowns</span></div>
+      </section>
+      <div class="toolbar" aria-label="Filter map">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="claim">Claims</button>
+        <button data-filter="evidence">Evidence</button>
+        <button data-filter="unknown">Unknown</button>
+      </div>
+      <section class="map-shell">
+        <svg class="connections" aria-hidden="true"></svg>
+        <div class="map">
+        <button
+          class="node position"
+          data-id="position"
+          style="--delay:0ms"
+          aria-label="Current position"
+        >
+          <span class="type">position</span>
+          <strong>Current position</strong>
+          <span class="copy">Portable enough to author once, not portable enough to test once.</span>
+        </button>
+        <button
+          class="node claim"
+          data-id="portable-core"
+          style="--delay:36ms"
+          aria-label="Shared core"
+        >
+          <span class="type">claim</span>
+          <strong>Shared core</strong>
+          <span class="copy">A conservative SKILL.md package with name, description, instructions, references, assets, and scripts has a credible cross-client authoring path.</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="spec-core"
+          style="--delay:72ms"
+          aria-label="Open minimum"
+        >
+          <span class="type">evidence</span>
+          <strong>Open minimum</strong>
+          <span class="copy">The Agent Skills specification defines a small required core and treats scripts, references, assets, compatibility, metadata, and allowed tools as optional layers.</span>
+          <span class="source-chip">↗ Agent Skills</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="claude-support"
+          style="--delay:108ms"
+          aria-label="Claude Code"
+        >
+          <span class="type">evidence</span>
+          <strong>Claude Code</strong>
+          <span class="copy">Claude Code follows the open Agent Skills standard, discovers project and personal skills, and adds host-specific invocation, subagent, permission, and dynamic-context features.</span>
+          <span class="source-chip">↗ Anthropic</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="codex-support"
+          style="--delay:144ms"
+          aria-label="Codex"
+        >
+          <span class="type">evidence</span>
+          <strong>Codex</strong>
+          <span class="copy">Codex uses the open Agent Skills standard, scans .agents/skills across repository scopes, supports explicit and implicit activation, and adds optional OpenAI metadata.</span>
+          <span class="source-chip">↗ OpenAI</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="copilot-support"
+          style="--delay:180ms"
+          aria-label="GitHub Copilot"
+        >
+          <span class="type">evidence</span>
+          <strong>GitHub Copilot</strong>
+          <span class="copy">GitHub documents Agent Skills across cloud agent, code review, CLI, app, VS Code, and JetBrains, with several accepted project and personal locations.</span>
+          <span class="source-chip">↗ GitHub Docs</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="cursor-support"
+          style="--delay:216ms"
+          aria-label="Cursor"
+        >
+          <span class="type">evidence</span>
+          <strong>Cursor</strong>
+          <span class="copy">Cursor 2.4 added SKILL.md discovery and application in both editor and CLI, including automatic relevance matching and slash-command invocation.</span>
+          <span class="source-chip">↗ Cursor</span>
+        </button>
+        <button
+          class="node evidence"
+          data-id="gemini-support"
+          style="--delay:252ms"
+          aria-label="Gemini CLI"
+        >
+          <span class="type">evidence</span>
+          <strong>Gemini CLI</strong>
+          <span class="copy">Gemini CLI discovers SKILL.md packages in .gemini/skills and the .agents/skills alias, supports reload and installation commands, and asks for activation consent.</span>
+          <span class="source-chip">↗ Google Gemini CLI</span>
+        </button>
+        <button
+          class="node claim"
+          data-id="host-differences"
+          style="--delay:288ms"
+          aria-label="Paths diverge"
+        >
+          <span class="type">claim</span>
+          <strong>Paths diverge</strong>
+          <span class="copy">The same core file is not discovered from one universal directory: native paths, aliases, scopes, precedence, and cloud behavior vary by host.</span>
+        </button>
+        <button
+          class="node claim"
+          data-id="behavior-differences"
+          style="--delay:324ms"
+          aria-label="Behavior diverges"
+        >
+          <span class="type">claim</span>
+          <strong>Behavior diverges</strong>
+          <span class="copy">Automatic matching, explicit invocation, consent, tool pre-approval, extra frontmatter, compaction, and plugin packaging are client behaviors outside the minimal common core.</span>
+        </button>
+        <button
+          class="node claim"
+          data-id="portable-deployment"
+          style="--delay:360ms"
+          aria-label="Ship thin adapters"
+        >
+          <span class="type">claim</span>
+          <strong>Ship thin adapters</strong>
+          <span class="copy">Keep one canonical skill payload, generate or mirror only the host-specific locations and metadata, and run behavioral checks in every supported client.</span>
+        </button>
+        <button
+          class="node unknown"
+          data-id="cross-client-benchmark"
+          style="--delay:396ms"
+          aria-label="Missing benchmark"
+        >
+          <span class="type">unknown</span>
+          <strong>Missing benchmark</strong>
+          <span class="copy">No committed public suite yet runs the same non-trivial skill prompts across all five clients and compares discovery, activation, tool use, and final artifacts.</span>
+        </button></div>
+      </section>
+    </main>
+    <aside>
+      <h2>Reasoning edges</h2>
+      <ol class="edge-list">
+        <li class="supports">
+          <button data-edge="spec-core|portable-core">
+            <span>Open minimum</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>The standard supplies a deliberately small package contract that clients can share.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="claude-support|portable-core">
+            <span>Claude Code</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>Claude Code explicitly identifies its skills as an implementation of the open standard.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="codex-support|portable-core">
+            <span>Codex</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>Codex documents the same SKILL.md authoring model and progressive loading pattern.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="copilot-support|portable-core">
+            <span>GitHub Copilot</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>Copilot adopts the standard across several GitHub and IDE surfaces.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="cursor-support|portable-core">
+            <span>Cursor</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>Cursor reads SKILL.md packages in both its editor and CLI.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="gemini-support|portable-core">
+            <span>Gemini CLI</span>
+            <b>supports</b>
+            <span>Shared core</span>
+          </button>
+          <p>Gemini CLI implements the same directory-plus-SKILL.md package shape.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="claude-support|host-differences">
+            <span>Claude Code</span>
+            <b>supports</b>
+            <span>Paths diverge</span>
+          </button>
+          <p>Claude&#039;s native .claude locations and cloud-session rules are host-specific.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="codex-support|host-differences">
+            <span>Codex</span>
+            <b>supports</b>
+            <span>Paths diverge</span>
+          </button>
+          <p>Codex scans .agents locations across working-directory and repository scopes.</p>
+        </li>
+        <li class="qualifies">
+          <button data-edge="copilot-support|host-differences">
+            <span>GitHub Copilot</span>
+            <b>qualifies</b>
+            <span>Paths diverge</span>
+          </button>
+          <p>Copilot accepts several compatibility paths, but its supported scopes and surfaces remain product-defined.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="gemini-support|host-differences">
+            <span>Gemini CLI</span>
+            <b>supports</b>
+            <span>Paths diverge</span>
+          </button>
+          <p>Gemini uses a native .gemini path while accepting .agents as an alias.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="claude-support|behavior-differences">
+            <span>Claude Code</span>
+            <b>supports</b>
+            <span>Behavior diverges</span>
+          </button>
+          <p>Claude adds invocation control, subagent execution, dynamic context, and permission fields.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="codex-support|behavior-differences">
+            <span>Codex</span>
+            <b>supports</b>
+            <span>Behavior diverges</span>
+          </button>
+          <p>Codex adds initial-list context budgets, OpenAI metadata, and plugin distribution guidance.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="cursor-support|behavior-differences">
+            <span>Cursor</span>
+            <b>supports</b>
+            <span>Behavior diverges</span>
+          </button>
+          <p>Cursor defines its own automatic and slash-menu activation surfaces.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="gemini-support|behavior-differences">
+            <span>Gemini CLI</span>
+            <b>supports</b>
+            <span>Behavior diverges</span>
+          </button>
+          <p>Gemini inserts an explicit consent step before a discovered skill activates.</p>
+        </li>
+        <li class="contradicts">
+          <button data-edge="host-differences|portable-core">
+            <span>Paths diverge</span>
+            <b>contradicts</b>
+            <span>Shared core</span>
+          </button>
+          <p>A shared file format does not create one universal installation or discovery location.</p>
+        </li>
+        <li class="qualifies">
+          <button data-edge="behavior-differences|portable-core">
+            <span>Behavior diverges</span>
+            <b>qualifies</b>
+            <span>Shared core</span>
+          </button>
+          <p>Portable instructions can still activate, execute, and persist differently across hosts.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="portable-core|portable-deployment">
+            <span>Shared core</span>
+            <b>supports</b>
+            <span>Ship thin adapters</span>
+          </button>
+          <p>One canonical payload avoids maintaining five independent instruction bodies.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="host-differences|portable-deployment">
+            <span>Paths diverge</span>
+            <b>supports</b>
+            <span>Ship thin adapters</span>
+          </button>
+          <p>Thin generated mirrors handle path differences without forking the workflow.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="behavior-differences|portable-deployment">
+            <span>Behavior diverges</span>
+            <b>supports</b>
+            <span>Ship thin adapters</span>
+          </button>
+          <p>Per-host acceptance tests are necessary when behavior is not standardized.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="portable-core|position">
+            <span>Shared core</span>
+            <b>supports</b>
+            <span>Current position</span>
+          </button>
+          <p>The shared minimum makes author-once a defensible default.</p>
+        </li>
+        <li class="supports">
+          <button data-edge="portable-deployment|position">
+            <span>Ship thin adapters</span>
+            <b>supports</b>
+            <span>Current position</span>
+          </button>
+          <p>Canonical content plus thin adapters preserves portability without pretending the clients are identical.</p>
+        </li>
+        <li class="missing">
+          <button data-edge="cross-client-benchmark|position">
+            <span>Missing benchmark</span>
+            <b>missing</b>
+            <span>Current position</span>
+          </button>
+          <p>Equivalent behavior remains an unverified hypothesis until one shared suite exercises all five clients.</p>
+        </li></ol>
+      <h2>Exact source region</h2>
+      <p class="empty">Select an evidence card to inspect the source excerpt behind it.</p>
+      <div class="sources">
+        <article class="source" data-source="agent-skills-spec">
+          <div>
+            <span>Agent Skills</span>
+            <time>2026-07-31</time>
+          </div>
+          <h3>Agent Skills specification</h3>
+          <p class="locator">Directory structure; SKILL.md format; Frontmatter</p>
+          <blockquote>A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional.</blockquote>
+          <a href="https://agentskills.io/specification" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article>
+        <article class="source" data-source="claude-skills">
+          <div>
+            <span>Anthropic</span>
+            <time>2026-07-31</time>
+          </div>
+          <h3>Extend Claude with skills</h3>
+          <p class="locator">Getting started; Where skills live; Frontmatter reference; Skill content lifecycle</p>
+          <blockquote>Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context.</blockquote>
+          <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article>
+        <article class="source" data-source="codex-skills">
+          <div>
+            <span>OpenAI</span>
+            <time>2026-07-31</time>
+          </div>
+          <h3>Build skills</h3>
+          <p class="locator">How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata</p>
+          <blockquote>Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata.</blockquote>
+          <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article>
+        <article class="source" data-source="copilot-skills">
+          <div>
+            <span>GitHub Docs</span>
+            <time>2026-07-31</time>
+          </div>
+          <h3>About agent skills</h3>
+          <p class="locator">About agent skills; supported surfaces; project and personal locations</p>
+          <blockquote>GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations.</blockquote>
+          <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article>
+        <article class="source" data-source="cursor-skills">
+          <div>
+            <span>Cursor</span>
+            <time>2026-01-22</time>
+          </div>
+          <h3>Cursor 2.4: Subagents, Skills, and Image Generation</h3>
+          <p class="locator">Skills</p>
+          <blockquote>Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu.</blockquote>
+          <a href="https://cursor.com/changelog/2-4" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article>
+        <article class="source" data-source="gemini-skills">
+          <div>
+            <span>Google Gemini CLI</span>
+            <time>2026-04-30</time>
+          </div>
+          <h3>Get started with Agent Skills</h3>
+          <p class="locator">Create your first skill; Verify discovery; How to use the skill; Manage skills</p>
+          <blockquote>Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one.</blockquote>
+          <a href="https://geminicli.com/docs/cli/tutorials/skills-getting-started/" target="_blank" rel="noreferrer">Open source region ↗</a>
+        </article></div>
+      <div class="receipt">receipt · 89f18aa3a3b2b9136096f772b3a884b89f2529e9dae31f4aab721ed190fc4908</div>
+    </aside>
+  </div>
+  <script type="application/json" id="map-data">{"edges":[{"from":"spec-core","to":"portable-core","relation":"supports","note":"The standard supplies a deliberately small package contract that clients can share."},{"from":"claude-support","to":"portable-core","relation":"supports","note":"Claude Code explicitly identifies its skills as an implementation of the open standard."},{"from":"codex-support","to":"portable-core","relation":"supports","note":"Codex documents the same SKILL.md authoring model and progressive loading pattern."},{"from":"copilot-support","to":"portable-core","relation":"supports","note":"Copilot adopts the standard across several GitHub and IDE surfaces."},{"from":"cursor-support","to":"portable-core","relation":"supports","note":"Cursor reads SKILL.md packages in both its editor and CLI."},{"from":"gemini-support","to":"portable-core","relation":"supports","note":"Gemini CLI implements the same directory-plus-SKILL.md package shape."},{"from":"claude-support","to":"host-differences","relation":"supports","note":"Claude's native .claude locations and cloud-session rules are host-specific."},{"from":"codex-support","to":"host-differences","relation":"supports","note":"Codex scans .agents locations across working-directory and repository scopes."},{"from":"copilot-support","to":"host-differences","relation":"qualifies","note":"Copilot accepts several compatibility paths, but its supported scopes and surfaces remain product-defined."},{"from":"gemini-support","to":"host-differences","relation":"supports","note":"Gemini uses a native .gemini path while accepting .agents as an alias."},{"from":"claude-support","to":"behavior-differences","relation":"supports","note":"Claude adds invocation control, subagent execution, dynamic context, and permission fields."},{"from":"codex-support","to":"behavior-differences","relation":"supports","note":"Codex adds initial-list context budgets, OpenAI metadata, and plugin distribution guidance."},{"from":"cursor-support","to":"behavior-differences","relation":"supports","note":"Cursor defines its own automatic and slash-menu activation surfaces."},{"from":"gemini-support","to":"behavior-differences","relation":"supports","note":"Gemini inserts an explicit consent step before a discovered skill activates."},{"from":"host-differences","to":"portable-core","relation":"contradicts","note":"A shared file format does not create one universal installation or discovery location."},{"from":"behavior-differences","to":"portable-core","relation":"qualifies","note":"Portable instructions can still activate, execute, and persist differently across hosts."},{"from":"portable-core","to":"portable-deployment","relation":"supports","note":"One canonical payload avoids maintaining five independent instruction bodies."},{"from":"host-differences","to":"portable-deployment","relation":"supports","note":"Thin generated mirrors handle path differences without forking the workflow."},{"from":"behavior-differences","to":"portable-deployment","relation":"supports","note":"Per-host acceptance tests are necessary when behavior is not standardized."},{"from":"portable-core","to":"position","relation":"supports","note":"The shared minimum makes author-once a defensible default."},{"from":"portable-deployment","to":"position","relation":"supports","note":"Canonical content plus thin adapters preserves portability without pretending the clients are identical."},{"from":"cross-client-benchmark","to":"position","relation":"missing","note":"Equivalent behavior remains an unverified hypothesis until one shared suite exercises all five clients."}],"nodes":[{"id":"position","type":"position","label":"Current position","text":"Portable enough to author once, not portable enough to test once."},{"id":"portable-core","type":"claim","label":"Shared core","text":"A conservative SKILL.md package with name, description, instructions, references, assets, and scripts has a credible cross-client authoring path."},{"id":"spec-core","type":"evidence","label":"Open minimum","text":"The Agent Skills specification defines a small required core and treats scripts, references, assets, compatibility, metadata, and allowed tools as optional layers.","sourceId":"agent-skills-spec"},{"id":"claude-support","type":"evidence","label":"Claude Code","text":"Claude Code follows the open Agent Skills standard, discovers project and personal skills, and adds host-specific invocation, subagent, permission, and dynamic-context features.","sourceId":"claude-skills"},{"id":"codex-support","type":"evidence","label":"Codex","text":"Codex uses the open Agent Skills standard, scans .agents/skills across repository scopes, supports explicit and implicit activation, and adds optional OpenAI metadata.","sourceId":"codex-skills"},{"id":"copilot-support","type":"evidence","label":"GitHub Copilot","text":"GitHub documents Agent Skills across cloud agent, code review, CLI, app, VS Code, and JetBrains, with several accepted project and personal locations.","sourceId":"copilot-skills"},{"id":"cursor-support","type":"evidence","label":"Cursor","text":"Cursor 2.4 added SKILL.md discovery and application in both editor and CLI, including automatic relevance matching and slash-command invocation.","sourceId":"cursor-skills"},{"id":"gemini-support","type":"evidence","label":"Gemini CLI","text":"Gemini CLI discovers SKILL.md packages in .gemini/skills and the .agents/skills alias, supports reload and installation commands, and asks for activation consent.","sourceId":"gemini-skills"},{"id":"host-differences","type":"claim","label":"Paths diverge","text":"The same core file is not discovered from one universal directory: native paths, aliases, scopes, precedence, and cloud behavior vary by host."},{"id":"behavior-differences","type":"claim","label":"Behavior diverges","text":"Automatic matching, explicit invocation, consent, tool pre-approval, extra frontmatter, compaction, and plugin packaging are client behaviors outside the minimal common core."},{"id":"portable-deployment","type":"claim","label":"Ship thin adapters","text":"Keep one canonical skill payload, generate or mirror only the host-specific locations and metadata, and run behavioral checks in every supported client."},{"id":"cross-client-benchmark","type":"unknown","label":"Missing benchmark","text":"No committed public suite yet runs the same non-trivial skill prompts across all five clients and compares discovery, activation, tool use, and final artifacts."}],"sources":[{"id":"agent-skills-spec","title":"Agent Skills specification","url":"https://agentskills.io/specification","publisher":"Agent Skills","date":"2026-07-31","locator":"Directory structure; SKILL.md format; Frontmatter","excerpt":"A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional."},{"id":"claude-skills","title":"Extend Claude with skills","url":"https://code.claude.com/docs/en/skills","publisher":"Anthropic","date":"2026-07-31","locator":"Getting started; Where skills live; Frontmatter reference; Skill content lifecycle","excerpt":"Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context."},{"id":"codex-skills","title":"Build skills","url":"https://learn.chatgpt.com/docs/build-skills","publisher":"OpenAI","date":"2026-07-31","locator":"How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata","excerpt":"Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata."},{"id":"copilot-skills","title":"About agent skills","url":"https://docs.github.com/en/copilot/concepts/agents/about-agent-skills","publisher":"GitHub Docs","date":"2026-07-31","locator":"About agent skills; supported surfaces; project and personal locations","excerpt":"GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations."},{"id":"cursor-skills","title":"Cursor 2.4: Subagents, Skills, and Image Generation","url":"https://cursor.com/changelog/2-4","publisher":"Cursor","date":"2026-01-22","locator":"Skills","excerpt":"Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu."},{"id":"gemini-skills","title":"Get started with Agent Skills","url":"https://geminicli.com/docs/cli/tutorials/skills-getting-started/","publisher":"Google Gemini CLI","date":"2026-04-30","locator":"Create your first skill; Verify discovery; How to use the skill; Manage skills","excerpt":"Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one."}]}</script>
+  <script>
+    const dataset = JSON.parse(document.querySelector("#map-data").textContent);
+    const cards = [...document.querySelectorAll(".node")];
+    const sources = [...document.querySelectorAll(".source")];
+    const empty = document.querySelector(".empty");
+    const shell = document.querySelector(".map-shell");
+    const svg = document.querySelector(".connections");
+    const svgNs = "http://www.w3.org/2000/svg";
+
+    function selectNode(id, focusPair = null) {
+      const node = dataset.nodes.find((item) => item.id === id);
+      cards.forEach((item) => {
+        item.classList.toggle("selected", item.dataset.id === id);
+        item.classList.toggle(
+          "dim",
+          Boolean(focusPair) && !focusPair.includes(item.dataset.id),
+        );
+      });
+      sources.forEach((item) => {
+        item.classList.toggle("visible", item.dataset.source === node?.sourceId);
+      });
+      empty.style.display = node?.sourceId ? "none" : "block";
+      if (!node?.sourceId) {
+        empty.textContent = node
+          ? "This node is a claim or an explicit unknown. Follow its reasoning edges to inspect the underlying evidence."
+          : "Select an evidence card to inspect the source excerpt behind it.";
+      }
+      [...svg.querySelectorAll(".connection")].forEach((path) => {
+        path.classList.toggle(
+          "dim",
+          Boolean(focusPair) &&
+            !focusPair.includes(path.dataset.from) &&
+            !focusPair.includes(path.dataset.to),
+        );
+      });
+    }
+
+    function drawConnections() {
+      svg.replaceChildren();
+      const shellRect = shell.getBoundingClientRect();
+      svg.setAttribute("viewBox", "0 0 " + shellRect.width + " " + shellRect.height);
+      for (const edge of dataset.edges) {
+        const from = document.querySelector('.node[data-id="' + CSS.escape(edge.from) + '"]');
+        const to = document.querySelector('.node[data-id="' + CSS.escape(edge.to) + '"]');
+        if (!from || !to || getComputedStyle(from).display === "none" || getComputedStyle(to).display === "none") continue;
+        const a = from.getBoundingClientRect();
+        const b = to.getBoundingClientRect();
+        const x1 = a.left - shellRect.left + a.width / 2;
+        const y1 = a.top - shellRect.top + a.height / 2;
+        const x2 = b.left - shellRect.left + b.width / 2;
+        const y2 = b.top - shellRect.top + b.height / 2;
+        const bend = Math.max(28, Math.abs(x2 - x1) * .22);
+        const path = document.createElementNS(svgNs, "path");
+        path.setAttribute("d", "M " + x1 + " " + y1 + " C " + (x1 + bend) + " " + y1 + ", " + (x2 - bend) + " " + y2 + ", " + x2 + " " + y2);
+        path.setAttribute("class", "connection " + edge.relation);
+        path.dataset.from = edge.from;
+        path.dataset.to = edge.to;
+        svg.append(path);
+      }
+    }
+
+    cards.forEach((card) => card.addEventListener("click", () => selectNode(card.dataset.id)));
+    document.querySelectorAll("[data-edge]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const [from, to] = button.dataset.edge.split("|");
+        selectNode(from, [from, to]);
+      });
+    });
+    document.querySelectorAll("[data-filter]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-filter]").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const filter = button.dataset.filter;
+        cards.forEach((card) => {
+          const visible =
+            filter === "all" ||
+            card.classList.contains(filter) ||
+            (filter === "claim" && card.classList.contains("position"));
+          card.style.display = visible ? "" : "none";
+          card.classList.remove("dim");
+        });
+        requestAnimationFrame(drawConnections);
+      });
+    });
+    addEventListener("resize", drawConnections);
+    requestAnimationFrame(drawConnections);
+  </script>
+</body>
+</html>

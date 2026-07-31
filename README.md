@@ -15,7 +15,7 @@
 
 [**Try the zero-install playground →**](https://alsoleg89.github.io/doubt/playground/)
 ·
-[**Explore Agent Skills vs MCP →**](https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html)
+[**Test Agent Skills portability →**](https://alsoleg89.github.io/doubt/examples/agent-skills-portability.html)
 ·
 [**Take the map-vs-memo study →**](https://alsoleg89.github.io/doubt/benchmark/)
 ·
@@ -56,6 +56,10 @@ downloads run in the tab; map content is never submitted over the network.
 
 ## Explore the evidence maps
 
+- [**Are Agent Skills actually portable?**](https://alsoleg89.github.io/doubt/examples/agent-skills-portability.html)
+  — one conservative core works across Claude Code, Codex, Copilot, Cursor,
+  and Gemini CLI, but discovery paths, invocation, consent, permissions,
+  metadata, and distribution still require per-host testing.
 - [**Agent Skills vs MCP**](https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html)
   — when a capability should be reusable procedure, a live protocol boundary,
   or both. Built from the Agent Skills specification, GitHub's implementation,
@@ -64,7 +68,7 @@ downloads run in the tab; map content is never submitted over the network.
   — the product decision that kept a distribution module, rejected it as the
   core, and preserved the missing reader-preference test.
 
-Both maps are committed as editable `.doubt.json`, validated with the same
+All maps are committed as editable `.doubt.json`, validated with the same
 evidence contract, and rendered as self-contained HTML.
 
 ## Try the real map

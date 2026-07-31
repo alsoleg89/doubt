@@ -32,6 +32,8 @@ jobs:
           cp src/contract.js _site/assets/contract.js
           cp src/render-map.js _site/assets/render-map.js
           cp src/share-link.js _site/assets/share-link.js
+          cp examples/agent-skills-portability.html _site/examples/agent-skills-portability.html
+          cp examples/agent-skills-portability.doubt.json _site/examples/agent-skills-portability.doubt.json
           cp examples/agent-skills-vs-mcp.html _site/examples/agent-skills-vs-mcp.html
           cp examples/agent-skills-vs-mcp.doubt.json _site/examples/agent-skills-vs-mcp.doubt.json
           cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html

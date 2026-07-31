@@ -71,3 +71,41 @@ test("topical Agent Skills vs MCP map validates and renders", async () => {
   assert.match(html, /Concepts → Layers, Transports, and Primitives/);
   assert.match(html, /0444afe44c523678f2ad8eb7267e0d7c7a392709921abf16474e68d2ef5a3991/);
 });
+
+test("Agent Skills portability map validates and preserves its missing benchmark", async () => {
+  const cwd = await mkdtemp(join(tmpdir(), "doubt-portability-"));
+  const output = join(cwd, "agent-skills-portability.html");
+  const result = spawnSync(
+    process.execPath,
+    [
+      "bin/doubt.js",
+      "map",
+      "examples/agent-skills-portability.doubt.json",
+      "--out",
+      output,
+      "--json",
+    ],
+    {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    },
+  );
+  assert.equal(result.status, 0);
+  const report = JSON.parse(result.stdout);
+  assert.equal(report.valid, true);
+  assert.deepEqual(report.metrics, {
+    claims: 5,
+    contradictions: 1,
+    evidence: 6,
+    sources: 6,
+    unknowns: 1,
+  });
+  assert.equal(
+    report.receipt,
+    "89f18aa3a3b2b9136096f772b3a884b89f2529e9dae31f4aab721ed190fc4908",
+  );
+  const html = await readFile(output, "utf8");
+  assert.match(html, /Are Agent Skills actually portable\?/);
+  assert.match(html, /Portable enough to author once, not portable enough to test once/);
+  assert.match(html, /No committed public suite yet/);
+});

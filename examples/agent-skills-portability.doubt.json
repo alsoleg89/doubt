@@ -1,0 +1,276 @@
+{
+  "title": "Are Agent Skills actually portable?",
+  "question": "Can one Agent Skill work across Claude Code, Codex, GitHub Copilot, Cursor, and Gemini CLI without client-specific forks?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Author one conservative Agent Skills core, but install and test it per host. SKILL.md, references, assets, and scripts are portable; discovery paths, invocation, consent, permissions, metadata, and distribution are not behaviorally identical.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Current position",
+      "text": "Portable enough to author once, not portable enough to test once."
+    },
+    {
+      "id": "portable-core",
+      "type": "claim",
+      "label": "Shared core",
+      "text": "A conservative SKILL.md package with name, description, instructions, references, assets, and scripts has a credible cross-client authoring path."
+    },
+    {
+      "id": "spec-core",
+      "type": "evidence",
+      "label": "Open minimum",
+      "text": "The Agent Skills specification defines a small required core and treats scripts, references, assets, compatibility, metadata, and allowed tools as optional layers.",
+      "sourceId": "agent-skills-spec"
+    },
+    {
+      "id": "claude-support",
+      "type": "evidence",
+      "label": "Claude Code",
+      "text": "Claude Code follows the open Agent Skills standard, discovers project and personal skills, and adds host-specific invocation, subagent, permission, and dynamic-context features.",
+      "sourceId": "claude-skills"
+    },
+    {
+      "id": "codex-support",
+      "type": "evidence",
+      "label": "Codex",
+      "text": "Codex uses the open Agent Skills standard, scans .agents/skills across repository scopes, supports explicit and implicit activation, and adds optional OpenAI metadata.",
+      "sourceId": "codex-skills"
+    },
+    {
+      "id": "copilot-support",
+      "type": "evidence",
+      "label": "GitHub Copilot",
+      "text": "GitHub documents Agent Skills across cloud agent, code review, CLI, app, VS Code, and JetBrains, with several accepted project and personal locations.",
+      "sourceId": "copilot-skills"
+    },
+    {
+      "id": "cursor-support",
+      "type": "evidence",
+      "label": "Cursor",
+      "text": "Cursor 2.4 added SKILL.md discovery and application in both editor and CLI, including automatic relevance matching and slash-command invocation.",
+      "sourceId": "cursor-skills"
+    },
+    {
+      "id": "gemini-support",
+      "type": "evidence",
+      "label": "Gemini CLI",
+      "text": "Gemini CLI discovers SKILL.md packages in .gemini/skills and the .agents/skills alias, supports reload and installation commands, and asks for activation consent.",
+      "sourceId": "gemini-skills"
+    },
+    {
+      "id": "host-differences",
+      "type": "claim",
+      "label": "Paths diverge",
+      "text": "The same core file is not discovered from one universal directory: native paths, aliases, scopes, precedence, and cloud behavior vary by host."
+    },
+    {
+      "id": "behavior-differences",
+      "type": "claim",
+      "label": "Behavior diverges",
+      "text": "Automatic matching, explicit invocation, consent, tool pre-approval, extra frontmatter, compaction, and plugin packaging are client behaviors outside the minimal common core."
+    },
+    {
+      "id": "portable-deployment",
+      "type": "claim",
+      "label": "Ship thin adapters",
+      "text": "Keep one canonical skill payload, generate or mirror only the host-specific locations and metadata, and run behavioral checks in every supported client."
+    },
+    {
+      "id": "cross-client-benchmark",
+      "type": "unknown",
+      "label": "Missing benchmark",
+      "text": "No committed public suite yet runs the same non-trivial skill prompts across all five clients and compares discovery, activation, tool use, and final artifacts."
+    }
+  ],
+  "edges": [
+    {
+      "from": "spec-core",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "The standard supplies a deliberately small package contract that clients can share."
+    },
+    {
+      "from": "claude-support",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "Claude Code explicitly identifies its skills as an implementation of the open standard."
+    },
+    {
+      "from": "codex-support",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "Codex documents the same SKILL.md authoring model and progressive loading pattern."
+    },
+    {
+      "from": "copilot-support",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "Copilot adopts the standard across several GitHub and IDE surfaces."
+    },
+    {
+      "from": "cursor-support",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "Cursor reads SKILL.md packages in both its editor and CLI."
+    },
+    {
+      "from": "gemini-support",
+      "to": "portable-core",
+      "relation": "supports",
+      "note": "Gemini CLI implements the same directory-plus-SKILL.md package shape."
+    },
+    {
+      "from": "claude-support",
+      "to": "host-differences",
+      "relation": "supports",
+      "note": "Claude's native .claude locations and cloud-session rules are host-specific."
+    },
+    {
+      "from": "codex-support",
+      "to": "host-differences",
+      "relation": "supports",
+      "note": "Codex scans .agents locations across working-directory and repository scopes."
+    },
+    {
+      "from": "copilot-support",
+      "to": "host-differences",
+      "relation": "qualifies",
+      "note": "Copilot accepts several compatibility paths, but its supported scopes and surfaces remain product-defined."
+    },
+    {
+      "from": "gemini-support",
+      "to": "host-differences",
+      "relation": "supports",
+      "note": "Gemini uses a native .gemini path while accepting .agents as an alias."
+    },
+    {
+      "from": "claude-support",
+      "to": "behavior-differences",
+      "relation": "supports",
+      "note": "Claude adds invocation control, subagent execution, dynamic context, and permission fields."
+    },
+    {
+      "from": "codex-support",
+      "to": "behavior-differences",
+      "relation": "supports",
+      "note": "Codex adds initial-list context budgets, OpenAI metadata, and plugin distribution guidance."
+    },
+    {
+      "from": "cursor-support",
+      "to": "behavior-differences",
+      "relation": "supports",
+      "note": "Cursor defines its own automatic and slash-menu activation surfaces."
+    },
+    {
+      "from": "gemini-support",
+      "to": "behavior-differences",
+      "relation": "supports",
+      "note": "Gemini inserts an explicit consent step before a discovered skill activates."
+    },
+    {
+      "from": "host-differences",
+      "to": "portable-core",
+      "relation": "contradicts",
+      "note": "A shared file format does not create one universal installation or discovery location."
+    },
+    {
+      "from": "behavior-differences",
+      "to": "portable-core",
+      "relation": "qualifies",
+      "note": "Portable instructions can still activate, execute, and persist differently across hosts."
+    },
+    {
+      "from": "portable-core",
+      "to": "portable-deployment",
+      "relation": "supports",
+      "note": "One canonical payload avoids maintaining five independent instruction bodies."
+    },
+    {
+      "from": "host-differences",
+      "to": "portable-deployment",
+      "relation": "supports",
+      "note": "Thin generated mirrors handle path differences without forking the workflow."
+    },
+    {
+      "from": "behavior-differences",
+      "to": "portable-deployment",
+      "relation": "supports",
+      "note": "Per-host acceptance tests are necessary when behavior is not standardized."
+    },
+    {
+      "from": "portable-core",
+      "to": "position",
+      "relation": "supports",
+      "note": "The shared minimum makes author-once a defensible default."
+    },
+    {
+      "from": "portable-deployment",
+      "to": "position",
+      "relation": "supports",
+      "note": "Canonical content plus thin adapters preserves portability without pretending the clients are identical."
+    },
+    {
+      "from": "cross-client-benchmark",
+      "to": "position",
+      "relation": "missing",
+      "note": "Equivalent behavior remains an unverified hypothesis until one shared suite exercises all five clients."
+    }
+  ],
+  "sources": [
+    {
+      "id": "agent-skills-spec",
+      "title": "Agent Skills specification",
+      "url": "https://agentskills.io/specification",
+      "publisher": "Agent Skills",
+      "date": "2026-07-31",
+      "locator": "Directory structure; SKILL.md format; Frontmatter",
+      "excerpt": "A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional."
+    },
+    {
+      "id": "claude-skills",
+      "title": "Extend Claude with skills",
+      "url": "https://code.claude.com/docs/en/skills",
+      "publisher": "Anthropic",
+      "date": "2026-07-31",
+      "locator": "Getting started; Where skills live; Frontmatter reference; Skill content lifecycle",
+      "excerpt": "Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context."
+    },
+    {
+      "id": "codex-skills",
+      "title": "Build skills",
+      "url": "https://learn.chatgpt.com/docs/build-skills",
+      "publisher": "OpenAI",
+      "date": "2026-07-31",
+      "locator": "How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata",
+      "excerpt": "Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata."
+    },
+    {
+      "id": "copilot-skills",
+      "title": "About agent skills",
+      "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      "publisher": "GitHub Docs",
+      "date": "2026-07-31",
+      "locator": "About agent skills; supported surfaces; project and personal locations",
+      "excerpt": "GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations."
+    },
+    {
+      "id": "cursor-skills",
+      "title": "Cursor 2.4: Subagents, Skills, and Image Generation",
+      "url": "https://cursor.com/changelog/2-4",
+      "publisher": "Cursor",
+      "date": "2026-01-22",
+      "locator": "Skills",
+      "excerpt": "Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu."
+    },
+    {
+      "id": "gemini-skills",
+      "title": "Get started with Agent Skills",
+      "url": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
+      "publisher": "Google Gemini CLI",
+      "date": "2026-04-30",
+      "locator": "Create your first skill; Verify discovery; How to use the skill; Manage skills",
+      "excerpt": "Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one."
+    }
+  ]
+}

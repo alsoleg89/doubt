@@ -125,6 +125,15 @@ export function renderMap(map, validation) {
     }
     .brand { font-weight: 820; letter-spacing: -.045em; font-size: 21px; }
     .brand i { color: var(--support); font-style: normal; }
+    .nav-meta { display: flex; align-items: center; gap: 13px; }
+    .nav-meta a {
+      color: var(--muted);
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .nav-meta a:hover { color: var(--support); }
     .date {
       color: var(--muted);
       font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -331,6 +340,10 @@ export function renderMap(map, validation) {
       .metric:nth-child(even) { border-right: 0; }
       .metric:last-child { border-bottom: 0; }
     }
+    @media (max-width: 520px) {
+      nav { align-items: flex-start; }
+      .nav-meta { flex-direction: column; align-items: flex-end; gap: 6px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
     }
@@ -341,7 +354,11 @@ export function renderMap(map, validation) {
     <main>
       <nav>
         <div class="brand">Doubt<i>↯</i></div>
-        <div class="date">Evidence snapshot · ${escapeHtml(map.updatedAt)}</div>
+        <div class="nav-meta">
+          <a href="https://alsoleg89.github.io/doubt/playground/" target="_blank" rel="noreferrer">Make a map ↗</a>
+          <a href="https://github.com/alsoleg89/doubt" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <div class="date">Evidence snapshot · ${escapeHtml(map.updatedAt)}</div>
+        </div>
       </nav>
       <header>
         <div>

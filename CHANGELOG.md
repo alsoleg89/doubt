@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add a six-source portability map comparing the shared Agent Skills core with
+  the discovery, invocation, consent, permission, metadata, and distribution
+  differences across Claude Code, Codex, Copilot, Cursor, and Gemini CLI.
+
 ## 0.4.1 — Portable share links
 
 - Add local-only playground share links that encode a valid map in the URL

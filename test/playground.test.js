@@ -53,6 +53,8 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(page, /property="og:image" content="https:\/\/alsoleg89\.github\.io\/doubt\/social-preview\.png"/);
   assert.match(home, /property="og:image" content="https:\/\/alsoleg89\.github\.io\/doubt\/social-preview\.png"/);
   assert.match(home, />Star on GitHub ↗<\/a>/);
+  assert.match(home, /examples\/agent-skills-portability\.html/);
+  assert.match(home, />Test Agent Skills portability<\/a>/);
   assert.match(page, /sandbox="allow-scripts allow-popups"/);
   assert.doesNotMatch(page, /allow-same-origin/);
   assert.doesNotMatch(page, /google-analytics|googletagmanager|segment\.com|posthog|plausible/i);
@@ -61,6 +63,8 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(workflow, /cp src\/contract\.js _site\/assets\/contract\.js/);
   assert.match(workflow, /cp src\/render-map\.js _site\/assets\/render-map\.js/);
   assert.match(workflow, /cp src\/share-link\.js _site\/assets\/share-link\.js/);
+  assert.match(workflow, /cp examples\/agent-skills-portability\.html _site\/examples\/agent-skills-portability\.html/);
+  assert.match(workflow, /cp examples\/agent-skills-portability\.doubt\.json _site\/examples\/agent-skills-portability\.doubt\.json/);
   assert.match(workflow, /cp site\/playground\/index\.html _site\/playground\/index\.html/);
   assert.match(workflow, /cp docs\/social-preview\.png _site\/social-preview\.png/);
 });
