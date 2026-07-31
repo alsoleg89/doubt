@@ -74,6 +74,14 @@ through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md
 
 ## Give the workflow to your agent
 
+Install directly from GitHub with GitHub CLI 2.90 or later:
+
+```bash
+gh skill install alsoleg89/doubt doubt
+```
+
+Or install the portable skill into every supported local agent:
+
 ```bash
 npx doubt-ai init --agent all
 ```
@@ -88,7 +96,9 @@ Preserve contrary evidence and show the exact source region behind every edge.
 The skill works with Claude Code, Codex, GitHub Copilot, Cursor, Gemini CLI, and
 clients that support the open Agent Skills layout. It uses the research and
 browsing capabilities the agent already has; Doubt does not proxy prompts or
-require a model key.
+require a model key. The checked-in
+[GitHub-native skill](.github/skills/doubt/SKILL.md) is byte-verified against
+the canonical install payload on every CI run.
 
 Compatible remote clients can also discover a digest-pinned archive through
 the [Agent Skills well-known index](https://alsoleg89.github.io/doubt/.well-known/agent-skills/index.json).

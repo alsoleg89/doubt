@@ -14,6 +14,8 @@
   security guidance.
 - Replace the Pages redirect with a public gallery for topical maps, the
   dogfood decision record, and the reader benchmark.
+- Add a GitHub-native `.github/skills/doubt` distribution path for `gh skill`
+  installation, with byte-for-byte CI enforcement against the canonical skill.
 
 ## 0.2.1 — Discoverable Agent Skill
 
