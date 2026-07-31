@@ -78,9 +78,10 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > conclusion.
 >
 > Doubt is an Agent Skill plus a zero-dependency Node CLI. The agent produces a
-> typed JSON reasoning record; the validator rejects unsourced evidence,
+> typed JSON reasoning record; a bundled offline validator rejects unsourced evidence,
 > invalid source dates and locators, decorative sources, disconnected or cyclic edges, unsupported
-> positions, and invented confidence percentages. A deterministic renderer then
+> positions, and invented confidence percentages. It uses only Node.js built-ins,
+> so sandboxed agents do not need npm access to produce a real receipt. A deterministic renderer then
 > emits one HTML file with a linear brief and an interactive graph, with no CDN
 > or server.
 >

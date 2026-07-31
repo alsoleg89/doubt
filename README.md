@@ -114,6 +114,12 @@ require a model key. The checked-in
 [GitHub project skill](.github/skills/doubt/SKILL.md) are byte-verified against
 the canonical install payload on every CI run.
 
+The installed skill carries the same deterministic evidence contract as the
+package in `scripts/validate.mjs`. An agent can validate and obtain the real
+receipt with Node.js 18+ even when its sandbox cannot reach npm. The skill
+explicitly forbids substituting a file hash, node count, or JSON parse check for
+a successful Doubt receipt.
+
 Compatible remote clients can also discover a digest-pinned archive through
 the [Agent Skills well-known index](https://alsoleg89.github.io/doubt/.well-known/agent-skills/index.json).
 

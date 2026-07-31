@@ -45,6 +45,8 @@ test("builds a v0.2 discovery index with a verified root-level archive", async (
     "agents/openai.yaml",
     "references/evidence-ladder.md",
     "references/map-schema.md",
+    "scripts/contract.mjs",
+    "scripts/validate.mjs",
     "SKILL.md",
   ]);
 });

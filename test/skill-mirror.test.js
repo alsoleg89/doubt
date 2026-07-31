@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -12,17 +12,25 @@ import {
 test("keeps repository skill layouts byte-identical to the canonical payload", async () => {
   const result = await compareSkillMirrors();
   assert.equal(result.ok, true);
-  assert.equal(result.files, 4);
+  assert.equal(result.files, 6);
   assert.equal(result.mirrors.length, 2);
   for (const mirror of result.mirrors) {
     assert.deepEqual(mirror.result, {
       ok: true,
-      files: 4,
+      files: 6,
       missing: [],
       unexpected: [],
       changed: [],
     });
   }
+});
+
+test("bundles the exact evidence contract used by the package", async () => {
+  const [packageContract, skillContract] = await Promise.all([
+    readFile(new URL("../src/contract.js", import.meta.url)),
+    readFile(new URL("../skill/doubt/scripts/contract.mjs", import.meta.url)),
+  ]);
+  assert.equal(skillContract.equals(packageContract), true);
 });
 
 test("detects drift and rebuilds a GitHub skill mirror", async () => {

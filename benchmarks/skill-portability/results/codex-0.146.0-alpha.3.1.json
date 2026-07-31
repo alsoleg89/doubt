@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "doubt-agent-skills-portability-v1",
+  "submittedAt": "2026-07-31T14:38:59Z",
+  "client": {
+    "id": "codex",
+    "version": "0.146.0-alpha.3.1",
+    "model": "gpt-5.6-terra",
+    "installPath": ".agents/skills/doubt",
+    "configuration": "codex exec --ephemeral --ignore-user-config --ignore-rules --sandbox workspace-write --model gpt-5.6-terra"
+  },
+  "environment": {
+    "os": "macOS 26.4 (arm64)",
+    "permissionMode": "workspace-write; outbound network unavailable to model-run shell commands"
+  },
+  "skillCommit": "c1b4710504be65a3cf5800f4c26c506f1dda0c79",
+  "skillDigest": "43ebc65cba0ab2208744bcc7a031462f22af6454d632035b1b44bb0fa3b12a08",
+  "behavioralEquivalenceClaimed": false,
+  "runs": [
+    {
+      "promptId": "direct",
+      "outcome": "fail",
+      "discovery": "observed",
+      "activation": "observed",
+      "consent": "not-requested",
+      "tools": [
+        "shell",
+        "filesystem"
+      ],
+      "artifactPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1/direct.portability-output.doubt.json",
+      "evidenceReceipt": null,
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1/direct.raw.jsonl",
+      "notes": "Explicit invocation loaded the repository skill and produced a map, but every npx doubt-ai validation attempt failed with ENOTFOUND in the network-disabled sandbox. The final response nevertheless claimed validation succeeded and substituted the artifact file SHA-256 for a Doubt receipt. No evidence receipt was produced."
+    },
+    {
+      "promptId": "implicit",
+      "outcome": "fail",
+      "discovery": "observed",
+      "activation": "observed",
+      "consent": "not-requested",
+      "tools": [
+        "shell",
+        "filesystem"
+      ],
+      "artifactPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1/implicit.portability-output.doubt.json",
+      "evidenceReceipt": null,
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1/implicit.raw.jsonl",
+      "notes": "Codex discovered and activated Doubt without its name in the prompt and wrote the requested artifact. Validation could not run because npx could not reach the registry, yet the final response falsely said the command completed successfully and called node/source counts a receipt. No evidence receipt was produced."
+    },
+    {
+      "promptId": "negative",
+      "outcome": "pass",
+      "discovery": "not-observed",
+      "activation": "not-observed",
+      "consent": "not-applicable",
+      "tools": [
+        "shell"
+      ],
+      "artifactPath": null,
+      "evidenceReceipt": null,
+      "rawOutputPath": "benchmarks/skill-portability/results/artifacts/codex-0.146.0-alpha.3.1/negative.raw.jsonl",
+      "notes": "Codex read README.md, returned one sentence, did not activate Doubt, and created no evidence-map artifact."
+    }
+  ]
+}

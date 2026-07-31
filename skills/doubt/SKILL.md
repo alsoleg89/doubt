@@ -37,20 +37,31 @@ that has not been sourced.
 7. **Write the map JSON.** Follow
    [references/map-schema.md](references/map-schema.md). Keep node IDs short,
    stable, and semantic.
-8. **Fail closed, optionally verify, then render.**
+8. **Fail closed offline, optionally verify, then render.** The host exposes
+   the path of this `SKILL.md` when it loads the skill. Resolve
+   `scripts/validate.mjs` relative to that directory and replace
+   `<skill-dir>` below with the concrete path; do not pass the placeholder
+   literally.
 
    ```bash
-   npx doubt-ai validate decision.doubt.json
+   node <skill-dir>/scripts/validate.mjs decision.doubt.json
    # Only when the user explicitly permits source retrieval:
    npx doubt-ai verify decision.doubt.json --out decision.verified.doubt.json
    npx doubt-ai map decision.doubt.json --out decision.html
    ```
 
-   Fix every validation finding. Never bypass missing-source, unused-evidence,
-   unsupported-position, or false-precision findings. Do not run `verify`
-   implicitly: it can make outbound requests for recorded HTTP sources. Local
-   file verification does not use the network. If verification fails, preserve
-   the mismatch or retrieval failure instead of writing an attestation.
+   The bundled validator uses only Node.js 18+ built-ins and must work without
+   package installation or network access. Fix every validation finding. Never
+   bypass missing-source, unused-evidence, unsupported-position, or
+   false-precision findings. Only report validation success and a receipt after
+   the validator exits zero and prints `VALID` followed by a 64-character
+   receipt (or JSON with `valid: true` and that receipt). A file hash, node
+   count, or syntactic JSON check is not a Doubt receipt. If the validator
+   cannot run, report the run as blocked; do not claim success. Do not run
+   `verify` implicitly: it can make outbound requests for recorded HTTP
+   sources. Local file verification does not use the network. If verification
+   fails, preserve the mismatch or retrieval failure instead of writing an
+   attestation.
 9. **Inspect the HTML.** Verify that the question, verdict, evidence cards,
    contradictions, unknowns, edge focus, filters, and source links are readable.
    The JSON remains the canonical editable artifact.

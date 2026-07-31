@@ -43,6 +43,8 @@ later changes; the validator does not relabel an old run as testing new bytes.
 The validator requires all three prompt classes, exact metadata, relative
 artifact paths, and a 64-character receipt whenever one was produced. A
 `blocked` or `fail` result is valid evidence when the limitation is documented.
+The canonical skill now contains its own Node.js validator; a client should not
+need npm registry access to complete the validation step.
 
 ## Outcome definitions
 

@@ -1,0 +1,204 @@
+{
+  "title": "Project Northstar automatic-merge decision map",
+  "question": "Should Project Northstar enable automatic merging for AI-generated dependency updates during the next four-week release cycle?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Provisional decision: do not enable the proposed automatic-merging rule for AI-generated dependency updates in the next four-week release cycle. The evidence supports potential benefit for a narrowly tested low-risk patch cohort, but does not cover the rule's current security surfaces or recovery capability.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Do not enable the proposed rule this cycle",
+      "text": "Project Northstar should not enable its current automatic-merging rule for AI-generated dependency updates during the next four-week release cycle."
+    },
+    {
+      "id": "tested-cohort",
+      "type": "claim",
+      "label": "A limited cohort showed promise",
+      "text": "Required checks caught both failures in a synthetic replay of low-risk patch updates, so automation may be viable for that tested cohort."
+    },
+    {
+      "id": "scope-limit",
+      "type": "claim",
+      "label": "Replay evidence has a material boundary",
+      "text": "The controlled replay does not establish safety for major updates, install scripts, or authentication and authorization changes."
+    },
+    {
+      "id": "review-delay",
+      "type": "claim",
+      "label": "Routine review creates delivery delay",
+      "text": "The recorded routine patch-update review wait is a reason to consider automation, if safety conditions are met."
+    },
+    {
+      "id": "e-r1",
+      "type": "evidence",
+      "label": "Controlled replay passed 18 of 20 updates",
+      "text": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits; the two failures were detected before merge by required checks.",
+      "sourceId": "reliability-r1"
+    },
+    {
+      "id": "e-r2",
+      "type": "evidence",
+      "label": "Replay excluded higher-risk change types",
+      "text": "The replay did not include major-version updates, packages with install scripts, or changes to authentication and authorization code.",
+      "sourceId": "reliability-r2"
+    },
+    {
+      "id": "e-s1",
+      "type": "evidence",
+      "label": "Generated descriptions lack signed provenance",
+      "text": "There is no signed provenance record for generated pull-request descriptions, so a reviewer cannot verify from a description alone which model, prompt, or retrieved advisory produced a recommendation.",
+      "sourceId": "security-s1"
+    },
+    {
+      "id": "e-s2",
+      "type": "evidence",
+      "label": "Current rule leaves sensitive surfaces eligible",
+      "text": "The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory.",
+      "sourceId": "security-s2"
+    },
+    {
+      "id": "e-o1",
+      "type": "evidence",
+      "label": "Routine reviews waited 31 hours",
+      "text": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle.",
+      "sourceId": "operations-o1"
+    },
+    {
+      "id": "e-o2",
+      "type": "evidence",
+      "label": "No automatic-merge rollback drill is recorded",
+      "text": "No rollback drill has been recorded for an automatically merged dependency update, and the fixture contains no measurement of recovery time after a bad merge.",
+      "sourceId": "operations-o2"
+    },
+    {
+      "id": "rollback-readiness",
+      "type": "unknown",
+      "label": "Rollback readiness is unmeasured",
+      "text": "It is unknown whether a bad automatically merged dependency update can be detected and recovered within an acceptable time; this could change the decision if demonstrated for the proposed rule."
+    }
+  ],
+  "edges": [
+    {
+      "from": "e-r1",
+      "to": "tested-cohort",
+      "relation": "supports",
+      "note": "The replay directly shows required checks catching the two observed failures within the low-risk patch cohort."
+    },
+    {
+      "from": "tested-cohort",
+      "to": "position",
+      "relation": "qualifies",
+      "note": "This favorable result is limited to the tested cohort, so it narrows rather than overturns the decision against the broader proposed rule."
+    },
+    {
+      "from": "e-r2",
+      "to": "scope-limit",
+      "relation": "supports",
+      "note": "The stated exclusions directly delimit what the replay can establish."
+    },
+    {
+      "from": "scope-limit",
+      "to": "position",
+      "relation": "supports",
+      "note": "Because the proposed rule covers surfaces absent from the replay, the replay cannot justify enabling that rule as written."
+    },
+    {
+      "from": "e-s1",
+      "to": "position",
+      "relation": "supports",
+      "note": "Missing signed provenance prevents verification of the generation inputs from the pull-request description, which is a reason not to rely on automated merges yet."
+    },
+    {
+      "from": "e-s2",
+      "to": "position",
+      "relation": "supports",
+      "note": "Allowing install-script and authentication-directory changes conflicts with the replay boundary, leaving the current rule without relevant safety evidence."
+    },
+    {
+      "from": "e-o1",
+      "to": "review-delay",
+      "relation": "supports",
+      "note": "The recorded 31-hour median wait directly establishes an operational cost of the current manual review process."
+    },
+    {
+      "from": "review-delay",
+      "to": "position",
+      "relation": "contradicts",
+      "note": "A substantial routine-review wait is a reason to enable automation, pushing against the provisional decision not to enable it."
+    },
+    {
+      "from": "e-o2",
+      "to": "rollback-readiness",
+      "relation": "supports",
+      "note": "The absence of a recorded drill and recovery-time measurement is the observed basis for the unresolved rollback-readiness gap."
+    },
+    {
+      "from": "rollback-readiness",
+      "to": "position",
+      "relation": "missing",
+      "note": "A demonstrated, acceptable recovery capability could reduce the risk of enabling the rule; without it, the decision remains provisional and conservative."
+    }
+  ],
+  "sources": [
+    {
+      "id": "reliability-r1",
+      "title": "Reliability observations — Region R1: controlled replay",
+      "url": "sources/reliability.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L3-L7",
+      "excerpt": "In the synthetic replay, 18 of 20 low-risk patch updates passed the complete test suite without manual edits. The two failures were detected before merge by the required checks."
+    },
+    {
+      "id": "reliability-r2",
+      "title": "Reliability observations — Region R2: boundary",
+      "url": "sources/reliability.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L9-L12",
+      "excerpt": "The replay did not include major-version updates, packages with install scripts, or changes that modified authentication and authorization code."
+    },
+    {
+      "id": "security-s1",
+      "title": "Security observations — Region S1: unresolved provenance",
+      "url": "sources/security.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L3-L7",
+      "excerpt": "The fixture has no signed provenance record for generated pull-request descriptions. A reviewer therefore cannot verify from the description alone which model, prompt, or retrieved advisory produced a recommendation."
+    },
+    {
+      "id": "security-s2",
+      "title": "Security observations — Region S2: protected surface",
+      "url": "sources/security.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L9-L12",
+      "excerpt": "The proposed rule currently excludes neither packages with install scripts nor updates that touch the authentication directory."
+    },
+    {
+      "id": "operations-o1",
+      "title": "Operations observations — Region O1: review queue",
+      "url": "sources/operations.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L3-L6",
+      "excerpt": "The synthetic team recorded a median wait of 31 hours for routine patch-update review during the previous four-week cycle."
+    },
+    {
+      "id": "operations-o2",
+      "title": "Operations observations — Region O2: missing rollback evidence",
+      "url": "sources/operations.md",
+      "publisher": "Project Northstar fixture",
+      "date": "2026-07-31",
+      "retrievedAt": "2026-07-31",
+      "locator": "L8-L11",
+      "excerpt": "No rollback drill has been recorded for an automatically merged dependency update. The fixture contains no measurement of recovery time after a bad merge."
+    }
+  ]
+}
