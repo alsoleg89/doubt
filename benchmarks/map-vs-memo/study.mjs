@@ -153,6 +153,9 @@ export function renderStudy(study) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A preregistered, local-first reader study comparing Doubt evidence maps with cited memos.">
   <meta name="theme-color" content="#0b0d0e">
+  <link rel="canonical" href="https://alsoleg89.github.io/doubt/benchmark/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alsoleg89.github.io/doubt/benchmark/">
   <meta property="og:title" content="${escapeHtml(study.title)} — Doubt benchmark">
   <meta property="og:description" content="Five topics. Same frozen sources. No telemetry. Export an anonymous result locally.">
   <title>${escapeHtml(study.title)} — Doubt benchmark</title>

@@ -32,12 +32,15 @@ test("browser contract and Node wrapper agree on the public example", async () =
 });
 
 test("playground is local-only and loads browser-safe canonical modules", async () => {
-  const [page, home, contract, shareLink, workflow] = await Promise.all([
+  const [page, home, contract, shareLink, workflow, robots, sitemap, llms] = await Promise.all([
     readFile("site/playground/index.html", "utf8"),
     readFile("site/index.html", "utf8"),
     readFile("src/contract.js", "utf8"),
     readFile("src/share-link.js", "utf8"),
     readFile(".github/workflows/pages.yml", "utf8"),
+    readFile("site/robots.txt", "utf8"),
+    readFile("site/sitemap.xml", "utf8"),
+    readFile("site/llms.txt", "utf8"),
   ]);
 
   assert.match(page, /import \{ canonicalJson, inspectMapContract \} from "\.\.\/assets\/contract\.js"/);
@@ -52,6 +55,11 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(page, /No account, telemetry, analytics,\s+or network submission/);
   assert.match(page, /property="og:image" content="https:\/\/alsoleg89\.github\.io\/doubt\/social-preview\.png"/);
   assert.match(home, /property="og:image" content="https:\/\/alsoleg89\.github\.io\/doubt\/social-preview\.png"/);
+  assert.match(home, /rel="canonical" href="https:\/\/alsoleg89\.github\.io\/doubt\/"/);
+  assert.match(home, /type="application\/ld\+json"/);
+  assert.match(home, /"@type": "SoftwareApplication"/);
+  assert.match(home, /rel="alternate" type="text\/plain".*llms\.txt/);
+  assert.match(page, /rel="canonical" href="https:\/\/alsoleg89\.github\.io\/doubt\/playground\/"/);
   assert.match(home, />Star on GitHub ↗<\/a>/);
   assert.match(home, /examples\/agent-skills-portability\.html/);
   assert.match(home, />Test Agent Skills portability<\/a>/);
@@ -73,6 +81,14 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(workflow, /cp examples\/agent-skills-portability\.doubt\.json _site\/examples\/agent-skills-portability\.doubt\.json/);
   assert.match(workflow, /cp site\/playground\/index\.html _site\/playground\/index\.html/);
   assert.match(workflow, /cp docs\/social-preview\.png _site\/social-preview\.png/);
+  assert.match(workflow, /cp site\/robots\.txt _site\/robots\.txt/);
+  assert.match(workflow, /cp site\/sitemap\.xml _site\/sitemap\.xml/);
+  assert.match(workflow, /cp site\/llms\.txt _site\/llms\.txt/);
+  assert.match(robots, /Sitemap: https:\/\/alsoleg89\.github\.io\/doubt\/sitemap\.xml/);
+  assert.match(sitemap, /<loc>https:\/\/alsoleg89\.github\.io\/doubt\/<\/loc>/);
+  assert.match(sitemap, /agent-skills-portability\.html/);
+  assert.match(llms, /The validator proves structural traceability/);
+  assert.doesNotMatch(llms, /5\/5|behaviorally equivalent/i);
 });
 
 test("share links round-trip Unicode maps without sending content in the request URL", () => {

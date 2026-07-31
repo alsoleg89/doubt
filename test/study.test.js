@@ -57,6 +57,7 @@ test("rendered study is self-contained and discloses local-only collection", asy
   assert.match(html, /URL\.createObjectURL/);
   assert.match(html, /crypto\.getRandomValues/);
   assert.match(html, /same frozen sources/i);
+  assert.match(html, /rel="canonical" href="https:\/\/alsoleg89\.github\.io\/doubt\/benchmark\/"/);
   assert.doesNotMatch(html, /<script[^>]+src=/);
   assert.doesNotMatch(html, /\bfetch\s*\(/);
   assert.doesNotMatch(html, /XMLHttpRequest|sendBeacon/);

@@ -4,6 +4,8 @@
 
 - Add a public five-client contribution queue that connects the Pages gallery,
   README, and contributor guide to scoped good-first benchmark issues.
+- Add crawlable Pages discovery through canonical URLs, structured software
+  metadata, a sitemap, robots policy, and an AI-readable project index.
 
 ## 0.5.0 — Agent Skills portability benchmark
 

@@ -1,0 +1,50 @@
+# Doubt
+
+> Doubt is an open-source Agent Skill, zero-dependency Node.js CLI, and GitHub
+> Action for turning contested questions into source-grounded evidence maps.
+
+Repository: https://github.com/alsoleg89/doubt
+License: MIT
+Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.5.0
+
+## Core contract
+
+- Atomic position, claim, evidence, and unknown nodes.
+- Typed supports, contradicts, qualifies, and missing reasoning edges.
+- Every evidence node requires a dated source, bounded excerpt, and exact
+  section, page, timestamp, or line locator.
+- Decorative sources, unsourced evidence, dangling edges, unsupported
+  positions, and invented confidence percentages fail validation.
+- Valid maps receive a SHA-256 receipt over canonical JSON.
+- Validation and rendering are local-only; there is no telemetry or model API.
+
+## Public artifacts
+
+- Product and map gallery: https://alsoleg89.github.io/doubt/
+- Local-only playground: https://alsoleg89.github.io/doubt/playground/
+- Agent Skills portability map: https://alsoleg89.github.io/doubt/examples/agent-skills-portability.html
+- Agent Skills vs MCP map: https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html
+- Reader benchmark: https://alsoleg89.github.io/doubt/benchmark/
+- Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.5.0/benchmarks/skill-portability/README.md
+
+## Installation
+
+Agent Skill:
+
+    gh skill install alsoleg89/doubt doubt
+
+CLI:
+
+    npx doubt-ai validate decision.doubt.json
+    npx doubt-ai map decision.doubt.json --out decision.html
+
+GitHub Action:
+
+    uses: alsoleg89/doubt@v0.5.0
+
+## Scope limits
+
+The validator proves structural traceability and safe rendering. It does not
+prove that a source is true, that an AI extracted it faithfully, or that a
+verdict is correct. The Agent Skills portability benchmark currently has zero
+submitted client results.

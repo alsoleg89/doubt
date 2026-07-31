@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alsoleg89.github.io/doubt/sitemap.xml
