@@ -93,6 +93,13 @@ Install directly from GitHub with GitHub CLI 2.90 or later:
 gh skill install alsoleg89/doubt doubt
 ```
 
+Or use the open Agent Skills installer for Codex, Claude Code, Copilot, Cursor,
+Gemini CLI, and other compatible clients:
+
+```bash
+npx skills add alsoleg89/doubt --skill doubt
+```
+
 Or install the portable skill into every supported local agent:
 
 ```bash
