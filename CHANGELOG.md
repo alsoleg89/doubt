@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.0 — Zero-install evidence playground
+
 - Replace the internal dogfood headline in the repository visual with a
   product-first 1280×640 social card grounded in the Agent Skills vs MCP map.
 - Add a zero-install, local-only browser playground that reuses the canonical

@@ -119,7 +119,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > you can keep in git or share without an account.
 >
 > There is also a reusable Action for enforcing the contract in pull requests:
-> `uses: alsoleg89/doubt@v0.3.1`.
+> `uses: alsoleg89/doubt@v0.4.0`.
 >
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >
@@ -166,8 +166,8 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 
 1. Create the public GitHub repository and push `main`.
 2. Enable GitHub Pages with GitHub Actions and verify the live map.
-3. Publish `doubt-ai@0.3.1` and verify `npx doubt-ai demo`.
-4. Tag `v0.3.1`; verify the GitHub Release tarball and CI matrix.
+3. Publish `doubt-ai@0.4.0` and verify `npx doubt-ai demo`.
+4. Tag `v0.4.0`; verify the GitHub Release tarball and CI matrix.
 5. Post Show HN after the live demo, npm package, release, and repository links
    all resolve.
 6. Post one technically adapted version to the most relevant developer
