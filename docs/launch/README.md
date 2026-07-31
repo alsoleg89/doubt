@@ -7,7 +7,46 @@ star counts, user counts, or performance claims without current evidence.
 
 - Repository: `https://github.com/alsoleg89/doubt`
 - Live map: `https://alsoleg89.github.io/doubt/`
+- Agent Skills vs MCP:
+  `https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html`
+- Reader benchmark: `https://alsoleg89.github.io/doubt/benchmark/`
 - npm: `https://www.npmjs.com/package/doubt-ai`
+
+## Topical launch hook
+
+**Title**
+
+> Agent Skills vs MCP: I mapped the boundary from the official specs
+
+**Body**
+
+> “Skills or MCP?” is usually framed as a format fight. The current
+> specifications describe different boundaries.
+>
+> I built a source-grounded map from the Agent Skills spec, GitHub's client
+> documentation, the discovery RFC, and the current MCP architecture and
+> security guidance:
+>
+> - use a Skill for reusable procedure and bundled context that loads when
+>   relevant;
+> - use MCP for live tools, resources, and prompts across a client/server
+>   boundary;
+> - use both when the Skill teaches a workflow that calls MCP-backed
+>   capabilities.
+>
+> The map also keeps the uncomfortable parts visible: Skills may run scripts,
+> remote MCP adds an authorization and security surface, discovery is still
+> evolving, and I found no committed cross-client behavior benchmark that
+> proves equivalent portability in practice.
+>
+> Interactive map:
+> https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html
+>
+> Editable JSON and validator:
+> https://github.com/alsoleg89/doubt
+>
+> I would value corrections where an edge overstates what the cited source
+> region establishes.
 
 ## GitHub
 

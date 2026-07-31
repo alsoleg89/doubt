@@ -1,0 +1,194 @@
+{
+  "title": "Agent Skills vs MCP",
+  "question": "Should an AI capability be an Agent Skill, an MCP server, or both?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Default to a Skill for reusable procedure and bundled context. Add MCP for live or dynamic tools and resources; combine them when the Skill should orchestrate an MCP-backed capability.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Current position",
+      "text": "Choose by capability boundary, not by format popularity."
+    },
+    {
+      "id": "skill-boundary",
+      "type": "claim",
+      "label": "Use a Skill",
+      "text": "Use an Agent Skill for reusable instructions, examples, references, assets, and scripts that should load only when a workflow is relevant."
+    },
+    {
+      "id": "skill-spec",
+      "type": "evidence",
+      "label": "Filesystem contract",
+      "text": "The Agent Skills specification defines a SKILL.md package with optional scripts, references, assets, and progressive disclosure.",
+      "sourceId": "agent-skills-spec"
+    },
+    {
+      "id": "skill-adoption",
+      "type": "evidence",
+      "label": "Client adoption",
+      "text": "GitHub documents the open Agent Skills standard across Copilot cloud agent, code review, CLI, app, and agent modes in multiple IDEs.",
+      "sourceId": "github-skills"
+    },
+    {
+      "id": "discovery-rfc",
+      "type": "evidence",
+      "label": "Distribution still moving",
+      "text": "The current well-known discovery proposal is a draft whose v0.2 format intentionally breaks with v0.1 and adds artifact digests and archive safety guidance.",
+      "sourceId": "skills-discovery"
+    },
+    {
+      "id": "mcp-boundary",
+      "type": "claim",
+      "label": "Use MCP",
+      "text": "Use MCP when a host must discover and call live tools, read dynamic resources, or use prompts across a local or remote client-server boundary."
+    },
+    {
+      "id": "mcp-architecture",
+      "type": "evidence",
+      "label": "Protocol boundary",
+      "text": "The current MCP architecture defines JSON-RPC discovery plus tools, resources, and prompts over stdio or Streamable HTTP transports.",
+      "sourceId": "mcp-architecture-source"
+    },
+    {
+      "id": "combined-pattern",
+      "type": "claim",
+      "label": "Use both",
+      "text": "Pair them when a portable Skill should teach the workflow while MCP supplies live data or actions."
+    },
+    {
+      "id": "security-surface",
+      "type": "evidence",
+      "label": "Runtime counterpressure",
+      "text": "MCP's official security guidance covers authorization-specific attack classes and mitigations that a remote capability must operate correctly.",
+      "sourceId": "mcp-security-source"
+    },
+    {
+      "id": "not-a-safety-shortcut",
+      "type": "claim",
+      "label": "Qualification",
+      "text": "A Skill is not automatically static or safe: it may include executable scripts, and support for pre-approved tools varies by agent implementation."
+    },
+    {
+      "id": "portability-benchmark",
+      "type": "unknown",
+      "label": "Missing evidence",
+      "text": "No committed cross-client benchmark yet measures whether one non-trivial Skill and one MCP integration behave consistently across major coding agents."
+    }
+  ],
+  "edges": [
+    {
+      "from": "skill-spec",
+      "to": "skill-boundary",
+      "relation": "supports",
+      "note": "The package format directly represents reusable procedure and on-demand supporting material."
+    },
+    {
+      "from": "skill-adoption",
+      "to": "skill-boundary",
+      "relation": "supports",
+      "note": "A documented open format has a credible portability path beyond one chat session."
+    },
+    {
+      "from": "discovery-rfc",
+      "to": "skill-boundary",
+      "relation": "contradicts",
+      "note": "Portable authoring is further along than stable remote discovery and distribution."
+    },
+    {
+      "from": "mcp-architecture",
+      "to": "mcp-boundary",
+      "relation": "supports",
+      "note": "MCP's primitives and transports are designed for live capability exchange."
+    },
+    {
+      "from": "mcp-architecture",
+      "to": "combined-pattern",
+      "relation": "supports",
+      "note": "A Skill can describe when and how to use tools that an MCP server exposes."
+    },
+    {
+      "from": "security-surface",
+      "to": "mcp-boundary",
+      "relation": "contradicts",
+      "note": "A live remote integration adds authorization and operational risk, so MCP should not be the default for static guidance."
+    },
+    {
+      "from": "not-a-safety-shortcut",
+      "to": "skill-boundary",
+      "relation": "qualifies",
+      "note": "Choosing a Skill changes the packaging boundary; it does not remove the need to review code and permissions."
+    },
+    {
+      "from": "skill-boundary",
+      "to": "position",
+      "relation": "supports",
+      "note": "Reusable procedure and bundled context fit the Skill boundary."
+    },
+    {
+      "from": "mcp-boundary",
+      "to": "position",
+      "relation": "supports",
+      "note": "Live data and actions fit a protocol boundary."
+    },
+    {
+      "from": "combined-pattern",
+      "to": "position",
+      "relation": "supports",
+      "note": "The formats compose when a workflow needs both procedural knowledge and runtime capability."
+    },
+    {
+      "from": "portability-benchmark",
+      "to": "position",
+      "relation": "missing",
+      "note": "A shared behavioral suite is needed before claiming equivalent portability in practice."
+    }
+  ],
+  "sources": [
+    {
+      "id": "agent-skills-spec",
+      "title": "Agent Skills specification",
+      "url": "https://agentskills.io/specification",
+      "publisher": "Agent Skills",
+      "date": "2026-07-31",
+      "locator": "Directory structure; allowed-tools; Progressive disclosure",
+      "excerpt": "A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required."
+    },
+    {
+      "id": "github-skills",
+      "title": "About agent skills",
+      "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+      "publisher": "GitHub Docs",
+      "date": "2026-07-31",
+      "locator": "About agent skills; supported clients and locations",
+      "excerpt": "GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes."
+    },
+    {
+      "id": "skills-discovery",
+      "title": "Agent Skills Discovery RFC",
+      "url": "https://github.com/cloudflare/agent-skills-discovery-rfc",
+      "publisher": "Cloudflare",
+      "date": "2026-07-31",
+      "locator": "Changelog v0.2.0; Problem; Discovery Index",
+      "excerpt": "The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance."
+    },
+    {
+      "id": "mcp-architecture-source",
+      "title": "MCP architecture overview",
+      "url": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+      "publisher": "Model Context Protocol",
+      "date": "2026-07-28",
+      "locator": "Concepts → Layers, Transports, and Primitives",
+      "excerpt": "MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports."
+    },
+    {
+      "id": "mcp-security-source",
+      "title": "MCP Security Best Practices",
+      "url": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices",
+      "publisher": "Model Context Protocol",
+      "date": "2026-07-28",
+      "locator": "Attacks and Mitigations",
+      "excerpt": "The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks."
+    }
+  ]
+}

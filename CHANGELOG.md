@@ -9,6 +9,11 @@
   rule.
 - Publish the self-contained reader study through GitHub Pages without
   analytics, telemetry, accounts, or network submission.
+- Add a topical Agent Skills vs MCP evidence map grounded in the current
+  official specifications, client documentation, discovery RFC, and MCP
+  security guidance.
+- Replace the Pages redirect with a public gallery for topical maps, the
+  dogfood decision record, and the reader benchmark.
 
 ## 0.2.1 — Discoverable Agent Skill
 

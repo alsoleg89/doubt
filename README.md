@@ -12,7 +12,7 @@
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
 
-[**Open the live evidence map →**](https://alsoleg89.github.io/doubt/)
+[**Explore Agent Skills vs MCP →**](https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html)
 ·
 [**Take the map-vs-memo study →**](https://alsoleg89.github.io/doubt/benchmark/)
 ·
@@ -35,6 +35,19 @@ Doubt produces a different artifact:
   every evidence node;
 - one self-contained HTML file that stays inspectable without an account,
   server, or CDN.
+
+## Explore the evidence maps
+
+- [**Agent Skills vs MCP**](https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html)
+  — when a capability should be reusable procedure, a live protocol boundary,
+  or both. Built from the Agent Skills specification, GitHub's implementation,
+  the discovery RFC, and the current MCP architecture and security guidance.
+- [**What should Doubt become?**](https://alsoleg89.github.io/doubt/examples/what-should-doubt-become.html)
+  — the product decision that kept a distribution module, rejected it as the
+  core, and preserved the missing reader-preference test.
+
+Both maps are committed as editable `.doubt.json`, validated with the same
+evidence contract, and rendered as self-contained HTML.
 
 ## Try the real map
 
