@@ -44,7 +44,7 @@
     .section-head { margin:82px 0 24px; display:flex; justify-content:space-between; align-items:end; gap:30px; }
     h2 { margin:8px 0 0; font-size:clamp(34px,5vw,56px); letter-spacing:-.055em; }
     .section-note { color:var(--muted); max-width:430px; line-height:1.55; }
-    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
     .card { min-height:330px; border:1px solid var(--line); border-radius:16px; background:var(--panel); padding:23px; text-decoration:none; display:flex; flex-direction:column; transition:transform .18s,border-color .18s; }
     .card:hover { transform:translateY(-3px); border-color:#5f6a63; }
     .card.featured { background:linear-gradient(145deg,rgba(168,236,103,.12),var(--panel) 55%); }
@@ -80,6 +80,7 @@
     <nav>
       <a class="brand" href="./">Doubt<i>↯</i></a>
       <div class="navlinks">
+        <a href="./playground/">Playground</a>
         <a href="./benchmark/">Reader benchmark</a>
         <a href="https://github.com/alsoleg89/doubt">GitHub ↗</a>
       </div>
@@ -90,7 +91,8 @@
         <h1>Evidence,<br>with edges.</h1>
         <p class="lede">Doubt keeps support, contradiction, qualification, and missing evidence inspectable. Every evidence card opens the exact dated source region behind it.</p>
         <div class="actions">
-          <a class="button primary" href="./examples/agent-skills-vs-mcp.html">Explore Skills vs MCP</a>
+          <a class="button primary" href="./playground/">Try the playground</a>
+          <a class="button secondary" href="./examples/agent-skills-vs-mcp.html">Explore Skills vs MCP</a>
           <a class="button secondary" href="https://github.com/alsoleg89/doubt">View the source</a>
         </div>
       </div>
@@ -108,12 +110,18 @@
     <div class="section-head">
       <div>
         <div class="eyebrow">Inspect the reasoning</div>
-        <h2>Three ways in.</h2>
+        <h2>Four ways in.</h2>
       </div>
-      <div class="section-note">Start with a real AI architecture question, audit the product decision that created Doubt, or test the interface against cited prose.</div>
+      <div class="section-note">Validate a map without installing anything, inspect a real AI architecture question, audit the product decision, or test maps against cited prose.</div>
     </div>
     <section class="cards">
-      <a class="card featured" href="./examples/agent-skills-vs-mcp.html">
+      <a class="card featured" href="./playground/">
+        <span class="tag">Zero-install</span>
+        <h3>Validate a map locally</h3>
+        <p>Paste or drop JSON, inspect fail-closed findings, render the same interactive artifact, and download portable JSON or HTML.</p>
+        <span class="edge">No upload · no account · no telemetry ↗</span>
+      </a>
+      <a class="card" href="./examples/agent-skills-vs-mcp.html">
         <span class="tag">Topical map</span>
         <h3>Agent Skills vs MCP</h3>
         <p>Which boundary fits reusable procedure, which fits live capability, and why “both” is sometimes the only honest answer.</p>

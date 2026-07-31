@@ -12,6 +12,8 @@
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
 
+[**Try the zero-install playground →**](https://alsoleg89.github.io/doubt/playground/)
+·
 [**Explore Agent Skills vs MCP →**](https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html)
 ·
 [**Take the map-vs-memo study →**](https://alsoleg89.github.io/doubt/benchmark/)
@@ -35,6 +37,15 @@ Doubt produces a different artifact:
   every evidence node;
 - one self-contained HTML file that stays inspectable without an account,
   server, or CDN.
+
+## Try it in the browser
+
+[**Open the local-only Doubt playground →**](https://alsoleg89.github.io/doubt/playground/)
+
+Paste or drop a `.doubt.json` file to run the same evidence-contract module used
+by the CLI, inspect exact findings, preview the interactive map, and download
+portable JSON or HTML. Validation, SHA-256 receipts, rendering, and downloads
+run in the tab; map content is never submitted over the network.
 
 ## Explore the evidence maps
 

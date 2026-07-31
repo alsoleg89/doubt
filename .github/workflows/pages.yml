@@ -25,8 +25,11 @@ jobs:
       - uses: actions/configure-pages@v6
       - name: Prepare self-contained demo
         run: |
-          mkdir -p _site/examples _site/probes/launchkit _site/benchmark
+          mkdir -p _site/examples _site/probes/launchkit _site/benchmark _site/playground _site/assets
           cp site/index.html _site/index.html
+          cp site/playground/index.html _site/playground/index.html
+          cp src/contract.js _site/assets/contract.js
+          cp src/render-map.js _site/assets/render-map.js
           cp examples/agent-skills-vs-mcp.html _site/examples/agent-skills-vs-mcp.html
           cp examples/agent-skills-vs-mcp.doubt.json _site/examples/agent-skills-vs-mcp.doubt.json
           cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html

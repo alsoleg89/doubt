@@ -4,6 +4,10 @@
 
 - Replace the internal dogfood headline in the repository visual with a
   product-first 1280×640 social card grounded in the Agent Skills vs MCP map.
+- Add a zero-install, local-only browser playground that reuses the canonical
+  evidence contract and renderer, with JSON/HTML downloads and no submission.
+- Split the browser-safe contract from the Node receipt/file wrapper so CLI,
+  Action, benchmark, and playground cannot silently diverge on invariants.
 
 ## 0.3.1 — Verified GitHub CLI install
 

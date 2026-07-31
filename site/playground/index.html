@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Validate and render a Doubt evidence map locally in your browser. No upload, account, or telemetry.">
+  <meta name="theme-color" content="#0b0d0e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doubt Playground — validate evidence locally">
+  <meta property="og:description" content="Paste a source-grounded evidence map, inspect contract findings, and render one portable HTML file.">
+  <title>Doubt Playground — local evidence-map validator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#0b0d0e; --panel:#111517; --raised:#161b1d; --ink:#f0f1e9;
+      --muted:#919a93; --line:#28302c; --green:#a8ec67; --red:#ff806e;
+      --yellow:#eac96f; --blue:#83b9ff;
+    }
+    * { box-sizing:border-box; }
+    html,body { min-height:100%; background:var(--bg); }
+    body { margin:0; color:var(--ink); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button,textarea,input { font:inherit; }
+    button { color:inherit; }
+    a { color:inherit; }
+    nav {
+      min-height:66px; display:flex; align-items:center; justify-content:space-between;
+      padding:0 22px; border-bottom:1px solid var(--line);
+    }
+    .brand { text-decoration:none; font-size:21px; font-weight:850; letter-spacing:-.045em; }
+    .brand i { color:var(--green); font-style:normal; }
+    .navlinks { display:flex; gap:18px; color:var(--muted); font-size:12px; }
+    .navlinks a { text-decoration:none; }
+    .intro {
+      padding:32px 22px 25px; display:flex; align-items:end;
+      justify-content:space-between; gap:30px;
+    }
+    .eyebrow {
+      color:var(--green); font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;
+      text-transform:uppercase; letter-spacing:.14em;
+    }
+    h1 { margin:8px 0 0; font-size:clamp(35px,5vw,57px); line-height:.95; letter-spacing:-.06em; }
+    .privacy {
+      max-width:480px; color:#bbc2bc; font-size:13px; line-height:1.5;
+      border-left:2px solid var(--green); padding-left:15px;
+    }
+    .privacy strong { color:var(--ink); }
+    .workbench {
+      display:grid; grid-template-columns:minmax(350px,42%) minmax(0,1fr);
+      min-height:calc(100vh - 188px); border-top:1px solid var(--line);
+    }
+    .editor {
+      min-width:0; padding:18px; border-right:1px solid var(--line);
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .toolbar { display:flex; flex-wrap:wrap; gap:7px; }
+    .toolbar button,.file-label {
+      cursor:pointer; border:1px solid var(--line); background:var(--panel);
+      border-radius:999px; padding:8px 11px; font-size:11px; font-weight:700;
+    }
+    .toolbar button:hover,.file-label:hover { border-color:#647168; }
+    .toolbar .primary { background:var(--green); border-color:var(--green); color:#0b0d0e; }
+    .toolbar button:disabled { cursor:not-allowed; opacity:.42; }
+    #file { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+    textarea {
+      width:100%; min-height:460px; flex:1; resize:vertical; border:1px solid var(--line);
+      border-radius:13px; outline:none; background:#0e1112; color:#dce1dc; padding:16px;
+      font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      tab-size:2;
+    }
+    textarea:focus { border-color:#61705f; box-shadow:0 0 0 3px rgba(168,236,103,.08); }
+    .result {
+      min-height:55px; border:1px solid var(--line); border-radius:12px;
+      background:var(--panel); padding:11px 13px; display:flex;
+      justify-content:space-between; align-items:center; gap:12px;
+    }
+    .result strong { display:block; font-size:12px; }
+    .result span { color:var(--muted); font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .result.valid strong { color:var(--green); }
+    .result.invalid strong { color:var(--red); }
+    .receipt { text-align:right; overflow-wrap:anywhere; max-width:48%; }
+    .findings { list-style:none; margin:0; padding:0; max-height:220px; overflow:auto; }
+    .findings li {
+      padding:10px 0; border-top:1px solid var(--line); color:#c5cbc6;
+      font-size:12px; line-height:1.45;
+    }
+    .findings code { color:var(--yellow); font-size:10px; }
+    .preview { min-width:0; position:relative; background:#090b0c; }
+    iframe { width:100%; height:100%; min-height:720px; border:0; background:var(--bg); display:block; }
+    .empty {
+      position:absolute; inset:0; display:grid; place-items:center; padding:40px;
+      color:var(--muted); text-align:center; line-height:1.6;
+    }
+    .empty[hidden] { display:none; }
+    .drop { border-color:var(--green) !important; background:rgba(168,236,103,.04) !important; }
+    @media (max-width:900px) {
+      .intro { align-items:start; flex-direction:column; }
+      .workbench { grid-template-columns:1fr; }
+      .editor { border-right:0; border-bottom:1px solid var(--line); }
+      textarea { min-height:390px; }
+      iframe { min-height:780px; }
+    }
+    @media (max-width:560px) {
+      .navlinks a:first-child { display:none; }
+      .intro { padding-top:25px; }
+      .editor { padding:12px; }
+      .result { align-items:flex-start; flex-direction:column; }
+      .receipt { max-width:100%; text-align:left; }
+    }
+    @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="../">Doubt<i>↯</i></a>
+    <div class="navlinks">
+      <a href="../examples/agent-skills-vs-mcp.html">Example map</a>
+      <a href="https://github.com/alsoleg89/doubt">GitHub ↗</a>
+    </div>
+  </nav>
+  <header class="intro">
+    <div>
+      <div class="eyebrow">Zero-install evidence contract</div>
+      <h1>Paste evidence.<br>Inspect the edges.</h1>
+    </div>
+    <div class="privacy">
+      <strong>Your map stays in this tab.</strong> Validation, SHA-256 receipt,
+      rendering, and downloads run locally. No account, telemetry, analytics,
+      or network submission.
+    </div>
+  </header>
+  <main class="workbench">
+    <section class="editor" id="editor-panel" aria-label="Evidence map editor">
+      <div class="toolbar">
+        <button class="primary" id="validate" type="button">Validate &amp; render</button>
+        <button id="example" type="button">Load example</button>
+        <label class="file-label" for="file">Open JSON</label>
+        <input id="file" type="file" accept=".json,.doubt.json,application/json">
+        <button id="download-json" type="button" disabled>Download JSON</button>
+        <button id="download-html" type="button" disabled>Download HTML</button>
+      </div>
+      <textarea id="source" aria-label="Doubt map JSON" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+      <div class="result" id="result" role="status" aria-live="polite">
+        <div><strong>Loading example…</strong><span>The validator is starting.</span></div>
+      </div>
+      <ol class="findings" id="findings" aria-label="Validation findings"></ol>
+    </section>
+    <section class="preview" aria-label="Interactive evidence map preview">
+      <div class="empty" id="empty">A valid map will render here as the same self-contained HTML produced by the CLI.</div>
+      <iframe id="frame" title="Rendered Doubt evidence map" sandbox="allow-scripts allow-popups"></iframe>
+    </section>
+  </main>
+  <script type="module">
+    import { canonicalJson, inspectMapContract } from "../assets/contract.js";
+    import { renderMap } from "../assets/render-map.js";
+
+    const source = document.querySelector("#source");
+    const result = document.querySelector("#result");
+    const findings = document.querySelector("#findings");
+    const frame = document.querySelector("#frame");
+    const empty = document.querySelector("#empty");
+    const editorPanel = document.querySelector("#editor-panel");
+    const downloadJson = document.querySelector("#download-json");
+    const downloadHtml = document.querySelector("#download-html");
+    const file = document.querySelector("#file");
+    let current = { map: null, validation: null, html: null };
+    let debounce;
+
+    function finding(path, rule, message) {
+      return { path, rule, message };
+    }
+
+    async function sha256(text) {
+      const bytes = new TextEncoder().encode(text);
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return [...new Uint8Array(digest)]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    function showFindings(items) {
+      findings.replaceChildren();
+      for (const item of items) {
+        const row = document.createElement("li");
+        const code = document.createElement("code");
+        code.textContent = `${item.rule} · ${item.path}`;
+        const copy = document.createElement("div");
+        copy.textContent = item.message;
+        row.append(code, copy);
+        findings.append(row);
+      }
+    }
+
+    function setInvalid(items) {
+      current = { map: null, validation: null, html: null };
+      downloadJson.disabled = true;
+      downloadHtml.disabled = true;
+      frame.removeAttribute("srcdoc");
+      empty.hidden = false;
+      result.className = "result invalid";
+      result.replaceChildren();
+      const summary = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = `${items.length} ${items.length === 1 ? "finding" : "findings"}`;
+      const detail = document.createElement("span");
+      detail.textContent = "The map was not rendered.";
+      summary.append(title, detail);
+      result.append(summary);
+      showFindings(items);
+    }
+
+    function slug(value) {
+      return String(value || "evidence-map")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .slice(0, 54) || "evidence-map";
+    }
+
+    async function evaluateEditor() {
+      let map;
+      try {
+        map = JSON.parse(source.value);
+      } catch (error) {
+        setInvalid([finding("$", "invalid-json", `Could not parse JSON: ${error.message}`)]);
+        return;
+      }
+
+      const validation = inspectMapContract(map);
+      if (!validation.valid) {
+        setInvalid(validation.findings);
+        return;
+      }
+
+      const receipt = await sha256(canonicalJson(map));
+      const complete = { ...validation, receipt };
+      const html = renderMap(map, complete);
+      current = { map, validation: complete, html };
+      showFindings([]);
+      frame.srcdoc = html;
+      empty.hidden = true;
+      downloadJson.disabled = false;
+      downloadHtml.disabled = false;
+      result.className = "result valid";
+      result.replaceChildren();
+
+      const summary = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = "VALID";
+      const detail = document.createElement("span");
+      const metrics = complete.metrics;
+      detail.textContent = `${metrics.claims} claims · ${metrics.evidence} evidence · ${metrics.sources} sources · ${metrics.contradictions} tensions · ${metrics.unknowns} unknowns`;
+      summary.append(title, detail);
+      const digest = document.createElement("span");
+      digest.className = "receipt";
+      digest.textContent = `receipt · ${receipt}`;
+      result.append(summary, digest);
+    }
+
+    async function loadExample() {
+      result.className = "result";
+      result.innerHTML = "<div><strong>Loading example…</strong><span>Fetching the bundled public map.</span></div>";
+      try {
+        const response = await fetch("../examples/agent-skills-vs-mcp.doubt.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const map = await response.json();
+        source.value = JSON.stringify(map, null, 2);
+        await evaluateEditor();
+      } catch (error) {
+        setInvalid([finding("$", "example-load", `Could not load the bundled example: ${error.message}`)]);
+      }
+    }
+
+    function downloadText(contents, name, type) {
+      const url = URL.createObjectURL(new Blob([contents], { type }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
+
+    document.querySelector("#validate").addEventListener("click", evaluateEditor);
+    document.querySelector("#example").addEventListener("click", loadExample);
+    downloadJson.addEventListener("click", () => {
+      if (!current.map) return;
+      downloadText(
+        `${JSON.stringify(current.map, null, 2)}\n`,
+        `${slug(current.map.title)}.doubt.json`,
+        "application/json",
+      );
+    });
+    downloadHtml.addEventListener("click", () => {
+      if (!current.html) return;
+      downloadText(
+        current.html,
+        `${slug(current.map.title)}.html`,
+        "text/html",
+      );
+    });
+    source.addEventListener("input", () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(evaluateEditor, 450);
+    });
+    file.addEventListener("change", async () => {
+      const selected = file.files?.[0];
+      if (!selected) return;
+      if (selected.size > 2_000_000) {
+        setInvalid([finding("$", "file-size", "Keep playground map files under 2 MB.")]);
+        return;
+      }
+      source.value = await selected.text();
+      await evaluateEditor();
+      file.value = "";
+    });
+    for (const event of ["dragenter", "dragover"]) {
+      editorPanel.addEventListener(event, (input) => {
+        input.preventDefault();
+        editorPanel.classList.add("drop");
+      });
+    }
+    for (const event of ["dragleave", "drop"]) {
+      editorPanel.addEventListener(event, (input) => {
+        input.preventDefault();
+        editorPanel.classList.remove("drop");
+      });
+    }
+    editorPanel.addEventListener("drop", async (input) => {
+      const selected = input.dataTransfer?.files?.[0];
+      if (!selected) return;
+      if (selected.size > 2_000_000) {
+        setInvalid([finding("$", "file-size", "Keep playground map files under 2 MB.")]);
+        return;
+      }
+      source.value = await selected.text();
+      await evaluateEditor();
+    });
+
+    loadExample();
+  </script>
+</body>
+</html>
