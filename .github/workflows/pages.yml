@@ -30,6 +30,7 @@ jobs:
           cp site/robots.txt _site/robots.txt
           cp site/sitemap.xml _site/sitemap.xml
           cp site/llms.txt _site/llms.txt
+          cp site/6cfa3cf24f13d6610627b17a367393d2.txt _site/6cfa3cf24f13d6610627b17a367393d2.txt
           cp docs/social-preview.png _site/social-preview.png
           cp site/playground/index.html _site/playground/index.html
           cp src/contract.js _site/assets/contract.js
@@ -52,3 +53,10 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
+      - name: Notify IndexNow
+        continue-on-error: true
+        run: >-
+          curl --fail-with-body --silent --show-error
+          --request POST https://api.indexnow.org/indexnow
+          --header "Content-Type: application/json; charset=utf-8"
+          --data-binary @site/indexnow.json

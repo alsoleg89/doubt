@@ -32,7 +32,7 @@ test("browser contract and Node wrapper agree on the public example", async () =
 });
 
 test("playground is local-only and loads browser-safe canonical modules", async () => {
-  const [page, home, contract, shareLink, workflow, robots, sitemap, llms] = await Promise.all([
+  const [page, home, contract, shareLink, workflow, robots, sitemap, llms, indexNow, indexNowKey] = await Promise.all([
     readFile("site/playground/index.html", "utf8"),
     readFile("site/index.html", "utf8"),
     readFile("src/contract.js", "utf8"),
@@ -41,6 +41,8 @@ test("playground is local-only and loads browser-safe canonical modules", async 
     readFile("site/robots.txt", "utf8"),
     readFile("site/sitemap.xml", "utf8"),
     readFile("site/llms.txt", "utf8"),
+    readFile("site/indexnow.json", "utf8"),
+    readFile("site/6cfa3cf24f13d6610627b17a367393d2.txt", "utf8"),
   ]);
 
   assert.match(page, /import \{ canonicalJson, inspectMapContract \} from "\.\.\/assets\/contract\.js"/);
@@ -84,11 +86,23 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(workflow, /cp site\/robots\.txt _site\/robots\.txt/);
   assert.match(workflow, /cp site\/sitemap\.xml _site\/sitemap\.xml/);
   assert.match(workflow, /cp site\/llms\.txt _site\/llms\.txt/);
+  assert.match(workflow, /cp site\/6cfa3cf24f13d6610627b17a367393d2\.txt _site\//);
+  assert.match(workflow, /https:\/\/api\.indexnow\.org\/indexnow/);
+  assert.match(workflow, /continue-on-error: true/);
   assert.match(robots, /Sitemap: https:\/\/alsoleg89\.github\.io\/doubt\/sitemap\.xml/);
   assert.match(sitemap, /<loc>https:\/\/alsoleg89\.github\.io\/doubt\/<\/loc>/);
   assert.match(sitemap, /agent-skills-portability\.html/);
   assert.match(llms, /The validator proves structural traceability/);
   assert.doesNotMatch(llms, /5\/5|behaviorally equivalent/i);
+  const indexNowPayload = JSON.parse(indexNow);
+  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  assert.equal(indexNowPayload.host, "alsoleg89.github.io");
+  assert.equal(indexNowPayload.key, indexNowKey.trim());
+  assert.equal(
+    indexNowPayload.keyLocation,
+    `https://alsoleg89.github.io/doubt/${indexNowPayload.key}.txt`,
+  );
+  assert.deepEqual(indexNowPayload.urlList, sitemapUrls);
 });
 
 test("share links round-trip Unicode maps without sending content in the request URL", () => {

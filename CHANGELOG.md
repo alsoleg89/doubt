@@ -6,6 +6,8 @@
   README, and contributor guide to scoped good-first benchmark issues.
 - Add crawlable Pages discovery through canonical URLs, structured software
   metadata, a sitemap, robots policy, and an AI-readable project index.
+- Notify IndexNow-compatible search engines after Pages deployments using a
+  path-scoped public verification key and a sitemap-locked URL batch.
 
 ## 0.5.0 — Agent Skills portability benchmark
 
