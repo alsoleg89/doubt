@@ -27,6 +27,8 @@ jobs:
         run: |
           mkdir -p _site/examples _site/probes/launchkit _site/benchmark
           cp site/index.html _site/index.html
+          cp examples/agent-skills-vs-mcp.html _site/examples/agent-skills-vs-mcp.html
+          cp examples/agent-skills-vs-mcp.doubt.json _site/examples/agent-skills-vs-mcp.doubt.json
           cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html
           cp examples/what-should-doubt-become.doubt.json _site/examples/what-should-doubt-become.doubt.json
           cp probes/launchkit/britanka.html _site/probes/launchkit/britanka.html

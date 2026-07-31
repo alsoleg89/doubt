@@ -3,16 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=./examples/what-should-doubt-become.html">
-  <title>Doubt — source-grounded evidence maps</title>
-  <meta name="description" content="See what supports a conclusion, what contradicts it, and what is still missing.">
+  <meta name="description" content="Doubt turns contested AI questions into source-grounded evidence maps with visible contradictions, qualifications, and unknowns.">
+  <meta name="theme-color" content="#0b0d0e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doubt — evidence, with edges">
+  <meta property="og:description" content="Explore source-grounded maps, inspect exact source regions, and test whether the map beats a cited memo.">
+  <title>Doubt — evidence, with edges</title>
   <style>
-    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-    body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #0b0d0e; color: #eef0e7; }
-    a { color: #a8ec67; }
+    :root {
+      color-scheme: dark;
+      --bg:#0b0d0e; --panel:#111517; --ink:#f0f1e9; --muted:#919a93;
+      --line:#28302c; --green:#a8ec67; --red:#ff806e; --blue:#83b9ff; --yellow:#eac96f;
+    }
+    * { box-sizing:border-box; }
+    html { background:var(--bg); }
+    body { margin:0; color:var(--ink); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a { color:inherit; }
+    .shell { max-width:1200px; margin:auto; padding:0 24px 90px; }
+    nav { min-height:70px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+    .brand { text-decoration:none; font-size:21px; font-weight:850; letter-spacing:-.045em; }
+    .brand i { color:var(--green); font-style:normal; }
+    .navlinks { display:flex; gap:20px; color:var(--muted); font-size:13px; }
+    .navlinks a { text-decoration:none; }
+    .navlinks a:hover { color:var(--ink); }
+    header { padding:90px 0 70px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr); gap:70px; align-items:end; }
+    .eyebrow { color:var(--green); font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.14em; }
+    h1 { margin:15px 0 22px; font-size:clamp(58px,9vw,112px); line-height:.86; letter-spacing:-.078em; max-width:850px; }
+    .lede { color:#c1c8c2; font-size:18px; line-height:1.62; max-width:680px; }
+    .position { border-left:2px solid var(--green); padding-left:19px; color:#c7cdc8; line-height:1.55; }
+    .position strong { display:block; color:var(--ink); margin-bottom:7px; }
+    .actions { display:flex; gap:11px; flex-wrap:wrap; margin-top:28px; }
+    .button { text-decoration:none; border-radius:999px; padding:12px 17px; font-weight:760; font-size:14px; }
+    .primary { background:var(--green); color:#0b0d0e; border:1px solid var(--green); }
+    .secondary { border:1px solid var(--line); }
+    .metrics { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    .metric { background:var(--panel); padding:18px; border-right:1px solid var(--line); }
+    .metric:last-child { border:0; }
+    .metric strong { display:block; font-size:27px; letter-spacing:-.045em; }
+    .metric span { color:var(--muted); font:9px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.1em; }
+    .section-head { margin:82px 0 24px; display:flex; justify-content:space-between; align-items:end; gap:30px; }
+    h2 { margin:8px 0 0; font-size:clamp(34px,5vw,56px); letter-spacing:-.055em; }
+    .section-note { color:var(--muted); max-width:430px; line-height:1.55; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .card { min-height:330px; border:1px solid var(--line); border-radius:16px; background:var(--panel); padding:23px; text-decoration:none; display:flex; flex-direction:column; transition:transform .18s,border-color .18s; }
+    .card:hover { transform:translateY(-3px); border-color:#5f6a63; }
+    .card.featured { background:linear-gradient(145deg,rgba(168,236,103,.12),var(--panel) 55%); }
+    .tag { align-self:flex-start; border:1px solid var(--line); border-radius:999px; padding:5px 8px; color:var(--muted); font:9px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.1em; }
+    .card h3 { margin:42px 0 13px; font-size:26px; line-height:1.02; letter-spacing:-.045em; }
+    .card p { color:#afb7b1; font-size:14px; line-height:1.55; }
+    .card .edge { margin-top:auto; padding-top:28px; color:var(--green); font:11px ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .relations { margin-top:76px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .relation { border-top:1px solid var(--line); padding:14px 3px; color:var(--muted); font:10px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.1em; }
+    .relation b { display:inline-block; width:8px; height:8px; border-radius:2px; background:var(--green); margin-right:8px; }
+    .relation:nth-child(2) b { background:var(--red); }
+    .relation:nth-child(3) b { background:var(--blue); }
+    .relation:nth-child(4) b { background:var(--yellow); }
+    footer { margin-top:75px; border-top:1px solid var(--line); padding-top:25px; display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:12px; }
+    @media (max-width:850px) {
+      header { grid-template-columns:1fr; gap:35px; padding-top:65px; }
+      .cards { grid-template-columns:1fr; }
+      .card { min-height:270px; }
+      .section-head { align-items:start; flex-direction:column; }
+    }
+    @media (max-width:580px) {
+      .navlinks a:first-child { display:none; }
+      .metrics,.relations { grid-template-columns:repeat(2,1fr); }
+      .metric:nth-child(2) { border-right:0; }
+      .metric:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+      footer { flex-direction:column; }
+    }
+    @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
   </style>
 </head>
 <body>
-  <p>Opening the <a href="./examples/what-should-doubt-become.html">Doubt evidence map</a>…</p>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./">Doubt<i>↯</i></a>
+      <div class="navlinks">
+        <a href="./benchmark/">Reader benchmark</a>
+        <a href="https://github.com/alsoleg89/doubt">GitHub ↗</a>
+      </div>
+    </nav>
+    <header>
+      <div>
+        <div class="eyebrow">Source-grounded reasoning artifacts</div>
+        <h1>Evidence,<br>with edges.</h1>
+        <p class="lede">Doubt keeps support, contradiction, qualification, and missing evidence inspectable. Every evidence card opens the exact dated source region behind it.</p>
+        <div class="actions">
+          <a class="button primary" href="./examples/agent-skills-vs-mcp.html">Explore Skills vs MCP</a>
+          <a class="button secondary" href="https://github.com/alsoleg89/doubt">View the source</a>
+        </div>
+      </div>
+      <div class="position">
+        <strong>Current map</strong>
+        Use Agent Skills for reusable procedure and context. Add MCP for live tools and resources. Combine them when the workflow needs both.
+      </div>
+    </header>
+    <section class="metrics" aria-label="Project facts">
+      <div class="metric"><strong>2</strong><span>public maps</span></div>
+      <div class="metric"><strong>10</strong><span>source regions</span></div>
+      <div class="metric"><strong>12/12</strong><span>contract cases</span></div>
+      <div class="metric"><strong>0</strong><span>runtime deps</span></div>
+    </section>
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Inspect the reasoning</div>
+        <h2>Three ways in.</h2>
+      </div>
+      <div class="section-note">Start with a real AI architecture question, audit the product decision that created Doubt, or test the interface against cited prose.</div>
+    </div>
+    <section class="cards">
+      <a class="card featured" href="./examples/agent-skills-vs-mcp.html">
+        <span class="tag">Topical map</span>
+        <h3>Agent Skills vs MCP</h3>
+        <p>Which boundary fits reusable procedure, which fits live capability, and why “both” is sometimes the only honest answer.</p>
+        <span class="edge">5 sources · 2 contradictions · 1 unknown ↗</span>
+      </a>
+      <a class="card" href="./examples/what-should-doubt-become.html">
+        <span class="tag">Dogfood map</span>
+        <h3>What should Doubt become?</h3>
+        <p>The evidence that killed a launch-video direction, preserved its strongest advantage, and exposed the missing reader test.</p>
+        <span class="edge">Open the decision record ↗</span>
+      </a>
+      <a class="card" href="./benchmark/">
+        <span class="tag">Open benchmark</span>
+        <h3>Does the map beat the memo?</h3>
+        <p>Five paired topics, the same frozen sources, local-only assignment, and no result claim before ten complete readers.</p>
+        <span class="edge">Take the reader study ↗</span>
+      </a>
+    </section>
+    <section class="relations" aria-label="Reasoning edge types">
+      <div class="relation"><b></b>supports</div>
+      <div class="relation"><b></b>contradicts</div>
+      <div class="relation"><b></b>qualifies</div>
+      <div class="relation"><b></b>missing</div>
+    </section>
+    <footer>
+      <span>MIT licensed · local first · no telemetry</span>
+      <span>If an answer matters, make its evidence navigable.</span>
+    </footer>
+  </div>
 </body>
 </html>
