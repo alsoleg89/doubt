@@ -73,6 +73,9 @@ clients that support the open Agent Skills layout. It uses the research and
 browsing capabilities the agent already has; Doubt does not proxy prompts or
 require a model key.
 
+Compatible remote clients can also discover a digest-pinned archive through
+the [Agent Skills well-known index](https://alsoleg89.github.io/doubt/.well-known/agent-skills/index.json).
+
 ## Render your own
 
 ```bash
@@ -112,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.2.0
+      - uses: alsoleg89/doubt@v0.2.1
 ```
 
 The Action fails the check with file-level annotations and writes receipts,

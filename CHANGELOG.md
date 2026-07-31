@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — Discoverable Agent Skill
+
+- Publish a deterministic, digest-pinned Agent Skill archive through the
+  Agent Skills Discovery v0.2 well-known index.
+- Verify archive structure, content integrity, and reproducible bytes in the
+  test suite.
+
 ## 0.2.0 — Evidence maps
 
 - Pivot Doubt from a prompt-only behavior layer to a source-grounded artifact.

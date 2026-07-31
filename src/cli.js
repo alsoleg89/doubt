@@ -69,7 +69,7 @@ function printMapValidation(validation) {
 export async function run(argv) {
   const [command = "help", ...rest] = argv;
   if (command === "--version" || command === "-v") {
-    console.log("0.2.0");
+    console.log("0.2.1");
     return;
   }
   if (command === "help" || command === "--help" || command === "-h") {

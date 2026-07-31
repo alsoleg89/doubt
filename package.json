@@ -1,6 +1,6 @@
 {
   "name": "doubt-ai",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Turn contested questions into interactive, source-grounded evidence maps.",
   "type": "module",
   "license": "MIT",
@@ -43,6 +43,7 @@
     "bin",
     "docs/demo.svg",
     "examples",
+    "scripts/build-skill-discovery.mjs",
     "src",
     "skill",
     "README.md",
@@ -53,6 +54,7 @@
   },
   "scripts": {
     "demo": "node bin/doubt.js demo --out examples/what-should-doubt-become.html",
+    "discovery": "node scripts/build-skill-discovery.mjs",
     "benchmark": "node benchmarks/evidence-contract.mjs",
     "benchmark:check": "node benchmarks/evidence-contract.mjs --check-only",
     "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/map.js && node --check src/render-map.js && node --check src/install.js",
