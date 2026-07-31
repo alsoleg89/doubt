@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -85,4 +85,16 @@ test("action preserves validator findings and escapes workflow commands", async 
     true,
   );
   assert.equal(escapeWorkflowCommand("a:b,c%\n"), "a%3Ab%2Cc%25%0A");
+});
+
+test("repository dogfoods the published evidence-contract Action", async () => {
+  const [workflow, readme] = await Promise.all([
+    readFile(".github/workflows/evidence.yml", "utf8"),
+    readFile("README.md", "utf8"),
+  ]);
+
+  assert.match(workflow, /name: Evidence contract/);
+  assert.match(workflow, /- uses: \.\//);
+  assert.match(workflow, /require-maps: "true"/);
+  assert.match(readme, /actions\/workflows\/evidence\.yml\/badge\.svg/);
 });

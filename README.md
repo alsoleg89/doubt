@@ -11,6 +11,7 @@
 [![Zero dependencies](https://img.shields.io/badge/runtime_dependencies-0-ff806e.svg)](package.json)
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
+[![Evidence contract](https://github.com/alsoleg89/doubt/actions/workflows/evidence.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/evidence.yml)
 
 [**Try the zero-install playground →**](https://alsoleg89.github.io/doubt/playground/)
 ·
