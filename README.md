@@ -61,9 +61,6 @@ downloads run in the tab; map content is never submitted over the network.
   — when a capability should be reusable procedure, a live protocol boundary,
   or both. Built from the Agent Skills specification, GitHub's implementation,
   the discovery RFC, and the current MCP architecture and security guidance.
-- [**What should Doubt become?**](https://alsoleg89.github.io/doubt/examples/what-should-doubt-become.html)
-  — the product decision that kept a distribution module, rejected it as the
-  core, and preserved the missing reader-preference test.
 
 All maps are committed as editable `.doubt.json`, validated with the same
 evidence contract, and rendered as self-contained HTML.
@@ -87,12 +84,6 @@ and inspect exact source regions. The canonical editable input is
 [plain JSON](examples/agent-skills-vs-mcp.doubt.json); the generated
 [self-contained HTML](examples/agent-skills-vs-mcp.html) has no runtime
 dependencies.
-
-The separate [product decision record](examples/what-should-doubt-become.doubt.json)
-preserves the evidence that killed earlier directions and the human-preference
-test that is still missing. The broader selection process started with
-[105 AI open-source wedges](docs/category-research-2026.md) and narrowed them
-through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md).
 
 ## Give the workflow to your agent
 

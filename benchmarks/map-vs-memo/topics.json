@@ -5,16 +5,16 @@
   "title": "Can an evidence map beat a cited memo?",
   "topics": [
     {
-      "id": "core-product-direction",
-      "mapFile": "../../examples/what-should-doubt-become.doubt.json",
+      "id": "agent-skills-vs-mcp",
+      "mapFile": "../../examples/agent-skills-vs-mcp.doubt.json",
       "memo": {
-        "title": "Product-direction memo",
+        "title": "Agent Skills vs MCP memo",
         "paragraphs": [
-          "Current position. Do not ship LaunchKit as a standalone product. Keep launch artifacts as a distribution module and make source-grounded decision maps the core of Doubt.",
-          "Launch artifacts still create useful public output, so removing the module entirely would discard a distribution advantage. The standalone case is weaker: RepoClip already turns repositories into narrated demo videos [S1], and OpenMontage already includes a Screen Demo workflow [S2].",
-          "The local falsification probe adds a practical warning. It produced useful artifacts for two repositories, but generic filler when the repository lacked usable product metadata [S3].",
-          "The alternative evidence-map wedge has a real adjacent demand signal: Causalith organizes research around claims and exact source spans [S4]. It is not uncontested, because Rigor already offers structured argument maps and AI verification, although its open-core path is milestone based [S5].",
-          "The most important unknown is reader pull. No domain-reader comparison has shown that an evidence map is more useful than a well-cited memo."
+          "Current position. Default to an Agent Skill for reusable procedure and bundled context. Add MCP for live or dynamic tools and resources; combine them when the Skill should orchestrate an MCP-backed capability.",
+          "The Skill boundary packages instructions, examples, references, assets, and scripts with progressive disclosure [S1]. GitHub documents that open format across Copilot clients [S2], although the current discovery proposal remains a breaking draft [S3].",
+          "MCP addresses a different boundary: servers expose live tools, resources, and prompts through JSON-RPC over local or remote transports [S4]. This makes MCP appropriate for dynamic capability, but it also introduces authorization and operational risks documented by the protocol's security guidance [S5].",
+          "The formats can therefore compose. A Skill can teach a repeatable workflow while an MCP server supplies live data or actions. Choosing a Skill is not a safety shortcut because Skills may include executable scripts and host permission behavior varies.",
+          "The most important unknown is behavioral portability. No committed cross-client benchmark yet shows that one non-trivial Skill and MCP integration behave consistently across major coding agents."
         ]
       },
       "questions": [
@@ -22,32 +22,32 @@
           "id": "position",
           "prompt": "What is the current position?",
           "options": [
-            "Make evidence maps the core and retain launch artifacts as a module.",
-            "Ship LaunchKit as the only product.",
-            "Stop both directions and build an agent-memory layer.",
-            "Turn Doubt into a hosted video editor."
+            "Use a Skill for reusable procedure, MCP for live capability, and combine them when needed.",
+            "Always use MCP because it is newer.",
+            "Always use a Skill because it is local.",
+            "Replace both formats with a hosted prompt."
           ],
           "answer": 0
         },
         {
           "id": "contradiction",
-          "prompt": "What is the strongest counterpressure against dropping LaunchKit completely?",
+          "prompt": "What is the strongest counterpressure against using MCP for static guidance?",
           "options": [
-            "Launch artifacts create a built-in public distribution loop.",
-            "The validator requires Node 18.",
-            "Rigor is already fully open source.",
-            "The evidence map has no renderer."
+            "A live integration adds authorization and operational risk.",
+            "MCP cannot expose tools.",
+            "Agent Skills require a remote server.",
+            "JSON-RPC cannot carry dynamic data."
           ],
           "answer": 0
         },
         {
           "id": "qualification",
-          "prompt": "Which qualification narrows the evidence-map opportunity?",
+          "prompt": "What qualifies the claim that a Skill is the simpler boundary?",
           "options": [
-            "Rigor already occupies part of the structured argument-map product shape.",
-            "Causalith has stopped mapping claims.",
-            "The local probe passed every unfamiliar repository.",
-            "Evidence maps cannot contain missing evidence."
+            "A Skill may include executable scripts, and host permission behavior varies.",
+            "A Skill can never contain code.",
+            "Every client discovers Skills identically.",
+            "Skills automatically verify their own sources."
           ],
           "answer": 0
         },
@@ -55,21 +55,21 @@
           "id": "unknown",
           "prompt": "What decisive evidence is still missing?",
           "options": [
-            "A domain-reader comparison of the map with a cited memo.",
-            "A list of supported Node versions.",
-            "A license file for OpenMontage.",
-            "A count of nodes in the dogfood map."
+            "A cross-client behavioral benchmark for a non-trivial Skill and MCP integration.",
+            "A list of JSON-RPC method names.",
+            "Proof that SKILL.md is Markdown.",
+            "A screenshot of the GitHub Docs page."
           ],
           "answer": 0
         },
         {
           "id": "source",
-          "prompt": "Where is the sampled Rigor observation located?",
+          "prompt": "Where are MCP's primitives and transports documented?",
           "options": [
-            "Homepage FAQ: What does the open source threshold mean?",
-            "README: Pipelines table → Screen Demo",
-            "Section: The Results",
-            "Generated hero and feature cards"
+            "Concepts → Layers, Transports, and Primitives",
+            "Agent Skills → Directory structure",
+            "Discovery RFC → Changelog v0.2.0",
+            "Security Best Practices → Attacks and Mitigations"
           ],
           "answer": 0
         }

@@ -51,8 +51,6 @@ jobs:
           cp examples/agent-skills-portability.doubt.json _site/examples/agent-skills-portability.doubt.json
           cp examples/agent-skills-vs-mcp.html _site/examples/agent-skills-vs-mcp.html
           cp examples/agent-skills-vs-mcp.doubt.json _site/examples/agent-skills-vs-mcp.doubt.json
-          cp examples/what-should-doubt-become.html _site/examples/what-should-doubt-become.html
-          cp examples/what-should-doubt-become.doubt.json _site/examples/what-should-doubt-become.doubt.json
           node benchmarks/map-vs-memo/study.mjs --out _site/benchmark/index.html
           node scripts/build-skill-discovery.mjs _site
           touch _site/.nojekyll

@@ -6,7 +6,7 @@ import { inspectMap } from "../src/map.js";
 import { renderMap } from "../src/render-map.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const exampleFile = path.join(root, "examples", "what-should-doubt-become.doubt.json");
+const exampleFile = path.join(root, "examples", "agent-skills-vs-mcp.doubt.json");
 const outputDir = path.join(root, "benchmarks", "results");
 const writeResults = !process.argv.includes("--check-only");
 
@@ -185,7 +185,8 @@ const cases = [
     id: "unsupported-position",
     expected: "unsupported-position",
     mutate(map) {
-      map.edges = map.edges.filter((edge) => edge.to !== "verdict");
+      const position = map.nodes.find((node) => node.type === "position");
+      map.edges = map.edges.filter((edge) => edge.to !== position.id);
     },
   },
   {
