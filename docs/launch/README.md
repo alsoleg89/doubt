@@ -93,8 +93,8 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > evidence counts to the job summary without installing a package.
 >
 > The default demo maps Agent Skills vs MCP from the official specifications;
-> the gallery also includes the decision record that selected this project from
-> 105 AI OSS wedges:
+> the gallery also includes a portability audit built from the Agent Skills
+> specification and public client documentation:
 >
 > https://alsoleg89.github.io/doubt/
 >
@@ -150,8 +150,8 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
    retrieved bytes; one failure means no attested output.
 7. The reusable GitHub Action validates every `*.doubt.json` map in CI and
    leaves file annotations plus a receipt in the job summary.
-8. I used it to record why I rejected other product directions—and kept the
-   missing human-pull test visible. Live map:
+8. The gallery includes a portability audit that keeps unsupported client
+   behavior and missing cross-client tests visible. Live map:
    https://alsoleg89.github.io/doubt/
 9. Repo + 21-case adversarial contract benchmark:
    https://github.com/alsoleg89/doubt
