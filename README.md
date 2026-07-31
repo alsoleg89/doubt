@@ -8,6 +8,7 @@
 
 [![MIT license](https://img.shields.io/badge/license-MIT-a8ec67.svg)](LICENSE)
 [![Node 18+](https://img.shields.io/badge/node-%E2%89%A518-83b9ff.svg)](package.json)
+[![npm version](https://img.shields.io/npm/v/doubt-ai.svg)](https://www.npmjs.com/package/doubt-ai)
 [![Zero dependencies](https://img.shields.io/badge/runtime_dependencies-0-ff806e.svg)](package.json)
 [![No telemetry](https://img.shields.io/badge/telemetry-none-eac96f.svg)](SECURITY.md)
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
@@ -76,6 +77,9 @@ evidence contract, and rendered as self-contained HTML.
 ```bash
 npx doubt-ai demo --out doubt-demo.html
 ```
+
+The public package is [`doubt-ai`](https://www.npmjs.com/package/doubt-ai); the
+CLI has zero runtime dependencies and requires Node.js 18 or newer.
 
 The command renders the same decision used to choose Doubt's product direction:
 

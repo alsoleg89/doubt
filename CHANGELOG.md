@@ -9,6 +9,8 @@
 - Notify IndexNow-compatible search engines after Pages deployments using a
   path-scoped public verification key and a sitemap-locked URL batch.
 - Restrict Pages and IndexNow runs to files that can change the public site.
+- Publish the verified v0.5.0 release tarball as the public `doubt-ai` package
+  on npm, with a clean Registry install and CLI smoke test.
 
 ## 0.5.0 — Agent Skills portability benchmark
 
