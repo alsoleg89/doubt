@@ -14,6 +14,8 @@ import { fileURLToPath } from "node:url";
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const canonicalSkill = join(repoRoot, "skill", "doubt");
 export const githubSkill = join(repoRoot, ".github", "skills", "doubt");
+export const publishedSkill = join(repoRoot, "skills", "doubt");
+export const skillMirrors = [githubSkill, publishedSkill];
 
 async function filesUnder(root, current = root) {
   const entries = await readdir(current, { withFileTypes: true });
@@ -80,26 +82,70 @@ export async function syncSkillMirror({
   return compareSkillMirror({ source, target });
 }
 
-function formatProblems(result) {
+export async function compareSkillMirrors({
+  source = canonicalSkill,
+  targets = skillMirrors,
+} = {}) {
+  const mirrors = await Promise.all(
+    targets.map(async (target) => ({
+      target,
+      result: await compareSkillMirror({ source, target }),
+    })),
+  );
+  return {
+    ok: mirrors.every((mirror) => mirror.result.ok),
+    files: mirrors[0]?.result.files ?? 0,
+    mirrors,
+  };
+}
+
+export async function syncSkillMirrors({
+  source = canonicalSkill,
+  targets = skillMirrors,
+} = {}) {
+  const mirrors = [];
+  for (const target of targets) {
+    mirrors.push({
+      target,
+      result: await syncSkillMirror({ source, target }),
+    });
+  }
+  return {
+    ok: mirrors.every((mirror) => mirror.result.ok),
+    files: mirrors[0]?.result.files ?? 0,
+    mirrors,
+  };
+}
+
+function formatProblems(result, target) {
   return [
-    ...result.missing.map((file) => `missing: ${file}`),
-    ...result.unexpected.map((file) => `unexpected: ${file}`),
-    ...result.changed.map((file) => `changed: ${file}`),
+    ...result.missing.map((file) => `${target}: missing: ${file}`),
+    ...result.unexpected.map((file) => `${target}: unexpected: ${file}`),
+    ...result.changed.map((file) => `${target}: changed: ${file}`),
   ].join("\n");
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const write = process.argv.includes("--write");
-  const result = write ? await syncSkillMirror() : await compareSkillMirror();
+  const result = write ? await syncSkillMirrors() : await compareSkillMirrors();
 
   if (!result.ok) {
-    console.error("GitHub skill mirror differs from skill/doubt:");
-    console.error(formatProblems(result));
+    console.error("Repository skill mirrors differ from skill/doubt:");
+    console.error(
+      result.mirrors
+        .filter((mirror) => !mirror.result.ok)
+        .map((mirror) => formatProblems(
+          mirror.result,
+          relative(repoRoot, mirror.target),
+        ))
+        .join("\n"),
+    );
     console.error("Run `npm run skill:sync` to rebuild the mirror.");
     process.exitCode = 1;
   } else {
     console.log(
-      `${write ? "Synced" : "Verified"} ${result.files} files in .github/skills/doubt`,
+      `${write ? "Synced" : "Verified"} ${result.files} files in `
+      + `${result.mirrors.length} repository skill mirrors`,
     );
   }
 }

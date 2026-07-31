@@ -97,7 +97,8 @@ The skill works with Claude Code, Codex, GitHub Copilot, Cursor, Gemini CLI, and
 clients that support the open Agent Skills layout. It uses the research and
 browsing capabilities the agent already has; Doubt does not proxy prompts or
 require a model key. The checked-in
-[GitHub-native skill](.github/skills/doubt/SKILL.md) is byte-verified against
+[remote-install skill](skills/doubt/SKILL.md) and
+[GitHub project skill](.github/skills/doubt/SKILL.md) are byte-verified against
 the canonical install payload on every CI run.
 
 Compatible remote clients can also discover a digest-pinned archive through
@@ -142,7 +143,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.3.0
+      - uses: alsoleg89/doubt@v0.3.1
 ```
 
 The Action fails the check with file-level annotations and writes receipts,
