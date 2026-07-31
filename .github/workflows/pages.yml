@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p _site/examples _site/probes/launchkit _site/benchmark _site/playground _site/assets
           cp site/index.html _site/index.html
+          cp docs/social-preview.png _site/social-preview.png
           cp site/playground/index.html _site/playground/index.html
           cp src/contract.js _site/assets/contract.js
           cp src/render-map.js _site/assets/render-map.js

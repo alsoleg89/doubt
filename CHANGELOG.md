@@ -8,6 +8,8 @@
   evidence contract and renderer, with JSON/HTML downloads and no submission.
 - Split the browser-safe contract from the Node receipt/file wrapper so CLI,
   Action, benchmark, and playground cannot silently diverge on invariants.
+- Ship the 1280×640 product card through Pages Open Graph metadata and add a
+  direct repository-star call to action on the two highest-traffic surfaces.
 
 ## 0.3.1 — Verified GitHub CLI install
 

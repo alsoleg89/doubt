@@ -20,6 +20,10 @@
 ·
 [**Bring a contested question →**](https://github.com/alsoleg89/doubt/discussions/4)
 
+If you want inspectable AI research to become a standard artifact,
+[**star Doubt**](https://github.com/alsoleg89/doubt) and challenge one reasoning
+edge.
+
 <img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
 
 </div>
