@@ -13,6 +13,8 @@
 [![CI](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml/badge.svg)](https://github.com/alsoleg89/doubt/actions/workflows/ci.yml)
 
 [**Open the live evidence map →**](https://alsoleg89.github.io/doubt/)
+·
+[**Bring a contested question →**](https://github.com/alsoleg89/doubt/discussions/4)
 
 <img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
 
