@@ -1,0 +1,108 @@
+{
+  "title": "Zero-dependency core",
+  "question": "Should Doubt keep its core free of runtime dependencies?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Keep the validator, renderer, installer, and Action on Node built-ins until a measured use case justifies a dependency.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Current position",
+      "text": "Keep the core zero-dependency."
+    },
+    {
+      "id": "portable-core",
+      "type": "evidence",
+      "label": "Explicit scope",
+      "text": "The contributor contract defines Doubt as a zero-dependency Node CLI and portable Agent Skill.",
+      "sourceId": "contributor-guide"
+    },
+    {
+      "id": "adversarial-pass",
+      "type": "evidence",
+      "label": "Current contract coverage",
+      "text": "The deterministic evidence-contract suite passes all twelve committed adversarial cases.",
+      "sourceId": "contract-report"
+    },
+    {
+      "id": "hand-rolled-ui",
+      "type": "evidence",
+      "label": "Maintenance pressure",
+      "text": "The renderer owns its full HTML, CSS, graph drawing, filtering, and source-panel behavior in one source file.",
+      "sourceId": "renderer-source"
+    },
+    {
+      "id": "coverage-limit",
+      "type": "claim",
+      "label": "Qualification",
+      "text": "Passing structural mutations does not prove source truth or extraction fidelity."
+    },
+    {
+      "id": "dependency-threshold",
+      "type": "unknown",
+      "label": "Missing evidence",
+      "text": "No measured user workflow yet shows that a dependency would remove enough complexity to justify its supply-chain and install cost."
+    }
+  ],
+  "edges": [
+    {
+      "from": "portable-core",
+      "to": "position",
+      "relation": "supports",
+      "note": "The current portability promise is explicit and already implemented."
+    },
+    {
+      "from": "adversarial-pass",
+      "to": "position",
+      "relation": "supports",
+      "note": "The built-in implementation already enforces the narrow structural contract."
+    },
+    {
+      "from": "hand-rolled-ui",
+      "to": "position",
+      "relation": "contradicts",
+      "note": "Avoiding dependencies transfers interface and rendering maintenance into the repository."
+    },
+    {
+      "from": "coverage-limit",
+      "to": "adversarial-pass",
+      "relation": "qualifies",
+      "note": "The green suite has a deliberately narrow interpretation."
+    },
+    {
+      "from": "dependency-threshold",
+      "to": "position",
+      "relation": "missing",
+      "note": "A concrete workflow benchmark should decide when the constraint stops paying for itself."
+    }
+  ],
+  "sources": [
+    {
+      "id": "contributor-guide",
+      "title": "Doubt contributor guide",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/AGENTS.md",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "Scope and Design constraints",
+      "excerpt": "Doubt is a zero-dependency Node.js CLI plus a portable Agent Skill. Keep the core local-first, provider-independent, and fail-closed on source traceability."
+    },
+    {
+      "id": "contract-report",
+      "title": "Evidence-contract benchmark",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/benchmarks/results/latest.md",
+      "publisher": "Doubt benchmark",
+      "date": "2026-07-30",
+      "locator": "Summary and scope note",
+      "excerpt": "12/12 cases passed (100%). This benchmark measures structural traceability and safe rendering. It does not measure whether a source is true or whether an AI extracted it faithfully."
+    },
+    {
+      "id": "renderer-source",
+      "title": "Self-contained map renderer",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/src/render-map.js",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "renderMap: style block and client script",
+      "excerpt": "The renderer emits the document style, evidence cards, reasoning edges, exact-source panel, filtering behavior, and SVG connection drawing from this built-in module."
+    }
+  ]
+}

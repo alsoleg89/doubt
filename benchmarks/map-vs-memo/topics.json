@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "studyId": "doubt-map-vs-memo-v1",
+  "title": "Can an evidence map beat a cited memo?",
+  "topics": [
+    {
+      "id": "core-product-direction",
+      "mapFile": "../../examples/what-should-doubt-become.doubt.json",
+      "memo": {
+        "title": "Product-direction memo",
+        "paragraphs": [
+          "Current position. Do not ship LaunchKit as a standalone product. Keep launch artifacts as a distribution module and make source-grounded decision maps the core of Doubt.",
+          "Launch artifacts still create useful public output, so removing the module entirely would discard a distribution advantage. The standalone case is weaker: RepoClip already turns repositories into narrated demo videos [S1], and OpenMontage already includes a Screen Demo workflow [S2].",
+          "The local falsification probe adds a practical warning. It produced useful artifacts for two repositories, but generic filler when the repository lacked usable product metadata [S3].",
+          "The alternative evidence-map wedge has a real adjacent demand signal: Causalith organizes research around claims and exact source spans [S4]. It is not uncontested, because Rigor already offers structured argument maps and AI verification, although its open-core path is milestone based [S5].",
+          "The most important unknown is reader pull. No domain-reader comparison has shown that an evidence map is more useful than a well-cited memo."
+        ]
+      },
+      "questions": [
+        {
+          "id": "position",
+          "prompt": "What is the current position?",
+          "options": [
+            "Make evidence maps the core and retain launch artifacts as a module.",
+            "Ship LaunchKit as the only product.",
+            "Stop both directions and build an agent-memory layer.",
+            "Turn Doubt into a hosted video editor."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "contradiction",
+          "prompt": "What is the strongest counterpressure against dropping LaunchKit completely?",
+          "options": [
+            "Launch artifacts create a built-in public distribution loop.",
+            "The validator requires Node 18.",
+            "Rigor is already fully open source.",
+            "The evidence map has no renderer."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "qualification",
+          "prompt": "Which qualification narrows the evidence-map opportunity?",
+          "options": [
+            "Rigor already occupies part of the structured argument-map product shape.",
+            "Causalith has stopped mapping claims.",
+            "The local probe passed every unfamiliar repository.",
+            "Evidence maps cannot contain missing evidence."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "unknown",
+          "prompt": "What decisive evidence is still missing?",
+          "options": [
+            "A domain-reader comparison of the map with a cited memo.",
+            "A list of supported Node versions.",
+            "A license file for OpenMontage.",
+            "A count of nodes in the dogfood map."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "source",
+          "prompt": "Where is the sampled Rigor observation located?",
+          "options": [
+            "Homepage FAQ: What does the open source threshold mean?",
+            "README: Pipelines table → Screen Demo",
+            "Section: The Results",
+            "Generated hero and feature cards"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "zero-dependency-core",
+      "mapFile": "./topics/zero-dependency-core.doubt.json",
+      "memo": {
+        "title": "Zero-dependency core memo",
+        "paragraphs": [
+          "Current position. Keep the validator, renderer, installer, and Action on Node built-ins until a measured workflow justifies adding a dependency.",
+          "This is already part of the contributor contract: Doubt is defined as a zero-dependency Node CLI and portable Agent Skill, with a local-first and provider-independent core [S1].",
+          "The current implementation is not merely aspirational. Its evidence-contract suite passes all twelve committed structural and rendering mutations [S2]. That result is qualified: the same report says it does not measure source truth or faithful extraction.",
+          "The strongest counterpressure is maintenance. The repository owns its document layout, styling, graph drawing, filtering, and source-panel interaction inside the built-in renderer [S3]. A dependency might eventually replace a meaningful part of that surface.",
+          "The missing evidence is a threshold test: no observed user workflow yet shows that a dependency removes enough complexity to offset installation and supply-chain cost."
+        ]
+      },
+      "questions": [
+        {
+          "id": "position",
+          "prompt": "What is the current position?",
+          "options": [
+            "Keep the core zero-dependency until a measured workflow justifies change.",
+            "Adopt a graph framework immediately.",
+            "Remove the renderer from the project.",
+            "Require a hosted backend."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "contradiction",
+          "prompt": "What is the strongest counterpressure?",
+          "options": [
+            "The repository must maintain its own substantial rendering and interaction surface.",
+            "Node cannot read JSON files.",
+            "The benchmark has no passing cases.",
+            "The Agent Skill requires a database."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "qualification",
+          "prompt": "What qualifies the 12/12 benchmark result?",
+          "options": [
+            "It covers structural traceability and safe rendering, not source truth.",
+            "It was run only on a hosted service.",
+            "It excludes malformed source regions.",
+            "It measures package-download growth."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "unknown",
+          "prompt": "What evidence is still missing?",
+          "options": [
+            "A measured workflow where a dependency's benefit exceeds its cost.",
+            "Proof that Node 18 exists.",
+            "A source for the package name.",
+            "A screenshot of the CLI help."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "source",
+          "prompt": "Where is the renderer maintenance surface documented?",
+          "options": [
+            "renderMap: style block and client script",
+            "Summary and scope note",
+            "Scope and Design constraints",
+            "README: installation command"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "dual-distribution",
+      "mapFile": "./topics/dual-distribution.doubt.json",
+      "memo": {
+        "title": "Distribution-surface memo",
+        "paragraphs": [
+          "Current position. Keep the Agent Skill and deterministic CLI as two surfaces of one evidence contract.",
+          "The Agent Skill supplies the judgment workflow: it tells the agent to preserve disagreement and bounded source regions when a consequential question has competing claims [S1]. The CLI supplies the reproducible executable surface; the package exposes a doubt binary and publishes the skill payload with the implementation [S2].",
+          "The strongest counterpressure is premature format maintenance. Doubt also emits a version 0.2 discovery index and root-level portable skill archive [S3], but adoption of that emerging discovery route has not been demonstrated.",
+          "Dual distribution is qualified by contract unity. The surfaces are useful only while they enforce the same schema and do not make different product claims.",
+          "The missing evidence is observed retention: without telemetry or a user sample, it is unknown whether people keep the skill, CLI, both, or neither."
+        ]
+      },
+      "questions": [
+        {
+          "id": "position",
+          "prompt": "What is the current position?",
+          "options": [
+            "Keep both the Agent Skill and CLI as surfaces of one contract.",
+            "Delete the skill and keep only a web app.",
+            "Publish only the discovery archive.",
+            "Replace the CLI with a prompt."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "contradiction",
+          "prompt": "What is the strongest counterpressure?",
+          "options": [
+            "An emerging discovery format adds maintenance before adoption is proven.",
+            "The package has no executable.",
+            "The skill does not discuss disagreement.",
+            "The CLI cannot validate JSON."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "qualification",
+          "prompt": "What condition qualifies dual distribution?",
+          "options": [
+            "Both surfaces must keep enforcing one canonical evidence contract.",
+            "Each surface should invent its own schema.",
+            "Only the archive may include documentation.",
+            "The CLI must send installation telemetry."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "unknown",
+          "prompt": "What evidence is still missing?",
+          "options": [
+            "Observed cross-platform use and retention by surface.",
+            "The location of the package binary.",
+            "The current discovery schema number.",
+            "Whether the skill has a title."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "source",
+          "prompt": "Where is the package's executable and included payload documented?",
+          "options": [
+            "package.json: bin and files fields",
+            "SKILL.md: Workflow and Evidence rules",
+            "Discovery builder: archive construction",
+            "README: benchmark scope note"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "strict-source-regions",
+      "mapFile": "./topics/strict-source-regions.doubt.json",
+      "memo": {
+        "title": "Source-region policy memo",
+        "paragraphs": [
+          "Current position. Keep exact locators and bounded excerpts as a fail-closed requirement, while describing the guarantee as traceability rather than truth.",
+          "The validator requires title, publisher, date, URL, locator, and excerpt for every source, and it rejects excerpts outside its bounded size range [S1]. Deterministic mutations cover a missing locator, a thin excerpt, and an oversized excerpt [S2].",
+          "The strongest counterpressure is overinterpretation. Public documentation explicitly says the suite does not establish whether a source is true or whether an AI extracted it faithfully [S3].",
+          "The rule is therefore qualified: a well-bounded quotation can still be misleading, stale, or unrelated to the reasoning edge attached to it.",
+          "The most important missing evidence is entailment. Doubt does not yet deterministically establish that the bounded excerpt supports the evidence text and edge note."
+        ]
+      },
+      "questions": [
+        {
+          "id": "position",
+          "prompt": "What is the current position?",
+          "options": [
+            "Require exact source regions but describe the guarantee as traceability.",
+            "Accept any topical citation without a locator.",
+            "Claim that every validated source is true.",
+            "Remove excerpts from the schema."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "contradiction",
+          "prompt": "What is the strongest counterpressure?",
+          "options": [
+            "Users may mistake structural traceability for fact checking or truth.",
+            "The validator accepts missing source fields.",
+            "The benchmark has no locator mutation.",
+            "The renderer cannot display excerpts."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "qualification",
+          "prompt": "What qualifies the exact-region requirement?",
+          "options": [
+            "A bounded quotation may still be misleading, stale, or inferentially unrelated.",
+            "Every bounded quotation is necessarily true.",
+            "Only source titles need to be bounded.",
+            "Locators make edge notes unnecessary."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "unknown",
+          "prompt": "What important capability is still missing?",
+          "options": [
+            "Deterministic verification that an excerpt entails its evidence text and edge.",
+            "A maximum excerpt length.",
+            "A rule requiring source URLs.",
+            "A test for missing locators."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "source",
+          "prompt": "Where are the required source fields enforced?",
+          "options": [
+            "src/map.js: Source validation loop",
+            "README: Quick start",
+            "Pages workflow: deploy job",
+            "package.json: keywords"
+          ],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "static-html-artifact",
+      "mapFile": "./topics/static-html-artifact.doubt.json",
+      "memo": {
+        "title": "Sharing-artifact memo",
+        "paragraphs": [
+          "Current position. Keep self-contained HTML as the default portable artifact and treat hosted collaboration as an optional future layer.",
+          "The renderer already produces one interactive file that can be opened locally, stored in git, or published without an account, backend, model key, CDN, or telemetry [S1]. The public workflow deploys the map, JSON, and discovery payload as one static Pages artifact [S2].",
+          "The document still provides interaction: its built-in script selects exact source regions, filters card types, and redraws graph connections [S3].",
+          "The strongest counterpressure is collaboration. A static file has no shared editing state, permission model, or synchronized review comments.",
+          "Static-first is qualified rather than absolute: a hosted layer may be useful later, but the durable artifact should remain independent. The missing evidence is a team study comparing collaboration demand with account-free portability."
+        ]
+      },
+      "questions": [
+        {
+          "id": "position",
+          "prompt": "What is the current position?",
+          "options": [
+            "Keep static HTML as the default and make hosting an optional layer.",
+            "Require every map to run on a hosted backend.",
+            "Replace HTML with screenshots only.",
+            "Remove interaction from exported maps."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "contradiction",
+          "prompt": "What is the strongest counterpressure?",
+          "options": [
+            "Static files lack shared editing state, permissions, and synchronized comments.",
+            "Static HTML cannot contain JavaScript.",
+            "GitHub Pages cannot serve HTML.",
+            "The renderer always loads a CDN."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "qualification",
+          "prompt": "What qualifies the static-first decision?",
+          "options": [
+            "A hosted collaboration layer can coexist with a durable static artifact.",
+            "A hosted layer must replace exported files.",
+            "Static-first forbids all future interfaces.",
+            "Only screenshots may be archived."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "unknown",
+          "prompt": "What evidence is still missing?",
+          "options": [
+            "A team study of collaboration demand versus account-free portability.",
+            "Proof that the page contains CSS.",
+            "The path of the Pages workflow.",
+            "A list of map node types."
+          ],
+          "answer": 0
+        },
+        {
+          "id": "source",
+          "prompt": "Where is the static deployment assembly documented?",
+          "options": [
+            ".github/workflows/pages.yml: Prepare self-contained demo",
+            "src/map.js: Source validation loop",
+            "package.json: engines",
+            "SKILL.md: When to use"
+          ],
+          "answer": 0
+        }
+      ]
+    }
+  ]
+}

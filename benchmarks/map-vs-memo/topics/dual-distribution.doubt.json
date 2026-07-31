@@ -1,0 +1,108 @@
+{
+  "title": "Dual distribution",
+  "question": "Should Doubt ship as both an Agent Skill and a command-line package?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Keep the Agent Skill and deterministic CLI as two surfaces of one evidence contract.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Current position",
+      "text": "Ship both the Agent Skill and CLI."
+    },
+    {
+      "id": "skill-workflow",
+      "type": "evidence",
+      "label": "Agent-facing workflow",
+      "text": "The skill tells an agent when to create a map and requires it to preserve disagreement and exact source regions.",
+      "sourceId": "skill-source"
+    },
+    {
+      "id": "cli-contract",
+      "type": "evidence",
+      "label": "Deterministic surface",
+      "text": "The package exposes a doubt executable and includes the same skill payload in its published files.",
+      "sourceId": "package-source"
+    },
+    {
+      "id": "discovery-draft",
+      "type": "evidence",
+      "label": "Emerging distribution",
+      "text": "The discovery builder targets schema version 0.2 and packages a root-level portable skill archive.",
+      "sourceId": "discovery-source"
+    },
+    {
+      "id": "one-contract",
+      "type": "claim",
+      "label": "Qualification",
+      "text": "The two surfaces are useful only if they continue to enforce one canonical evidence contract."
+    },
+    {
+      "id": "cross-platform-use",
+      "type": "unknown",
+      "label": "Missing evidence",
+      "text": "No installation telemetry or cross-platform user sample yet shows which surface people actually retain."
+    }
+  ],
+  "edges": [
+    {
+      "from": "skill-workflow",
+      "to": "position",
+      "relation": "supports",
+      "note": "The Agent Skill supplies the judgment workflow that a validator alone cannot."
+    },
+    {
+      "from": "cli-contract",
+      "to": "position",
+      "relation": "supports",
+      "note": "The CLI supplies reproducible validation and rendering after an agent proposes the map."
+    },
+    {
+      "from": "discovery-draft",
+      "to": "position",
+      "relation": "contradicts",
+      "note": "Supporting an emerging draft distribution format adds maintenance before adoption is proven."
+    },
+    {
+      "from": "one-contract",
+      "to": "position",
+      "relation": "qualifies",
+      "note": "Surface count must not create divergent schemas or claims."
+    },
+    {
+      "from": "cross-platform-use",
+      "to": "position",
+      "relation": "missing",
+      "note": "Observed retention by surface would determine whether dual distribution is worth maintaining."
+    }
+  ],
+  "sources": [
+    {
+      "id": "skill-source",
+      "title": "Doubt Agent Skill",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/skill/doubt/SKILL.md",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "Workflow and Evidence rules",
+      "excerpt": "Build a Doubt map when a consequential question has competing claims or meaningful missing evidence. Preserve disagreement instead of compressing it into a single confident paragraph."
+    },
+    {
+      "id": "package-source",
+      "title": "doubt-ai package manifest",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/package.json",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "bin and files fields",
+      "excerpt": "The package maps the doubt executable to bin/doubt.js and includes action, benchmarks, examples, source, and skill directories in the published artifact."
+    },
+    {
+      "id": "discovery-source",
+      "title": "Agent Skill discovery builder",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/scripts/build-skill-discovery.mjs",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "index schema and archive construction",
+      "excerpt": "The builder emits a schema_version 0.2 discovery index, a sha256 digest, and a root-level tar.gz archive containing the canonical skill payload."
+    }
+  ]
+}

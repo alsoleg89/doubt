@@ -1,0 +1,108 @@
+{
+  "title": "Strict source regions",
+  "question": "Should Doubt reject evidence that lacks an exact source region?",
+  "updatedAt": "2026-07-31",
+  "verdict": "Keep exact locators and bounded excerpts as a fail-closed requirement, while describing the guarantee as traceability rather than truth.",
+  "nodes": [
+    {
+      "id": "position",
+      "type": "position",
+      "label": "Current position",
+      "text": "Reject evidence without an exact source region."
+    },
+    {
+      "id": "locator-rule",
+      "type": "evidence",
+      "label": "Enforced fields",
+      "text": "Every source must include a locator and excerpt, and undersized or oversized excerpts fail validation.",
+      "sourceId": "validator-source"
+    },
+    {
+      "id": "mutation-proof",
+      "type": "evidence",
+      "label": "Adversarial coverage",
+      "text": "Committed mutations verify missing locators, thin excerpts, and oversized excerpts are rejected.",
+      "sourceId": "benchmark-source"
+    },
+    {
+      "id": "truth-limit",
+      "type": "evidence",
+      "label": "Guarantee boundary",
+      "text": "The public documentation explicitly says structural validation does not establish source truth or faithful AI extraction.",
+      "sourceId": "readme-source"
+    },
+    {
+      "id": "bounded-not-true",
+      "type": "claim",
+      "label": "Qualification",
+      "text": "A perfectly bounded quotation can still be misleading, outdated, or unrelated to the edge note."
+    },
+    {
+      "id": "entailment-check",
+      "type": "unknown",
+      "label": "Missing evidence",
+      "text": "Doubt does not yet deterministically verify that an excerpt entails the evidence text and reasoning edge."
+    }
+  ],
+  "edges": [
+    {
+      "from": "locator-rule",
+      "to": "position",
+      "relation": "supports",
+      "note": "The rule makes every evidence card navigable to a bounded region."
+    },
+    {
+      "from": "mutation-proof",
+      "to": "position",
+      "relation": "supports",
+      "note": "The specific failure modes are covered by reproducible fixtures."
+    },
+    {
+      "from": "truth-limit",
+      "to": "position",
+      "relation": "contradicts",
+      "note": "Strict traceability can look stronger than it is if users mistake it for fact checking."
+    },
+    {
+      "from": "bounded-not-true",
+      "to": "locator-rule",
+      "relation": "qualifies",
+      "note": "Region quality and inferential fit remain separate from region presence."
+    },
+    {
+      "from": "entailment-check",
+      "to": "position",
+      "relation": "missing",
+      "note": "An entailment audit would address the most important gap left by structural validation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "validator-source",
+      "title": "Doubt map validator",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/src/map.js",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "Source validation loop",
+      "excerpt": "Each source must provide title, publisher, date, URL, locator, and excerpt. Excerpts shorter than 40 or longer than 500 characters produce findings."
+    },
+    {
+      "id": "benchmark-source",
+      "title": "Evidence-contract adversarial cases",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/benchmarks/evidence-contract.mjs",
+      "publisher": "Doubt benchmark",
+      "date": "2026-07-30",
+      "locator": "missing-source-locator, thin-source-region, oversized-source-region",
+      "excerpt": "The deterministic suite deletes a locator, replaces an excerpt with Too short, and creates a 501-character excerpt; each mutation names the validator rule that must fire."
+    },
+    {
+      "id": "readme-source",
+      "title": "Doubt README",
+      "url": "https://github.com/alsoleg89/doubt/blob/v0.2.1/README.md",
+      "publisher": "Doubt",
+      "date": "2026-07-31",
+      "locator": "Adversarial benchmark scope note",
+      "excerpt": "This benchmark measures structural traceability and safe rendering. It does not pretend to measure whether a source is true or whether an AI extracted it faithfully."
+    }
+  ]
+}
