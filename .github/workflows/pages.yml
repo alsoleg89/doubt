@@ -3,6 +3,18 @@ name: Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - ".github/workflows/pages.yml"
+      - "benchmarks/map-vs-memo/**"
+      - "docs/social-preview.png"
+      - "examples/**"
+      - "probes/launchkit/britanka.html"
+      - "scripts/build-skill-discovery.mjs"
+      - "site/**"
+      - "skill/**"
+      - "src/contract.js"
+      - "src/render-map.js"
+      - "src/share-link.js"
   workflow_dispatch:
 
 permissions:

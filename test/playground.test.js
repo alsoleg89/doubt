@@ -82,6 +82,8 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(workflow, /cp examples\/agent-skills-portability\.html _site\/examples\/agent-skills-portability\.html/);
   assert.match(workflow, /cp examples\/agent-skills-portability\.doubt\.json _site\/examples\/agent-skills-portability\.doubt\.json/);
   assert.match(workflow, /cp site\/playground\/index\.html _site\/playground\/index\.html/);
+  assert.match(workflow, /paths:\s+[\s\S]*- "site\/\*\*"/);
+  assert.match(workflow, /- "examples\/\*\*"/);
   assert.match(workflow, /cp docs\/social-preview\.png _site\/social-preview\.png/);
   assert.match(workflow, /cp site\/robots\.txt _site\/robots\.txt/);
   assert.match(workflow, /cp site\/sitemap\.xml _site\/sitemap\.xml/);
