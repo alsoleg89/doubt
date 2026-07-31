@@ -62,11 +62,21 @@
     .relation:nth-child(2) b { background:var(--red); }
     .relation:nth-child(3) b { background:var(--blue); }
     .relation:nth-child(4) b { background:var(--yellow); }
+    .client-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+    .client { min-height:165px; border:1px solid var(--line); border-radius:14px; padding:17px; background:var(--panel); text-decoration:none; display:flex; flex-direction:column; transition:transform .18s,border-color .18s; }
+    .client:hover { transform:translateY(-3px); border-color:var(--green); }
+    .client-status { color:var(--green); font:9px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:.1em; }
+    .client strong { margin:26px 0 8px; font-size:17px; line-height:1.1; letter-spacing:-.025em; }
+    .client span:last-child { margin-top:auto; color:var(--muted); font-size:11px; line-height:1.45; }
+    .contribution-cta { margin-top:14px; border:1px solid var(--line); border-radius:14px; padding:18px; display:flex; justify-content:space-between; align-items:center; gap:20px; color:#b8c0ba; }
+    .contribution-cta strong { color:var(--ink); }
+    .contribution-cta a { color:var(--green); text-decoration:none; font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace; white-space:nowrap; }
     footer { margin-top:75px; border-top:1px solid var(--line); padding-top:25px; display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:12px; }
     @media (max-width:850px) {
       header { grid-template-columns:1fr; gap:35px; padding-top:65px; }
       .cards { grid-template-columns:1fr; }
       .card { min-height:270px; }
+      .client-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
       .section-head { align-items:start; flex-direction:column; }
     }
     @media (max-width:580px) {
@@ -74,6 +84,9 @@
       .metrics,.relations { grid-template-columns:repeat(2,1fr); }
       .metric:nth-child(2) { border-right:0; }
       .metric:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+      .client-grid { grid-template-columns:1fr; }
+      .client { min-height:135px; }
+      .contribution-cta { align-items:flex-start; flex-direction:column; }
       footer { flex-direction:column; }
     }
     @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
@@ -86,6 +99,7 @@
       <div class="navlinks">
         <a href="./playground/">Playground</a>
         <a href="./benchmark/">Reader benchmark</a>
+        <a href="#contribute">Contribute</a>
         <a href="https://github.com/alsoleg89/doubt">GitHub ↗</a>
       </div>
     </nav>
@@ -150,6 +164,44 @@
         <span class="edge">Take the reader study ↗</span>
       </a>
     </section>
+    <div class="section-head" id="contribute">
+      <div>
+        <div class="eyebrow">0/5 clients benchmarked</div>
+        <h2>Run one client.</h2>
+      </div>
+      <div class="section-note">The docs say Agent Skills are portable. The behavior is still unproven. Pick one client, run three frozen prompts, and submit success, failure, or a documented block.</div>
+    </div>
+    <section class="client-grid" aria-label="Open Agent Skills portability benchmark issues">
+      <a class="client" href="https://github.com/alsoleg89/doubt/issues/11">
+        <span class="client-status">Open · #11</span>
+        <strong>Claude Code</strong>
+        <span>Direct · implicit · negative</span>
+      </a>
+      <a class="client" href="https://github.com/alsoleg89/doubt/issues/12">
+        <span class="client-status">Open · #12</span>
+        <strong>OpenAI Codex</strong>
+        <span>Direct · implicit · negative</span>
+      </a>
+      <a class="client" href="https://github.com/alsoleg89/doubt/issues/15">
+        <span class="client-status">Open · #15</span>
+        <strong>GitHub Copilot</strong>
+        <span>Direct · implicit · negative</span>
+      </a>
+      <a class="client" href="https://github.com/alsoleg89/doubt/issues/14">
+        <span class="client-status">Open · #14</span>
+        <strong>Cursor</strong>
+        <span>Direct · implicit · negative</span>
+      </a>
+      <a class="client" href="https://github.com/alsoleg89/doubt/issues/13">
+        <span class="client-status">Open · #13</span>
+        <strong>Gemini CLI</strong>
+        <span>Direct · implicit · negative</span>
+      </a>
+    </section>
+    <div class="contribution-cta">
+      <span><strong>One client is enough.</strong> Exact versions and raw outputs matter more than a positive result.</span>
+      <a href="https://github.com/alsoleg89/doubt/issues/9">Read the frozen protocol ↗</a>
+    </div>
     <section class="relations" aria-label="Reasoning edge types">
       <div class="relation"><b></b>supports</div>
       <div class="relation"><b></b>contradicts</div>

@@ -208,6 +208,13 @@ output, generated artifacts, and receipts. A contributor can submit one client;
 failures and blocked runs are valid evidence. The baseline is zero submitted
 clients, and a single-client result may not claim behavioral equivalence.
 
+[**Claim one client →**](https://alsoleg89.github.io/doubt/#contribute):
+[Claude Code](https://github.com/alsoleg89/doubt/issues/11),
+[Codex](https://github.com/alsoleg89/doubt/issues/12),
+[GitHub Copilot](https://github.com/alsoleg89/doubt/issues/15),
+[Cursor](https://github.com/alsoleg89/doubt/issues/14), or
+[Gemini CLI](https://github.com/alsoleg89/doubt/issues/13).
+
 ## Reader benchmark — recruiting
 
 The structural benchmark does not answer the product question: does an

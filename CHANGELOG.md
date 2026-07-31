@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add a public five-client contribution queue that connects the Pages gallery,
+  README, and contributor guide to scoped good-first benchmark issues.
+
 ## 0.5.0 — Agent Skills portability benchmark
 
 - Add a six-source portability map comparing the shared Agent Skills core with

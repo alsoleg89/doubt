@@ -22,6 +22,12 @@ skill or error message first.
 To contribute an Agent Skills portability result, follow the frozen
 [`benchmarks/skill-portability/`](benchmarks/skill-portability/) protocol. Keep
 the skill, fixture, and three prompts unchanged; include exact client metadata
-and sanitized raw output. Negative and blocked results are welcome.
+and sanitized raw output. Negative and blocked results are welcome. Claim a
+scoped issue for
+[Claude Code](https://github.com/alsoleg89/doubt/issues/11),
+[Codex](https://github.com/alsoleg89/doubt/issues/12),
+[GitHub Copilot](https://github.com/alsoleg89/doubt/issues/15),
+[Cursor](https://github.com/alsoleg89/doubt/issues/14), or
+[Gemini CLI](https://github.com/alsoleg89/doubt/issues/13).
 
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
