@@ -89,6 +89,12 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > match the excerpt, and bind the receipt to the retrieved bytes. If one source
 > is unreachable or mismatched, it writes no attested output.
 >
+> The first target it caught was this project's own flagship demo. All five
+> excerpts were polished paraphrases rather than text present in the cited
+> pages, so every match failed and no attested map was written. I replaced them
+> with verbatim source text; the committed demo now passes 5/5 and carries the
+> resulting byte and excerpt digests. The portability map passes 8/8.
+>
 > The same contract ships as a reusable GitHub Action: it finds
 > `*.doubt.json` maps, annotates invalid files, and writes content receipts and
 > evidence counts to the job summary without installing a package.
@@ -153,8 +159,9 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
    section/page/line locator. Decorative citations fail validation.
 5. The renderer emits one self-contained HTML file with Brief and Map views. No
    account, backend, model key, CDN, or telemetry.
-6. `doubt verify` explicitly re-fetches sources, matches excerpts, and hashes
-   retrieved bytes; one failure means no attested output.
+6. `doubt verify` first caught Doubt's own demo: 5/5 polished paraphrases
+   mismatched. The committed rewrite uses verbatim excerpts and passes 5/5;
+   one future failure still means no attested output.
 7. The reusable GitHub Action validates every `*.doubt.json` map in CI and
    leaves file annotations plus a receipt in the job summary.
 8. The gallery includes a portability audit that keeps unsupported client

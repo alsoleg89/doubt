@@ -199,6 +199,25 @@
       return sha256(canonicalJson(receiptPayload(map, sourceSnapshots)));
     }
 
+    async function verificationExcerptFindings(map) {
+      const items = [];
+      for (const [index, item] of (map.sources || []).entries()) {
+        const recorded = item?.verification?.excerptSha256;
+        if (
+          typeof item?.excerpt === "string"
+          && /^[a-f0-9]{64}$/.test(recorded || "")
+          && recorded !== await sha256(item.excerpt)
+        ) {
+          items.push(finding(
+            `$.sources[${index}].verification.excerptSha256`,
+            "verification-excerpt-mismatch",
+            "excerptSha256 must match the current source excerpt.",
+          ));
+        }
+      }
+      return items;
+    }
+
     function showFindings(items) {
       findings.replaceChildren();
       for (const item of items) {
@@ -249,8 +268,9 @@
       }
 
       const validation = inspectMapContract(map);
-      if (!validation.valid) {
-        setInvalid(validation.findings);
+      const verificationFindings = await verificationExcerptFindings(map);
+      if (!validation.valid || verificationFindings.length > 0) {
+        setInvalid([...validation.findings, ...verificationFindings]);
         return;
       }
 

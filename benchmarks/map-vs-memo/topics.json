@@ -11,8 +11,8 @@
         "title": "Agent Skills vs MCP memo",
         "paragraphs": [
           "Current position. Default to an Agent Skill for reusable procedure and bundled context. Add MCP for live or dynamic tools and resources; combine them when the Skill should orchestrate an MCP-backed capability.",
-          "The Skill boundary packages instructions, examples, references, assets, and scripts with progressive disclosure [S1]. GitHub documents that open format across Copilot clients [S2], although the current discovery proposal remains a breaking draft [S3].",
-          "MCP addresses a different boundary: servers expose live tools, resources, and prompts through JSON-RPC over local or remote transports [S4]. This makes MCP appropriate for dynamic capability, but it also introduces authorization and operational risks documented by the protocol's security guidance [S5].",
+          "The Skill boundary packages instructions, examples, references, assets, and scripts with progressive disclosure [S1]. GitHub documents that open format across Copilot clients [S2], although there is still no standard way to ask what skills a domain publishes [S3].",
+          "MCP addresses a different boundary: servers expose tools for AI actions, resources for context data, and prompts for interaction templates [S4]. This makes MCP appropriate for dynamic capability, but it also introduces authorization and operational risks documented by the protocol's security guidance [S5].",
           "The formats can therefore compose. A Skill can teach a repeatable workflow while an MCP server supplies live data or actions. Choosing a Skill is not a safety shortcut because Skills may include executable scripts and host permission behavior varies.",
           "The most important unknown is behavioral portability. No committed cross-client benchmark yet shows that one non-trivial Skill and MCP integration behave consistently across major coding agents."
         ]
@@ -64,12 +64,12 @@
         },
         {
           "id": "source",
-          "prompt": "Where are MCP's primitives and transports documented?",
+          "prompt": "What does the MCP data layer let servers provide?",
           "options": [
-            "Concepts → Layers, Transports, and Primitives",
-            "Agent Skills → Directory structure",
-            "Discovery RFC → Changelog v0.2.0",
-            "Security Best Practices → Attacks and Mitigations"
+            "Tools for AI actions, resources for context data, and prompts for interaction templates.",
+            "Only static Markdown instructions and local scripts.",
+            "A mandatory hosted model and vector database.",
+            "Repository discovery records without client-server interaction."
           ],
           "answer": 0
         }

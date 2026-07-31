@@ -72,7 +72,8 @@ test("topical Agent Skills vs MCP map validates and renders", async () => {
   });
   const html = await readFile(output, "utf8");
   assert.match(html, /Should an AI capability be an Agent Skill, an MCP server, or both\?/);
-  assert.match(html, /Concepts → Layers, Transports, and Primitives/);
+  assert.match(html, /Enables servers to provide core functionality including tools for AI actions/);
+  assert.match(html, /✓ Verified/);
   assert.match(report.receipt, /^[a-f0-9]{64}$/);
   assert.match(html, new RegExp(report.receipt));
 });
@@ -101,8 +102,8 @@ test("Agent Skills portability map validates and preserves the remaining client 
   assert.deepEqual(report.metrics, {
     claims: 4,
     contradictions: 1,
-    evidence: 7,
-    sources: 7,
+    evidence: 8,
+    sources: 8,
     unknowns: 1,
   });
   assert.match(report.receipt, /^[a-f0-9]{64}$/);
@@ -111,5 +112,7 @@ test("Agent Skills portability map validates and preserves the remaining client 
   assert.match(html, /Portable enough to author once, not portable enough to test once/);
   assert.match(html, /Copilot run: 2\/3/);
   assert.match(html, /Four clients missing/);
+  assert.match(html, /Gemini activation/);
+  assert.match(html, /✓ Verified/);
   assert.match(html, new RegExp(report.receipt));
 });

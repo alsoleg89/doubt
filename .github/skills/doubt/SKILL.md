@@ -16,8 +16,10 @@ that has not been sourced.
    the map is testing.
 2. **Collect current source regions.** Prefer direct observations and primary
    sources. For each item, preserve the URL or local path, publisher, date,
-   retrieval date, section/page/line locator, and a short excerpt that can be checked in
-   context. Read [references/evidence-ladder.md](references/evidence-ladder.md)
+   retrieval date, section/page/line locator, and a short verbatim excerpt copied
+   from that source region. Never put an agent-written paraphrase in `excerpt`;
+   keep interpretation in the evidence node's `text`. Read
+   [references/evidence-ladder.md](references/evidence-ladder.md)
    when source quality is disputed.
 3. **Atomize the reasoning.** Create only four node types:
    - `position`: the single current verdict;
@@ -37,7 +39,7 @@ that has not been sourced.
 7. **Write the map JSON.** Follow
    [references/map-schema.md](references/map-schema.md). Keep node IDs short,
    stable, and semantic.
-8. **Fail closed offline, optionally verify, then render.** The host exposes
+8. **Fail closed offline, explicitly verify, then render.** The host exposes
    the path of this `SKILL.md` when it loads the skill. Resolve
    `scripts/validate.mjs` relative to that directory and replace
    `<skill-dir>` below with the concrete path; do not pass the placeholder
@@ -45,9 +47,10 @@ that has not been sourced.
 
    ```bash
    node <skill-dir>/scripts/validate.mjs decision.doubt.json
-   # Only when the user explicitly permits source retrieval:
+   # Required before calling an externally sourced map finished or verified;
+   # run only after the user explicitly permits source retrieval:
    npx doubt-ai verify decision.doubt.json --out decision.verified.doubt.json
-   npx doubt-ai map decision.doubt.json --out decision.html
+   npx doubt-ai map decision.verified.doubt.json --out decision.html
    ```
 
    The bundled validator uses only Node.js 18+ built-ins and must work without
@@ -57,11 +60,14 @@ that has not been sourced.
    the validator exits zero and prints `VALID` followed by a 64-character
    receipt (or JSON with `valid: true` and that receipt). A file hash, node
    count, or syntactic JSON check is not a Doubt receipt. If the validator
-   cannot run, report the run as blocked; do not claim success. Do not run
-   `verify` implicitly: it can make outbound requests for recorded HTTP
-   sources. Local file verification does not use the network. If verification
-   fails, preserve the mismatch or retrieval failure instead of writing an
-   attestation.
+   cannot run, report the run as blocked; do not claim success. Source
+   verification is a required final gate for a finished externally sourced map,
+   but do not run `verify` implicitly: it can make outbound requests for
+   recorded HTTP sources. Ask for permission first. If permission is denied or
+   unavailable, you may render the original JSON only as a recorded-only draft;
+   do not call it finished or verified. Local file verification does not use the
+   network. If verification fails, preserve the mismatch or retrieval failure
+   instead of writing an attestation.
 9. **Inspect the HTML.** Verify that the question, verdict, evidence cards,
    contradictions, unknowns, edge focus, filters, and source links are readable.
    The JSON remains the canonical editable artifact.
@@ -73,6 +79,7 @@ A finished map must satisfy all of these:
 - exactly one position has incoming reasoning;
 - every evidence node names a source and participates in an edge;
 - every source has a publication date, retrieval date, bounded region, and is used;
+- every source excerpt is verbatim text from its bounded region, never a summary;
 - every non-position node has a directed path to the position, without cycles;
 - the map contains contrary or qualifying evidence when the source set contains
   it;

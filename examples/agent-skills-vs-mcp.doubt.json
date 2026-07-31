@@ -34,7 +34,7 @@
       "id": "discovery-rfc",
       "type": "evidence",
       "label": "Distribution still moving",
-      "text": "The current well-known discovery proposal is a draft whose v0.2 format intentionally breaks with v0.1 and adds artifact digests and archive safety guidance.",
+      "text": "The current well-known discovery proposal is still a draft because there is no standard way to ask what skills a domain publishes.",
       "sourceId": "skills-discovery"
     },
     {
@@ -47,7 +47,7 @@
       "id": "mcp-architecture",
       "type": "evidence",
       "label": "Protocol boundary",
-      "text": "The current MCP architecture defines JSON-RPC discovery plus tools, resources, and prompts over stdio or Streamable HTTP transports.",
+      "text": "The current MCP architecture lets servers expose tools, resources, and prompts to clients.",
       "sourceId": "mcp-architecture-source"
     },
     {
@@ -151,9 +151,18 @@
       "url": "https://agentskills.io/specification",
       "publisher": "Agent Skills",
       "date": "2026-07-31",
-      "locator": "Section: Directory structure; allowed-tools; Progressive disclosure",
-      "excerpt": "A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Directory structure",
+      "excerpt": "A skill is a directory containing, at minimum, a SKILL.md file:",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:28.648Z",
+        "contentSha256": "605755e79b35025696909d48c8a8719124ae00d7542270fb5308c5e90c797d0f",
+        "excerptSha256": "e0cb219c3e96e4a0229d246e1a4865b84b2f232b184e560c9f8384a613e190a7",
+        "finalUrl": "https://agentskills.io/specification",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "github-skills",
@@ -161,9 +170,18 @@
       "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
       "publisher": "GitHub Docs",
       "date": "2026-07-31",
-      "locator": "Section: About agent skills; supported clients and locations",
-      "excerpt": "GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: About agent skills",
+      "excerpt": "Agent skills are folders of instructions, scripts, and resources that Copilot can load when relevant to improve its performance in specialized tasks.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:28.648Z",
+        "contentSha256": "ce62e6db4f93c5c2f11ed15bb1c859d3c90fae48bd8d3f2dbd6e02480c80beee",
+        "excerptSha256": "15328c97886a72bcc370210a6486d9e3eda6d985e69cb943838981bdd919f5e0",
+        "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "skills-discovery",
@@ -171,9 +189,18 @@
       "url": "https://github.com/cloudflare/agent-skills-discovery-rfc",
       "publisher": "Cloudflare",
       "date": "2026-07-31",
-      "locator": "Section: Changelog v0.2.0; Problem; Discovery Index",
-      "excerpt": "The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Problem",
+      "excerpt": "There is no standard way to answer: \"What skills does example.com publish?\"",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:28.648Z",
+        "contentSha256": "0a5279c253bf5b67827134207e6454bfe29320e6d2ef4df9cdc75ac44155b8cf",
+        "excerptSha256": "fa2ba7f94b4c1b7d04e4ac72bedf2de1f38bef40700300f1c3f6b95e0719c0be",
+        "finalUrl": "https://github.com/cloudflare/agent-skills-discovery-rfc",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "mcp-architecture-source",
@@ -181,9 +208,18 @@
       "url": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
       "publisher": "Model Context Protocol",
       "date": "2026-07-28",
-      "locator": "Section: Concepts → Layers, Transports, and Primitives",
-      "excerpt": "MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Data layer",
+      "excerpt": "Enables servers to provide core functionality including tools for AI actions, resources for context data, and prompts for interaction templates from and to the client",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:28.648Z",
+        "contentSha256": "93658053d00a01a1322fd5179fe5bb2255d10cd2e4f65ab0a09a466721365914",
+        "excerptSha256": "25454d99d5323904d409255cd9a8116e0c2c0937acfb4bb8f9815d713d367669",
+        "finalUrl": "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "mcp-security-source",
@@ -191,9 +227,18 @@
       "url": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices",
       "publisher": "Model Context Protocol",
       "date": "2026-07-28",
-      "locator": "Section: Attacks and Mitigations",
-      "excerpt": "The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Token Passthrough → Risks",
+      "excerpt": "Token passthrough is explicitly forbidden in the authorization specification as it introduces a number of security risks, that include:",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:28.648Z",
+        "contentSha256": "85a24b3a6e1ff8562ad2c84797b9d04348bc98c47b1e31b14690193a468e4ab2",
+        "excerptSha256": "285b45bc9084574dac6f83e3d4f461a0f4fd1ecbdca354dd5b9bbdf75f189c09",
+        "finalUrl": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     }
   ]
 }

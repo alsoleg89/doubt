@@ -350,6 +350,12 @@ output map or receipt is written. Page, section, and timestamp locators remain
 marked `not-machine-checked`; line ranges are checked against the selected
 lines.
 
+The first live dogfood run rejected Doubt's own flagship example: all five
+recorded excerpts were paraphrases rather than text present in the cited
+pages. The example was rewritten with verbatim excerpts and now commits a
+successful attestation for every source. The portability map does the same for
+all eight of its sources.
+
 A valid map proves structural traceability, not truth. A verified map adds
 evidence that its recorded excerpt appeared in the retrieved bytes at one
 time; it still does not prove that a source is true or correctly interpreted.

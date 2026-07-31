@@ -62,8 +62,15 @@
       "id": "gemini-support",
       "type": "evidence",
       "label": "Gemini CLI",
-      "text": "Gemini CLI discovers SKILL.md packages in .gemini/skills and the .agents/skills alias, supports reload and installation commands, and asks for activation consent.",
+      "text": "Gemini CLI discovers SKILL.md packages in .gemini/skills and accepts .agents/skills as an alias.",
       "sourceId": "gemini-skills"
+    },
+    {
+      "id": "gemini-consent",
+      "type": "evidence",
+      "label": "Gemini activation",
+      "text": "Gemini CLI asks for confirmation before activating a discovered skill.",
+      "sourceId": "gemini-consent-source"
     },
     {
       "id": "host-differences",
@@ -170,7 +177,7 @@
       "note": "Cursor defines its own automatic and slash-menu activation surfaces."
     },
     {
-      "from": "gemini-support",
+      "from": "gemini-consent",
       "to": "behavior-differences",
       "relation": "supports",
       "note": "Gemini inserts an explicit consent step before a discovered skill activates."
@@ -243,9 +250,18 @@
       "url": "https://agentskills.io/specification",
       "publisher": "Agent Skills",
       "date": "2026-07-31",
-      "locator": "Section: Directory structure; SKILL.md format; Frontmatter",
-      "excerpt": "A skill requires a SKILL.md file with name and description. Scripts, references, assets, compatibility, metadata, and the experimental allowed-tools field are optional.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Directory structure",
+      "excerpt": "A skill is a directory containing, at minimum, a SKILL.md file:",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "605755e79b35025696909d48c8a8719124ae00d7542270fb5308c5e90c797d0f",
+        "excerptSha256": "e0cb219c3e96e4a0229d246e1a4865b84b2f232b184e560c9f8384a613e190a7",
+        "finalUrl": "https://agentskills.io/specification",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "claude-skills",
@@ -253,9 +269,18 @@
       "url": "https://code.claude.com/docs/en/skills",
       "publisher": "Anthropic",
       "date": "2026-07-31",
-      "locator": "Section: Getting started; Where skills live; Frontmatter reference; Skill content lifecycle",
-      "excerpt": "Claude Code follows the Agent Skills open standard and adds project and personal .claude paths, direct slash invocation, automatic loading, invocation controls, subagent execution, and dynamic context.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Extend Claude with skills",
+      "excerpt": "Claude Code skills follow the Agent Skills open standard, which works across multiple AI tools.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "42670acc469f4b151bce46ac454c45d5d2efe693b2e45b65dffd73ce4f9f60fc",
+        "excerptSha256": "40c2c2689b0efea439d1d447707cb3fadf8303b289c6b874717bc0881fca89e3",
+        "finalUrl": "https://code.claude.com/docs/en/skills",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "codex-skills",
@@ -263,9 +288,18 @@
       "url": "https://learn.chatgpt.com/docs/build-skills",
       "publisher": "OpenAI",
       "date": "2026-07-31",
-      "locator": "Section: How ChatGPT and Codex use skills; Where Codex loads local skills; Optional metadata",
-      "excerpt": "Codex builds on the open Agent Skills standard, scans .agents/skills at repository and user scopes, supports explicit or implicit activation, and recognizes optional agents/openai.yaml metadata.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Build skills",
+      "excerpt": "Use agent skills to extend ChatGPT and Codex with task-specific capabilities. A skill packages instructions, resources, and optional scripts so either product can follow a workflow reliably.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "dfed51c9e5b7b2d1de5dfa76d27ba8ea82c646e3e27166f92ddd58012091b174",
+        "excerptSha256": "a13c99dc5db31d88e113301f0b39e45867c6c1822e5173ebd6fb232bc12c579b",
+        "finalUrl": "https://learn.chatgpt.com/docs/build-skills",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "copilot-skills",
@@ -273,9 +307,18 @@
       "url": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
       "publisher": "GitHub Docs",
       "date": "2026-07-31",
-      "locator": "Section: About agent skills; supported surfaces; project and personal locations",
-      "excerpt": "GitHub calls Agent Skills an open standard, supports them across Copilot cloud agent, code review, CLI, app and IDE agent modes, and accepts .github, .claude, .agents, and personal skill locations.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: About agent skills",
+      "excerpt": "Agent skills are folders of instructions, scripts, and resources that Copilot can load when relevant to improve its performance in specialized tasks.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "ce62e6db4f93c5c2f11ed15bb1c859d3c90fae48bd8d3f2dbd6e02480c80beee",
+        "excerptSha256": "15328c97886a72bcc370210a6486d9e3eda6d985e69cb943838981bdd919f5e0",
+        "finalUrl": "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "copilot-result",
@@ -284,8 +327,17 @@
       "publisher": "Doubt portability benchmark",
       "date": "2026-07-31",
       "locator": "Section: runs[0] direct; runs[1] implicit; runs[2] negative",
-      "excerpt": "Direct passed after Copilot repaired three validator findings; implicit failed with three invalid source URLs and no receipt; negative passed without skill activation or an evidence-map artifact.",
-      "retrievedAt": "2026-07-31"
+      "excerpt": "Copilot discovered and activated Doubt without its name in the prompt, then created an artifact but did not run the requested validator or report a receipt.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "a0c685f4270f91ee07dc1c001532891491a1d5a2c60fe20c4f5983301f7c0092",
+        "excerptSha256": "77566d66b55d310bf8bc082d0c6a69e1a51c5dff9c36195dc6ad66e8fc5ef863",
+        "finalUrl": "/Users/alsoleg/Documents/Playground/doubt/benchmarks/skill-portability/results/github-copilot-1.0.77.json",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "cursor-skills",
@@ -294,8 +346,17 @@
       "publisher": "Cursor",
       "date": "2026-01-22",
       "locator": "Section: Skills",
-      "excerpt": "Cursor 2.4 supports Agent Skills in the editor and CLI. Agents discover and apply SKILL.md packages when relevant, and users can invoke a skill through the slash-command menu.",
-      "retrievedAt": "2026-07-31"
+      "excerpt": "Agents can discover and apply skills when domain-specific knowledge and workflows are relevant.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "371061553b6dceba3a2aec70e16f2ede17f112919f92880d98bcfc78dc9b7718",
+        "excerptSha256": "dcdc88928b1d6c7f6499a66b5b8f6c6cba22238ba1e379919bf8b475b6d2f0c6",
+        "finalUrl": "https://cursor.com/changelog/2-4",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     },
     {
       "id": "gemini-skills",
@@ -303,9 +364,37 @@
       "url": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
       "publisher": "Google Gemini CLI",
       "date": "2026-04-30",
-      "locator": "Section: Create your first skill; Verify discovery; How to use the skill; Manage skills",
-      "excerpt": "Gemini CLI discovers SKILL.md packages from .gemini/skills and the .agents/skills alias, can reload and install skills, and requests user consent before activating one.",
-      "retrievedAt": "2026-07-31"
+      "locator": "Section: Verify discovery",
+      "excerpt": "Gemini CLI automatically discovers skills in the .gemini/skills directory (as well as the .agents/skills alias).",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "b15b7b62bffba0e3e5fb13afc88a4efc9285cd7e1535afad6021afedc75e1277",
+        "excerptSha256": "18f9f59a6090b2d41dad0584d4cb4a3c90b0328e84396d7cd4fc27679d86e8b9",
+        "finalUrl": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
+    },
+    {
+      "id": "gemini-consent-source",
+      "title": "Get started with Agent Skills",
+      "url": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
+      "publisher": "Google Gemini CLI",
+      "date": "2026-04-30",
+      "locator": "Section: How to use the skill → Consent",
+      "excerpt": "You will see a confirmation prompt. Type y to approve.",
+      "retrievedAt": "2026-07-31",
+      "verification": {
+        "checkedAt": "2026-07-31T16:50:32.339Z",
+        "contentSha256": "b15b7b62bffba0e3e5fb13afc88a4efc9285cd7e1535afad6021afedc75e1277",
+        "excerptSha256": "1e1c4e9cea9e2c3babce295acb08c26184a9526e7bc866d49bd5cb8bf18ac911",
+        "finalUrl": "https://geminicli.com/docs/cli/tutorials/skills-getting-started/",
+        "locatorStatus": "not-machine-checked",
+        "method": "normalized-excerpt-match",
+        "status": "verified"
+      }
     }
   ]
 }

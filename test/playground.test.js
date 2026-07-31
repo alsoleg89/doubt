@@ -56,6 +56,8 @@ test("playground is local-only and loads browser-safe canonical modules", async 
 
   assert.match(page, /import \{ canonicalJson, inspectMapContract, receiptPayload \} from "\.\.\/assets\/contract\.js"/);
   assert.match(page, /receiptForMap\(map\)/);
+  assert.match(page, /verificationExcerptFindings\(map\)/);
+  assert.match(page, /verification-excerpt-mismatch/);
   assert.match(page, /contract: "doubt-evidence-receipt-v1"|receiptPayload\(map, sourceSnapshots\)/);
   assert.match(page, /import \{ renderMap \} from "\.\.\/assets\/render-map\.js"/);
   assert.match(page, /import \{ buildShareUrl, decodeShareMap \} from "\.\.\/assets\/share-link\.js"/);

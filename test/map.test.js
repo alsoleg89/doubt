@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import test from "node:test";
 import { inspectMap, validateMap } from "../src/map.js";
 import { renderMap } from "../src/render-map.js";
@@ -167,7 +168,7 @@ test("map validates verifier attestations and includes them in the receipt", () 
   map.sources[0].verification = {
     checkedAt: "2026-07-30T12:00:00.000Z",
     contentSha256: "a".repeat(64),
-    excerptSha256: "b".repeat(64),
+    excerptSha256: createHash("sha256").update(map.sources[0].excerpt).digest("hex"),
     finalUrl: "/tmp/test-output.txt",
     locatorStatus: "matched",
     method: "normalized-excerpt-match",
@@ -179,9 +180,11 @@ test("map validates verifier attestations and includes them in the receipt", () 
 
   map.sources[0].verification.contentSha256 = "not-a-digest";
   map.sources[0].verification.checkedAt = "yesterday";
+  map.sources[0].excerpt += " Tampered after verification.";
   const rules = inspectMap(map).findings.map((item) => item.rule);
   assert.equal(rules.includes("verification-digest"), true);
   assert.equal(rules.includes("verification-time"), true);
+  assert.equal(rules.includes("verification-excerpt-mismatch"), true);
 });
 
 test("map fails closed on unsourced evidence", () => {
@@ -238,7 +241,7 @@ test("renderer distinguishes verified source bytes from recorded snapshots", () 
   map.sources[0].verification = {
     checkedAt: "2026-07-30T12:00:00.000Z",
     contentSha256: "a".repeat(64),
-    excerptSha256: "b".repeat(64),
+    excerptSha256: createHash("sha256").update(map.sources[0].excerpt).digest("hex"),
     finalUrl: "/tmp/test-output.txt",
     locatorStatus: "matched",
     method: "normalized-excerpt-match",

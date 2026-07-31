@@ -27,11 +27,34 @@ function receiptFor(map) {
   return createHash("sha256").update(canonicalJson(payload)).digest("hex");
 }
 
+function verificationExcerptFindings(map) {
+  const findings = [];
+  for (const [index, source] of (map?.sources || []).entries()) {
+    const recorded = source?.verification?.excerptSha256;
+    if (
+      typeof source?.excerpt === "string"
+      && /^[a-f0-9]{64}$/.test(recorded || "")
+      && recorded !== createHash("sha256").update(source.excerpt).digest("hex")
+    ) {
+      findings.push({
+        path: `$.sources[${index}].verification.excerptSha256`,
+        rule: "verification-excerpt-mismatch",
+        message: "excerptSha256 must match the current source excerpt.",
+      });
+    }
+  }
+  return findings;
+}
+
 export function inspectMap(map) {
   const result = inspectMapContract(map);
+  const findings = [...result.findings, ...verificationExcerptFindings(map)];
+  const valid = findings.length === 0;
   return {
     ...result,
-    receipt: result.valid ? receiptFor(map) : null,
+    findings,
+    valid,
+    receipt: valid ? receiptFor(map) : null,
   };
 }
 
