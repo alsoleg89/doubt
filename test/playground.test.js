@@ -66,10 +66,12 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(home, /examples\/agent-skills-portability\.html/);
   assert.match(home, />Test Agent Skills portability<\/a>/);
   assert.match(home, /id="contribute"/);
-  assert.match(home, /1\/5 clients benchmarked/);
-  for (const issue of [11, 12, 14, 13]) {
+  assert.match(home, /2\/5 clients benchmarked/);
+  for (const issue of [11, 14, 13]) {
     assert.match(home, new RegExp(`github\\.com\\/alsoleg89\\/doubt\\/issues\\/${issue}`));
   }
+  assert.match(home, /codex-0\.146\.0-alpha\.3\.1-offline\.json/);
+  assert.match(home, /Completed · 3\/3/);
   assert.match(home, /Completed · 2\/3/);
   assert.match(home, /One client is enough/);
   assert.match(page, /sandbox="allow-scripts allow-popups"/);
@@ -96,6 +98,7 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(sitemap, /<loc>https:\/\/alsoleg89\.github\.io\/doubt\/<\/loc>/);
   assert.match(sitemap, /agent-skills-portability\.html/);
   assert.match(llms, /The validator proves structural traceability/);
+  assert.match(llms, /submitted runs\s+for two of five clients/);
   assert.doesNotMatch(llms, /5\/5|behaviorally equivalent/i);
   const indexNowPayload = JSON.parse(indexNow);
   const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);

@@ -28,6 +28,8 @@ Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.8.0
 - Agent Skills vs MCP map: https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html
 - Reader benchmark: https://alsoleg89.github.io/doubt/benchmark/
 - Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.8.0/benchmarks/skill-portability/README.md
+- Codex fixed-skill result: https://github.com/alsoleg89/doubt/blob/v0.8.0/benchmarks/skill-portability/results/codex-0.146.0-alpha.3.1-offline.json
+- GitHub Copilot result: https://github.com/alsoleg89/doubt/blob/v0.8.0/benchmarks/skill-portability/results/github-copilot-1.0.77.json
 
 ## Installation
 
@@ -49,5 +51,6 @@ GitHub Action:
 
 The validator proves structural traceability and safe rendering. It does not
 prove that a source is true, that an AI extracted it faithfully, or that a
-verdict is correct. The Agent Skills portability benchmark currently has zero
-submitted client results.
+verdict is correct. The Agent Skills portability benchmark has submitted runs
+for two of five clients: Codex and GitHub Copilot. These results do not establish
+cross-client behavioral equivalence.

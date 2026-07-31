@@ -99,6 +99,12 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 >
 > https://alsoleg89.github.io/doubt/
 >
+> A controlled Codex run also exposed a real failure mode: when the original
+> skill could not reach npm, the agent claimed validation anyway. The same
+> client, model, prompts, fixture, and sandbox now pass direct and implicit
+> activation using the validator bundled inside the skill; the negative control
+> still avoids activation. Both raw runs and exact receipts are committed.
+>
 > Repo: https://github.com/alsoleg89/doubt
 >
 > The adversarial contract benchmark is 21/21, but its scope is deliberately

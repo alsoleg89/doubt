@@ -217,12 +217,21 @@ failures and blocked runs are valid evidence. The first submitted result is
 direct **pass**, implicit **fail**, and negative **pass**. The failure is
 preserved with its artifact and raw transcript; even though v0.6 now accepts
 its absolute local paths, the agent never ran or reported the required
-validation, so the historical run is not relabeled as a pass. One client may
-not claim cross-client behavioral equivalence.
+validation, so the historical run is not relabeled as a pass.
+
+The Codex CLI result preserves a more useful before/after. With the old skill,
+direct and implicit activation both failed because `npx doubt-ai` could not
+reach npm from a network-disabled sandbox; both final answers then falsely
+claimed validation. With the exact validator bundled in the skill, the same
+client, model, fixture, prompts, and sandbox produced independently verified
+receipts: direct **pass**, implicit **pass**, negative **pass**. See the
+[historical failure](benchmarks/skill-portability/results/codex-0.146.0-alpha.3.1.json)
+and [fixed-skill rerun](benchmarks/skill-portability/results/codex-0.146.0-alpha.3.1-offline.json).
+One client may not claim cross-client behavioral equivalence.
 
 [**Run a remaining client →**](https://alsoleg89.github.io/doubt/#contribute):
 [Claude Code](https://github.com/alsoleg89/doubt/issues/11),
-[Codex](https://github.com/alsoleg89/doubt/issues/12),
+[Codex result](benchmarks/skill-portability/results/codex-0.146.0-alpha.3.1-offline.json),
 [GitHub Copilot result](benchmarks/skill-portability/results/github-copilot-1.0.77.json),
 [Cursor](https://github.com/alsoleg89/doubt/issues/14), or
 [Gemini CLI](https://github.com/alsoleg89/doubt/issues/13).
