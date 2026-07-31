@@ -34,6 +34,14 @@ export function canonicalJson(map) {
   return JSON.stringify(canonical(map));
 }
 
+export function receiptPayload(map, sourceSnapshots) {
+  return {
+    contract: "doubt-evidence-receipt-v1",
+    map,
+    sourceSnapshots,
+  };
+}
+
 function finding(path, rule, message) {
   return { path, rule, message };
 }
@@ -65,6 +73,17 @@ function retrievalDate(value) {
     `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
   );
   return dayValue === null ? null : dayValue;
+}
+
+function validUtcTimestamp(value) {
+  if (typeof value !== "string") return false;
+  const match = value.match(ISO_UTC_TIMESTAMP);
+  if (!match) return false;
+  const [, year, month, day, hour, minute, second] = match.map(Number);
+  if (hour > 23 || minute > 59 || second > 59) return false;
+  return parseIsoDate(
+    `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
+  ) !== null;
 }
 
 function boundedLocator(value) {
@@ -261,6 +280,76 @@ export function inspectMapContract(map) {
           "Source excerpt must contain varied, checkable content rather than repeated filler.",
         ),
       );
+    }
+    if (source.verification != null) {
+      const verification = source.verification;
+      const verificationBase = `${base}.verification`;
+      if (!verification || typeof verification !== "object" || Array.isArray(verification)) {
+        findings.push(
+          finding(verificationBase, "verification-type", "verification must be an object."),
+        );
+      } else {
+        if (verification.status !== "verified") {
+          findings.push(
+            finding(`${verificationBase}.status`, "verification-status", "Verification status must be verified."),
+          );
+        }
+        if (verification.method !== "normalized-excerpt-match") {
+          findings.push(
+            finding(
+              `${verificationBase}.method`,
+              "verification-method",
+              "Verification method must be normalized-excerpt-match.",
+            ),
+          );
+        }
+        if (!validUtcTimestamp(verification.checkedAt)) {
+          findings.push(
+            finding(
+              `${verificationBase}.checkedAt`,
+              "verification-time",
+              "Verification checkedAt must be an ISO UTC timestamp ending in Z.",
+            ),
+          );
+        } else if (source.retrievedAt !== verification.checkedAt.slice(0, 10)) {
+          findings.push(
+            finding(
+              `${verificationBase}.checkedAt`,
+              "verification-retrieval-mismatch",
+              "A verified source retrievedAt must equal the UTC date in verification.checkedAt.",
+            ),
+          );
+        }
+        for (const key of ["contentSha256", "excerptSha256"]) {
+          if (typeof verification[key] !== "string" || !/^[a-f0-9]{64}$/.test(verification[key])) {
+            findings.push(
+              finding(
+                `${verificationBase}.${key}`,
+                "verification-digest",
+                `${key} must be a lowercase SHA-256 digest.`,
+              ),
+            );
+          }
+        }
+        if (!["matched", "not-machine-checked"].includes(verification.locatorStatus)) {
+          findings.push(
+            finding(
+              `${verificationBase}.locatorStatus`,
+              "verification-locator",
+              "locatorStatus must be matched or not-machine-checked.",
+            ),
+          );
+        }
+        if (typeof verification.finalUrl !== "string" || !sourceLocation(verification.finalUrl)) {
+          findings.push(
+            finding(
+              `${verificationBase}.finalUrl`,
+              "verification-url",
+              "finalUrl must be an http(s), file://, or local path source location.",
+            ),
+          );
+        }
+      }
     }
   }
 

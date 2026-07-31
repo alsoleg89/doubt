@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { doctor, installSkill } from "./install.js";
 import { loadMap } from "./map.js";
 import { renderMap } from "./render-map.js";
+import { verifyMapSources } from "./verify.js";
 
 const c = {
   cyan: "\u001b[36m",
@@ -16,7 +17,7 @@ const c = {
 };
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const demoMap = resolve(root, "examples", "what-should-doubt-become.doubt.json");
+const demoMap = resolve(root, "examples", "agent-skills-vs-mcp.doubt.json");
 const packageVersion = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")).version;
 
 const help = `doubt — turn contested questions into source-grounded evidence maps
@@ -26,6 +27,7 @@ Usage
   doubt doctor [--agent <name|all>] [--global] [--json]
   doubt map <file.json> [--out <file.html>] [--json]
   doubt validate <file.json> [--json]
+  doubt verify <file.json> [--out <verified.json>|--write] [--timeout <ms>] [--allow-private] [--json]
   doubt demo [--out <file.html>] [--json]
 
 Agents
@@ -35,6 +37,7 @@ Examples
   npx doubt-ai init --agent all
   npx doubt-ai map research.doubt.json --out evidence-map.html
   npx doubt-ai validate research.doubt.json
+  npx doubt-ai verify research.doubt.json --out research.verified.doubt.json
   npx doubt-ai demo --out doubt-demo.html
 `;
 
@@ -47,7 +50,7 @@ function options(args) {
       continue;
     }
     const key = value.slice(2);
-    if (["global", "force", "json"].includes(key)) result[key] = true;
+    if (["global", "force", "json", "write", "allow-private"].includes(key)) result[key] = true;
     else {
       if (!args[i + 1] || args[i + 1].startsWith("--")) throw new Error(`Missing value for --${key}`);
       result[key] = args[i + 1];
@@ -143,6 +146,43 @@ export async function run(argv) {
     const { validation } = await loadMap(resolve(file));
     if (flags.json) console.log(JSON.stringify(validation, null, 2));
     else printMapValidation(validation);
+    return;
+  }
+
+  if (command === "verify") {
+    const file = flags._[0];
+    if (!file) throw new Error("Pass a .json evidence map.");
+    if (flags.write && flags.out) throw new Error("Use either --write or --out, not both.");
+    const inputFile = resolve(file);
+    const timeoutMs = flags.timeout == null ? undefined : Number(flags.timeout);
+    if (timeoutMs != null && (!Number.isInteger(timeoutMs) || timeoutMs < 1)) {
+      throw new Error("--timeout must be a positive integer in milliseconds.");
+    }
+    const { map } = await loadMap(inputFile);
+    const verification = await verifyMapSources(map, {
+      allowPrivate: flags["allow-private"],
+      mapFile: inputFile,
+      timeoutMs,
+    });
+    let outputFile = null;
+    if (verification.ok && (flags.write || flags.out)) {
+      outputFile = flags.write ? inputFile : resolve(flags.out);
+      await writeFile(outputFile, `${JSON.stringify(verification.map, null, 2)}\n`);
+    }
+    const report = { ...verification, output: outputFile };
+    delete report.map;
+    if (flags.json) {
+      console.log(JSON.stringify(report, null, 2));
+    } else {
+      console.log(`${verification.ok ? c.green : c.red}${verification.ok ? "VERIFIED" : "UNVERIFIED"}${c.reset} ${verification.checkedAt}`);
+      for (const result of verification.results) {
+        const icon = result.status === "verified" ? `${c.green}✓` : `${c.red}×`;
+        console.log(`${icon}${c.reset} ${result.sourceId} · ${result.status} · ${result.message}`);
+      }
+      if (outputFile) console.log(`  ${c.cyan}map${c.reset} ${outputFile}`);
+      if (verification.receipt) console.log(`  ${c.dim}receipt · ${verification.receipt}${c.reset}`);
+    }
+    if (!verification.ok) process.exitCode = 1;
     return;
   }
 

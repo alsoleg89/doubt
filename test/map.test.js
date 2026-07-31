@@ -161,6 +161,29 @@ test("receipt covers the recorded excerpt and retrieval time", () => {
   assert.notEqual(validateMap(original).receipt, validateMap(changedRetrieval).receipt);
 });
 
+test("map validates verifier attestations and includes them in the receipt", () => {
+  const map = fixture();
+  map.sources[0].retrievedAt = "2026-07-30";
+  map.sources[0].verification = {
+    checkedAt: "2026-07-30T12:00:00.000Z",
+    contentSha256: "a".repeat(64),
+    excerptSha256: "b".repeat(64),
+    finalUrl: "/tmp/test-output.txt",
+    locatorStatus: "matched",
+    method: "normalized-excerpt-match",
+    status: "verified",
+  };
+  const originalReceipt = validateMap(map).receipt;
+  map.sources[0].verification.contentSha256 = "c".repeat(64);
+  assert.notEqual(validateMap(map).receipt, originalReceipt);
+
+  map.sources[0].verification.contentSha256 = "not-a-digest";
+  map.sources[0].verification.checkedAt = "yesterday";
+  const rules = inspectMap(map).findings.map((item) => item.rule);
+  assert.equal(rules.includes("verification-digest"), true);
+  assert.equal(rules.includes("verification-time"), true);
+});
+
 test("map fails closed on unsourced evidence", () => {
   const map = fixture();
   delete map.nodes[1].sourceId;
@@ -187,6 +210,14 @@ test("rendered map is self-contained and keeps exact source regions", () => {
   const html = renderMap(map, validateMap(map));
   assert.match(html, /<!doctype html>/);
   assert.match(html, /Summary line 42/);
+  assert.match(html, /Recorded snapshot · not re-fetched by Doubt/);
+  assert.match(html, /<body data-view="brief">/);
+  assert.match(html, /aria-label="Linear reasoning brief"/);
+  assert.match(html, />Brief<\/button>/);
+  assert.match(html, />Map<\/button>/);
+  assert.match(html, /Observed behavior|Observed result/);
+  assert.match(html, /document\.body\.dataset\.view = view/);
+  assert.match(html, /querySelectorAll\("\.view-toolbar \[data-view\]"\)/);
   assert.match(html, /supports/);
   assert.match(html, /requestAnimationFrame\(drawConnections\)/);
   assert.match(html, /property="og:title"/);
@@ -199,6 +230,25 @@ test("rendered map is self-contained and keeps exact source regions", () => {
     />Observed result<\/span>\s*<b>supports<\/b>\s*<span>Current position</,
   );
   assert.doesNotMatch(html, /https:\/\/cdn\./);
+});
+
+test("renderer distinguishes verified source bytes from recorded snapshots", () => {
+  const map = fixture();
+  map.sources[0].retrievedAt = "2026-07-30";
+  map.sources[0].verification = {
+    checkedAt: "2026-07-30T12:00:00.000Z",
+    contentSha256: "a".repeat(64),
+    excerptSha256: "b".repeat(64),
+    finalUrl: "/tmp/test-output.txt",
+    locatorStatus: "matched",
+    method: "normalized-excerpt-match",
+    status: "verified",
+  };
+  const html = renderMap(map, validateMap(map));
+  assert.match(html, /✓ Verified 2026-07-30T12:00:00.000Z/);
+  assert.match(html, /line locator matched/);
+  assert.match(html, /aaaaaaaaaaaaaaaa…/);
+  assert.doesNotMatch(html, /Recorded snapshot · not re-fetched/);
 });
 
 test("renderer escapes map content and embedded JSON", () => {

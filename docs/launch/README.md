@@ -81,21 +81,26 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > typed JSON reasoning record; the validator rejects unsourced evidence,
 > invalid source dates and locators, decorative sources, disconnected or cyclic edges, unsupported
 > positions, and invented confidence percentages. A deterministic renderer then
-> emits one interactive HTML file with no CDN or server.
+> emits one HTML file with a linear brief and an interactive graph, with no CDN
+> or server.
+>
+> The explicit `doubt verify` command can also retrieve every recorded source,
+> match the excerpt, and bind the receipt to the retrieved bytes. If one source
+> is unreachable or mismatched, it writes no attested output.
 >
 > The same contract ships as a reusable GitHub Action: it finds
 > `*.doubt.json` maps, annotates invalid files, and writes content receipts and
 > evidence counts to the job summary without installing a package.
 >
-> I dogfooded it on the decision that selected this project from 105 AI OSS
-> wedges. The map keeps the strongest objection and the still-missing human
-> preference test visible:
+> The default demo maps Agent Skills vs MCP from the official specifications;
+> the gallery also includes the decision record that selected this project from
+> 105 AI OSS wedges:
 >
 > https://alsoleg89.github.io/doubt/
 >
 > Repo: https://github.com/alsoleg89/doubt
 >
-> The adversarial contract benchmark is 20/20, but its scope is deliberately
+> The adversarial contract benchmark is 21/21, but its scope is deliberately
 > narrow: it tests structural traceability and safe rendering, not whether a
 > source is true or an AI extracted it faithfully. I would especially value
 > feedback on the JSON contract and whether the map beats a cited memo for a
@@ -119,7 +124,7 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
 > you can keep in git or share without an account.
 >
 > There is also a reusable Action for enforcing the contract in pull requests:
-> `uses: alsoleg89/doubt@v0.6.0`.
+> `uses: alsoleg89/doubt@v0.7.0`.
 >
 > Live dogfood map: https://alsoleg89.github.io/doubt/
 >
@@ -139,14 +144,16 @@ preview. It is the GitHub-recommended 1280×640 PNG and stays under 1 MB.
    contradicts, qualifies, missing.
 4. Every evidence node needs publication and retrieval dates plus an exact
    section/page/line locator. Decorative citations fail validation.
-5. The renderer emits one self-contained HTML file. No account, backend, model
-   key, CDN, or telemetry.
-6. The reusable GitHub Action validates every `*.doubt.json` map in CI and
+5. The renderer emits one self-contained HTML file with Brief and Map views. No
+   account, backend, model key, CDN, or telemetry.
+6. `doubt verify` explicitly re-fetches sources, matches excerpts, and hashes
+   retrieved bytes; one failure means no attested output.
+7. The reusable GitHub Action validates every `*.doubt.json` map in CI and
    leaves file annotations plus a receipt in the job summary.
-7. I used it to record why I rejected two other product directions—and kept the
+8. I used it to record why I rejected other product directions—and kept the
    missing human-pull test visible. Live map:
    https://alsoleg89.github.io/doubt/
-8. Repo + 12-case adversarial contract benchmark:
+9. Repo + 21-case adversarial contract benchmark:
    https://github.com/alsoleg89/doubt
 
 ## Product Hunt

@@ -1,8 +1,8 @@
 # Evidence-contract benchmark
 
-Generated: 2026-07-31T10:46:34.321Z
+Generated: 2026-07-31T11:08:10.787Z
 
-**20/20 cases passed (100%).**
+**21/21 cases passed (100%).**
 
 | Case | Expected | Observed | Result |
 | --- | --- | --- | --- |
@@ -26,6 +26,7 @@ Generated: 2026-07-31T10:46:34.321Z
 | `decorative-unused-evidence` | `unused-evidence` | `unused-evidence, disconnected-node` | PASS |
 | `unsupported-position` | `unsupported-position` | `unused-evidence, unsupported-position` | PASS |
 | `embedded-markup` | `escaped` | `escaped` | PASS |
+| `forged-verification-digest` | `verification-digest` | `verification-digest` | PASS |
 
 This benchmark measures structural traceability and safe rendering. It does
 not measure whether a source is true or whether an AI extracted it faithfully.

@@ -52,7 +52,16 @@ The canonical artifact is UTF-8 JSON. Use a `.doubt.json` suffix when practical.
       "date": "YYYY-MM-DD",
       "retrievedAt": "YYYY-MM-DD or an ISO UTC timestamp ending in Z",
       "locator": "Section: Results, p. 7, § 2.1, L12-L18, or 00:04:31",
-      "excerpt": "A short, checkable excerpt or bounded source-region description."
+      "excerpt": "A short, checkable excerpt or bounded source-region description.",
+      "verification": {
+        "status": "verified",
+        "method": "normalized-excerpt-match",
+        "checkedAt": "YYYY-MM-DDTHH:mm:ss.sssZ",
+        "contentSha256": "64 lowercase hexadecimal characters",
+        "excerptSha256": "64 lowercase hexadecimal characters",
+        "finalUrl": "The checked URL or absolute local path",
+        "locatorStatus": "matched or not-machine-checked"
+      }
     }
   ]
 }
@@ -73,6 +82,10 @@ The canonical artifact is UTF-8 JSON. Use a `.doubt.json` suffix when practical.
   later than `updatedAt`.
 - Every source records `retrievedAt`; the receipt covers that value and the
   exact recorded excerpt, not the mutable bytes currently served by its URL.
+- `verification` is optional and must only be written by a successful explicit
+  `doubt verify` run. It binds the receipt to the retrieved bytes and matched
+  excerpt. Line locators can be machine-checked; page, section, and timestamp
+  locators are reported as `not-machine-checked`.
 - Locators must identify a bounded section, page, line range, or timestamp.
 - Excerpts must contain 40–500 characters of varied, checkable content;
   repeated filler is rejected.

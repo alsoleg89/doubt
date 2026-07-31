@@ -22,10 +22,6 @@
 ·
 [**Bring a contested question →**](https://github.com/alsoleg89/doubt/discussions/4)
 
-If you want inspectable AI research to become a standard artifact,
-[**star Doubt**](https://github.com/alsoleg89/doubt) and challenge one reasoning
-edge.
-
 <img src="docs/demo.svg" alt="Doubt evidence map showing a verdict, supporting evidence, a contradiction, and a missing fact linked to exact source regions" width="100%">
 
 </div>
@@ -81,20 +77,20 @@ npx doubt-ai demo --out doubt-demo.html
 The public package is [`doubt-ai`](https://www.npmjs.com/package/doubt-ai); the
 CLI has zero runtime dependencies and requires Node.js 18 or newer.
 
-The command renders the same decision used to choose Doubt's product direction:
+The command renders a current architecture decision from official Agent Skills,
+GitHub, and MCP sources:
 
-> Is repository-to-launch-artifacts the strongest path to a community-scale
-> open-source project?
+> Should an AI capability be an Agent Skill, an MCP server, or both?
 
-Open `doubt-demo.html`, select an evidence card, and the exact source locator
-appears beside the reasoning graph. The canonical editable input is
-[plain JSON](examples/what-should-doubt-become.doubt.json); the generated
-[self-contained HTML](examples/what-should-doubt-become.html) has no runtime
+Open `doubt-demo.html` to read the linear brief, switch to the reasoning graph,
+and inspect exact source regions. The canonical editable input is
+[plain JSON](examples/agent-skills-vs-mcp.doubt.json); the generated
+[self-contained HTML](examples/agent-skills-vs-mcp.html) has no runtime
 dependencies.
 
-The public map is also the product decision record: it preserves the evidence
-that killed two earlier directions and the human-preference test that is still
-missing. The broader selection process started with
+The separate [product decision record](examples/what-should-doubt-become.doubt.json)
+preserves the evidence that killed earlier directions and the human-preference
+test that is still missing. The broader selection process started with
 [105 AI open-source wedges](docs/category-research-2026.md) and narrowed them
 through [direct competitor and prototype tests](docs/candidate-shortlist-2026.md).
 
@@ -172,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: alsoleg89/doubt@v0.6.0
+      - uses: alsoleg89/doubt@v0.7.0
 ```
 
 The Action fails the check with file-level annotations and writes receipts,
@@ -183,7 +179,7 @@ network call.
 Known negative fixtures can remain committed without weakening the gate:
 
 ```yaml
-      - uses: alsoleg89/doubt@v0.6.0
+      - uses: alsoleg89/doubt@v0.7.0
         with:
           exclude: benchmarks/expected-failures
 ```
@@ -317,6 +313,7 @@ invalid evidence record pass the validator.
 | --- | --- |
 | `doubt map <file.json> --out <file.html>` | Validate and render an interactive map |
 | `doubt validate <file.json>` | Check the evidence contract without rendering |
+| `doubt verify <file.json> --out <verified.json>` | Explicitly retrieve each source, match its excerpt, and write an attested map only if all sources pass |
 | `doubt demo --out <file.html>` | Render the included dogfood map |
 | `doubt init --agent all` | Install the map-building skill |
 | `doubt doctor --agent all` | Detect missing or locally modified skill copies |
@@ -329,9 +326,21 @@ The renderer reads only the JSON file you pass and writes the requested HTML.
 The installer copies static skill files. No telemetry, background service,
 remote runtime, model call, or hidden network request is used.
 
-A valid map proves structural traceability, not truth. A source can still be
-wrong, stale, or misinterpreted; that is why source regions, edge notes,
-contradictions, and unknowns remain visible for review.
+`doubt verify` is the only network-capable command, and it runs only when you
+invoke it explicitly. It sends an HTTP GET to each recorded `http(s)` source,
+blocks localhost and private addresses by default, checks every redirect,
+matches the normalized excerpt, and records the retrieved-byte SHA-256. It
+never uploads the map or excerpt to Doubt. Local file sources stay local. If
+one source is unreachable or mismatched, verification fails closed and no
+output map or receipt is written. Page, section, and timestamp locators remain
+marked `not-machine-checked`; line ranges are checked against the selected
+lines.
+
+A valid map proves structural traceability, not truth. A verified map adds
+evidence that its recorded excerpt appeared in the retrieved bytes at one
+time; it still does not prove that a source is true or correctly interpreted.
+That is why source regions, edge notes, contradictions, and unknowns remain
+visible for review.
 
 See [SECURITY.md](SECURITY.md) for the threat model.
 

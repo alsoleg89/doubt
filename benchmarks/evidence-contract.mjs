@@ -207,6 +207,22 @@ const cases = [
       };
     },
   },
+  {
+    id: "forged-verification-digest",
+    expected: "verification-digest",
+    mutate(map) {
+      map.sources[0].retrievedAt = map.updatedAt;
+      map.sources[0].verification = {
+        checkedAt: `${map.updatedAt}T12:00:00.000Z`,
+        contentSha256: "not-a-sha256-digest",
+        excerptSha256: "a".repeat(64),
+        finalUrl: map.sources[0].url,
+        locatorStatus: "not-machine-checked",
+        method: "normalized-excerpt-match",
+        status: "verified",
+      };
+    },
+  },
 ];
 
 const results = cases.map((testCase) => {

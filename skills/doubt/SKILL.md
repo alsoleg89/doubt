@@ -37,15 +37,20 @@ that has not been sourced.
 7. **Write the map JSON.** Follow
    [references/map-schema.md](references/map-schema.md). Keep node IDs short,
    stable, and semantic.
-8. **Fail closed, then render.**
+8. **Fail closed, optionally verify, then render.**
 
    ```bash
    npx doubt-ai validate decision.doubt.json
+   # Only when the user explicitly permits source retrieval:
+   npx doubt-ai verify decision.doubt.json --out decision.verified.doubt.json
    npx doubt-ai map decision.doubt.json --out decision.html
    ```
 
    Fix every validation finding. Never bypass missing-source, unused-evidence,
-   unsupported-position, or false-precision findings.
+   unsupported-position, or false-precision findings. Do not run `verify`
+   implicitly: it can make outbound requests for recorded HTTP sources. Local
+   file verification does not use the network. If verification fails, preserve
+   the mismatch or retrieval failure instead of writing an attestation.
 9. **Inspect the HTML.** Verify that the question, verdict, evidence cards,
    contradictions, unknowns, edge focus, filters, and source links are readable.
    The JSON remains the canonical editable artifact.

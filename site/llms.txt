@@ -5,7 +5,7 @@
 
 Repository: https://github.com/alsoleg89/doubt
 License: MIT
-Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.5.0
+Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.7.0
 
 ## Core contract
 
@@ -15,7 +15,9 @@ Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.5.0
   section, page, timestamp, or line locator.
 - Decorative sources, unsourced evidence, dangling edges, unsupported
   positions, and invented confidence percentages fail validation.
-- Valid maps receive a SHA-256 receipt over canonical JSON.
+- Valid maps receive a SHA-256 receipt over canonical JSON and recorded source snapshots.
+- Explicit `doubt verify` retrieval can match excerpts and bind receipts to
+  retrieved-byte hashes; partial failures produce no attested output.
 - Validation and rendering are local-only; there is no telemetry or model API.
 
 ## Public artifacts
@@ -25,7 +27,7 @@ Current release: https://github.com/alsoleg89/doubt/releases/tag/v0.5.0
 - Agent Skills portability map: https://alsoleg89.github.io/doubt/examples/agent-skills-portability.html
 - Agent Skills vs MCP map: https://alsoleg89.github.io/doubt/examples/agent-skills-vs-mcp.html
 - Reader benchmark: https://alsoleg89.github.io/doubt/benchmark/
-- Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.5.0/benchmarks/skill-portability/README.md
+- Five-client portability protocol: https://github.com/alsoleg89/doubt/blob/v0.7.0/benchmarks/skill-portability/README.md
 
 ## Installation
 
@@ -36,11 +38,12 @@ Agent Skill:
 CLI:
 
     npx doubt-ai validate decision.doubt.json
+    npx doubt-ai verify decision.doubt.json --out decision.verified.doubt.json
     npx doubt-ai map decision.doubt.json --out decision.html
 
 GitHub Action:
 
-    uses: alsoleg89/doubt@v0.5.0
+    uses: alsoleg89/doubt@v0.7.0
 
 ## Scope limits
 

@@ -1,6 +1,6 @@
 {
   "name": "doubt-ai",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Turn contested questions into interactive, source-grounded evidence maps.",
   "type": "module",
   "license": "MIT",
@@ -59,7 +59,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "demo": "node bin/doubt.js demo --out examples/what-should-doubt-become.html",
+    "demo": "node bin/doubt.js demo --out examples/agent-skills-vs-mcp.html",
     "discovery": "node scripts/build-skill-discovery.mjs",
     "skill:sync": "node scripts/sync-github-skill.mjs --write",
     "skill:check": "node scripts/sync-github-skill.mjs --check",
@@ -69,7 +69,7 @@
     "benchmark:reader:check": "node benchmarks/map-vs-memo/study.mjs --check-only",
     "benchmark:reader:analyze": "node benchmarks/map-vs-memo/analyze.mjs",
     "benchmark:portability": "node benchmarks/skill-portability/validate.mjs",
-    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/share-link.js && node --check src/install.js && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs && node --check benchmarks/skill-portability/validate.mjs",
+    "lint": "node --check bin/doubt.js && node --check action/index.js && node --check src/action.js && node --check src/cli.js && node --check src/contract.js && node --check src/map.js && node --check src/render-map.js && node --check src/share-link.js && node --check src/verify.js && node --check src/install.js && node --check scripts/sync-github-skill.mjs && node --check benchmarks/map-vs-memo/study.mjs && node --check benchmarks/map-vs-memo/analyze.mjs && node --check benchmarks/skill-portability/validate.mjs",
     "test": "node --test",
     "check": "npm run lint && npm run skill:check && npm test && npm run benchmark:check && npm run benchmark:reader:check && npm run benchmark:portability",
     "prepack": "npm run check"

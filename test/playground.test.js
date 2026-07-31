@@ -40,13 +40,18 @@ test("playground is local-only and loads browser-safe canonical modules", async 
     readFile("site/6cfa3cf24f13d6610627b17a367393d2.txt", "utf8"),
   ]);
 
-  assert.match(page, /import \{ canonicalJson, inspectMapContract \} from "\.\.\/assets\/contract\.js"/);
+  assert.match(page, /import \{ canonicalJson, inspectMapContract, receiptPayload \} from "\.\.\/assets\/contract\.js"/);
+  assert.match(page, /receiptForMap\(map\)/);
+  assert.match(page, /contract: "doubt-evidence-receipt-v1"|receiptPayload\(map, sourceSnapshots\)/);
   assert.match(page, /import \{ renderMap \} from "\.\.\/assets\/render-map\.js"/);
   assert.match(page, /import \{ buildShareUrl, decodeShareMap \} from "\.\.\/assets\/share-link\.js"/);
   assert.match(page, />Copy share link<\/button>/);
   assert.match(page, /history\.replaceState\(null, "", link\)/);
   assert.match(page, /The share link is ready in the address bar/);
-  assert.match(page, /Useful artifact\? Star Doubt on GitHub/);
+  assert.match(page, />Load rejected example<\/button>/);
+  assert.match(page, /map\.sources\[0\]\.date = "3026-99-99"/);
+  assert.match(page, /map\.sources\[0\]\.locator = "see somewhere"/);
+  assert.match(page, /map\.sources\[0\]\.excerpt = "a"\.repeat\(42\)/);
   assert.match(page, /Share links carry the map after <code>#<\/code>/);
   assert.match(page, /Your map stays in this tab/);
   assert.match(page, /No account, telemetry, analytics,\s+or network submission/);
@@ -57,7 +62,7 @@ test("playground is local-only and loads browser-safe canonical modules", async 
   assert.match(home, /"@type": "SoftwareApplication"/);
   assert.match(home, /rel="alternate" type="text\/plain".*llms\.txt/);
   assert.match(page, /rel="canonical" href="https:\/\/alsoleg89\.github\.io\/doubt\/playground\/"/);
-  assert.match(home, />Star on GitHub ↗<\/a>/);
+  assert.doesNotMatch(home, />Star on GitHub ↗<\/a>/);
   assert.match(home, /examples\/agent-skills-portability\.html/);
   assert.match(home, />Test Agent Skills portability<\/a>/);
   assert.match(home, /id="contribute"/);

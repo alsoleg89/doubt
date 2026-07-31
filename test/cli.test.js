@@ -16,7 +16,10 @@ test("demo emits a validated, self-contained evidence map", async () => {
   const report = JSON.parse(result.stdout);
   assert.equal(report.valid, true);
   assert.match(report.receipt, /^[a-f0-9]{64}$/);
-  assert.match(await readFile(output, "utf8"), /Exact source region/);
+  const html = await readFile(output, "utf8");
+  assert.match(html, /Exact source region/);
+  assert.match(html, /Should an AI capability be an Agent Skill, an MCP server, or both\?/);
+  assert.match(html, /Linear reasoning brief/);
 });
 
 test("help documents the one-command install", () => {
@@ -26,6 +29,7 @@ test("help documents the one-command install", () => {
   });
   assert.match(result.stdout, /npx doubt-ai init --agent all/);
   assert.match(result.stdout, /doubt map <file\.json>/);
+  assert.match(result.stdout, /doubt verify <file\.json>/);
 });
 
 test("version stays aligned with package metadata", async () => {

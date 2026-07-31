@@ -16,7 +16,18 @@ export function renderMap(map, validation) {
   const label = (count, singular, plural = `${singular}s`) => (
     count === 1 ? singular : plural
   );
+  const nodeById = new Map(map.nodes.map((node) => [node.id, node]));
   const nodeLabels = new Map(map.nodes.map((node) => [node.id, node.label]));
+  const position = map.nodes.find((node) => node.type === "position");
+  function distanceToPosition(nodeId, seen = new Set()) {
+    if (nodeId === position.id) return 0;
+    if (seen.has(nodeId)) return Number.POSITIVE_INFINITY;
+    const nextSeen = new Set(seen).add(nodeId);
+    const distances = map.edges
+      .filter((edge) => edge.from === nodeId)
+      .map((edge) => distanceToPosition(edge.to, nextSeen));
+    return distances.length === 0 ? Number.POSITIVE_INFINITY : 1 + Math.min(...distances);
+  }
   const nodes = map.nodes
     .map((node, index) => {
       const source = node.sourceId
@@ -51,9 +62,42 @@ export function renderMap(map, validation) {
     )
     .join("");
 
+  const briefEdges = map.edges
+    .map((edge, index) => ({ edge, index, depth: distanceToPosition(edge.from) }))
+    .sort((left, right) => left.depth - right.depth || left.index - right.index)
+    .map(({ edge }) => {
+      const from = nodeById.get(edge.from);
+      const to = nodeById.get(edge.to);
+      const source = from.sourceId
+        ? map.sources.find((item) => item.id === from.sourceId)
+        : null;
+      const sourceRegion = source
+        ? `<details class="brief-source">
+            <summary>${escapeHtml(source.publisher)} · ${escapeHtml(source.locator)}${source.verification ? " · verified" : ""}</summary>
+            <blockquote>${escapeHtml(source.excerpt)}</blockquote>
+            <a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>`
+        : "";
+      return `<article class="brief-edge ${escapeHtml(edge.relation)}">
+        <div class="brief-relation">${escapeHtml(edge.relation)}</div>
+        <h3>${escapeHtml(from.label)} <span>→</span> ${escapeHtml(to.label)}</h3>
+        <p class="brief-claim">${escapeHtml(from.text)}</p>
+        <p class="brief-note">${escapeHtml(edge.note)}</p>
+${sourceRegion}
+      </article>`;
+    })
+    .join("");
+
   const sources = map.sources
-    .map(
-      (source) => `
+    .map((source) => {
+      const verification = source.verification
+        ? `<p class="verification">✓ Verified ${escapeHtml(source.verification.checkedAt)} · ${escapeHtml(
+          source.verification.locatorStatus === "matched"
+            ? "line locator matched"
+            : "excerpt matched; locator not machine-checked",
+        )}<br><code>${escapeHtml(source.verification.contentSha256.slice(0, 16))}…</code></p>`
+        : `<p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>`;
+      return `
         <article class="source" data-source="${escapeHtml(source.id)}">
           <div>
             <span>${escapeHtml(source.publisher)}</span>
@@ -62,10 +106,11 @@ export function renderMap(map, validation) {
           <h3>${escapeHtml(source.title)}</h3>
           <p class="locator">${escapeHtml(source.locator)}</p>
           <p class="retrieved">Retrieved ${escapeHtml(source.retrievedAt)}</p>
+          ${verification}
           <blockquote>${escapeHtml(source.excerpt)}</blockquote>
           <a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">Open source region ↗</a>
-        </article>`,
-    )
+        </article>`;
+    })
     .join("");
 
   const data = jsonForScript({
@@ -199,6 +244,64 @@ export function renderMap(map, validation) {
       font-size: 12px;
     }
     .toolbar button.active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+    .view-toolbar { margin-bottom: 30px; }
+    .view-toolbar::before {
+      align-self: center;
+      color: var(--muted);
+      content: "VIEW";
+      font: 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+      margin-right: 3px;
+    }
+    .brief-view { max-width: 900px; }
+    .brief-position {
+      background: linear-gradient(140deg, rgba(168, 236, 103, .13), rgba(17, 20, 22, .97) 58%);
+      border: 1px solid rgba(168, 236, 103, .32);
+      border-radius: 15px;
+      padding: clamp(22px, 4vw, 36px);
+    }
+    .brief-position span, .brief-section-title {
+      color: var(--support);
+      font: 700 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .brief-position h2 { font-size: clamp(28px, 4vw, 45px); letter-spacing: -.05em; margin: 12px 0; }
+    .brief-position p { color: #c9cfca; font-size: 17px; line-height: 1.58; margin: 0; }
+    .brief-section-title { color: var(--muted); margin: 36px 0 10px; }
+    .brief-edge { border-top: 1px solid var(--line); padding: 24px 0 27px 142px; position: relative; }
+    .brief-relation {
+      border-radius: 5px;
+      color: var(--bg);
+      font: 750 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+      left: 0;
+      padding: 5px 7px;
+      position: absolute;
+      text-transform: uppercase;
+      top: 27px;
+      background: var(--support);
+    }
+    .brief-edge.contradicts .brief-relation { background: var(--against); }
+    .brief-edge.qualifies .brief-relation { background: var(--claim); }
+    .brief-edge.missing .brief-relation { background: var(--missing); }
+    .brief-edge h3 { font-size: 16px; letter-spacing: -.02em; margin: 0 0 13px; }
+    .brief-edge h3 span { color: var(--muted); font-weight: 400; padding: 0 5px; }
+    .brief-claim { color: #d4d9d5; font-size: 15px; line-height: 1.55; margin: 0 0 9px; }
+    .brief-note { color: var(--muted); font-size: 13px; line-height: 1.52; margin: 0; }
+    .brief-source {
+      border-left: 2px solid var(--line);
+      margin-top: 16px;
+      padding-left: 13px;
+    }
+    .brief-source summary { color: var(--claim); cursor: pointer; font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .brief-source blockquote { margin: 12px 0; }
+    .brief-source a { color: var(--support); font-size: 11px; text-decoration: none; }
+    .map-view { display: none; }
+    body[data-view="map"] .brief-view { display: none; }
+    body[data-view="map"] .map-view { display: block; }
+    body[data-view="brief"] .shell { grid-template-columns: minmax(0, 1fr); }
+    body[data-view="brief"] main { margin: 0 auto; max-width: 1250px; width: 100%; }
+    body[data-view="brief"] aside { display: none; }
     .map-shell { position: relative; }
     .connections {
       position: absolute;
@@ -324,6 +427,16 @@ export function renderMap(map, validation) {
       font-size: 11px;
       margin: -6px 0 10px;
     }
+    .verification, .unverified {
+      border: 1px solid rgba(168, 236, 103, .24);
+      border-radius: 8px;
+      color: var(--support);
+      font: 10px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin: 0 0 13px;
+      padding: 8px 9px;
+    }
+    .verification code { color: var(--muted); font: inherit; }
+    .unverified { border-color: var(--line); color: var(--muted); }
     blockquote { margin: 0 0 15px; color: #aeb5b0; font-size: 13px; line-height: 1.5; }
     .source a { color: var(--support); font-size: 12px; text-decoration: none; }
     .empty { color: var(--muted); font-size: 13px; line-height: 1.5; }
@@ -348,6 +461,8 @@ export function renderMap(map, validation) {
       .metric { border-bottom: 1px solid var(--line); }
       .metric:nth-child(even) { border-right: 0; }
       .metric:last-child { border-bottom: 0; }
+      .brief-edge { padding-left: 0; padding-top: 61px; }
+      .brief-relation { top: 24px; }
     }
     @media (max-width: 520px) {
       nav { align-items: flex-start; }
@@ -358,7 +473,7 @@ export function renderMap(map, validation) {
     }
   </style>
 </head>
-<body>
+<body data-view="brief">
   <div class="shell">
     <main>
       <nav>
@@ -383,15 +498,30 @@ export function renderMap(map, validation) {
         <div class="metric"><strong>${metrics.contradictions}</strong><span>${label(metrics.contradictions, "tension")}</span></div>
         <div class="metric"><strong>${metrics.unknowns}</strong><span>${label(metrics.unknowns, "unknown")}</span></div>
       </section>
-      <div class="toolbar" aria-label="Filter map">
-        <button class="active" data-filter="all">All</button>
-        <button data-filter="claim">Claims</button>
-        <button data-filter="evidence">Evidence</button>
-        <button data-filter="unknown">Unknown</button>
+      <div class="toolbar view-toolbar" aria-label="Choose evidence view">
+        <button class="active" data-view="brief" aria-pressed="true">Brief</button>
+        <button data-view="map" aria-pressed="false">Map</button>
       </div>
-      <section class="map-shell">
-        <svg class="connections" aria-hidden="true"></svg>
-        <div class="map">${nodes}</div>
+      <section class="brief-view" aria-label="Linear reasoning brief">
+        <article class="brief-position">
+          <span>Current position</span>
+          <h2>${escapeHtml(position.label)}</h2>
+          <p>${escapeHtml(position.text)}</p>
+        </article>
+        <div class="brief-section-title">Reasoning · decision to evidence</div>
+        ${briefEdges}
+      </section>
+      <section class="map-view" aria-label="Interactive reasoning map">
+        <div class="toolbar" aria-label="Filter map">
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="claim">Claims</button>
+          <button data-filter="evidence">Evidence</button>
+          <button data-filter="unknown">Unknown</button>
+        </div>
+        <section class="map-shell">
+          <svg class="connections" aria-hidden="true"></svg>
+          <div class="map">${nodes}</div>
+        </section>
       </section>
     </main>
     <aside>
@@ -486,6 +616,18 @@ export function renderMap(map, validation) {
           card.classList.remove("dim");
         });
         requestAnimationFrame(drawConnections);
+      });
+    });
+    document.querySelectorAll(".view-toolbar [data-view]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const view = button.dataset.view;
+        document.body.dataset.view = view;
+        document.querySelectorAll(".view-toolbar [data-view]").forEach((item) => {
+          const active = item.dataset.view === view;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        if (view === "map") requestAnimationFrame(drawConnections);
       });
     });
     addEventListener("resize", drawConnections);

@@ -18,7 +18,9 @@ core local-first, provider-independent, and fail-closed on source traceability.
 
 - Support Node.js 18 and later with built-in modules only.
 - Never execute installed skill or map content.
-- Never send user text, sources, or telemetry over the network.
+- Never upload user text, source content, or telemetry. Only the explicit
+  `doubt verify` command may retrieve recorded source URLs; all other commands
+  stay offline and `verify` must fail closed.
 - Treat `skill/doubt/` as the canonical install payload.
 - Escape all user-controlled text before embedding it in HTML.
 - Add passing and adversarial fixtures for every schema invariant.

@@ -4,6 +4,7 @@ import {
   MapValidationError,
   canonicalJson,
   inspectMapContract,
+  receiptPayload,
 } from "./contract.js";
 
 export {
@@ -12,6 +13,7 @@ export {
   RELATIONS,
   canonicalJson,
   inspectMapContract,
+  receiptPayload,
   validateMapContract,
 } from "./contract.js";
 
@@ -21,11 +23,7 @@ function receiptFor(map) {
     retrievedAt: source.retrievedAt,
     excerptSha256: createHash("sha256").update(source.excerpt).digest("hex"),
   }));
-  const payload = {
-    contract: "doubt-evidence-receipt-v1",
-    map,
-    sourceSnapshots,
-  };
+  const payload = receiptPayload(map, sourceSnapshots);
   return createHash("sha256").update(canonicalJson(payload)).digest("hex");
 }
 

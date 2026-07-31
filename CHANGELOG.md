@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 — Verifiable sources and readable briefs
+
+- Add explicit, fail-closed `doubt verify` source retrieval with normalized
+  excerpt matching, retrieved-byte hashes, line-range checks, redirect-by-
+  redirect private-network blocking, and no output on partial failure.
+- Validate verification attestations as part of the evidence contract and show
+  verified versus recorded-only source snapshots in rendered maps.
+- Make the browser playground and Node CLI hash the exact same receipt payload.
+- Expand the adversarial evidence-contract benchmark to 21 cases.
+
 ## 0.6.0 — Evidence snapshots and graph integrity
 
 - Reject malformed or future source dates and unbounded locators; accept safe

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-31T10:46:34.321Z",
+  "generatedAt": "2026-07-31T11:08:10.787Z",
   "subject": "Doubt evidence-contract validator and renderer",
   "methodology": "Deterministic adversarial mutations of the canonical dogfood map. Each case names the invariant that must fire; graph cases cover reachability, duplication, and cycles; the markup case checks escaped visible HTML and embedded JSON.",
   "summary": {
-    "passed": 20,
-    "total": 20,
+    "passed": 21,
+    "total": 21,
     "rate": 100
   },
   "results": [
@@ -128,6 +128,12 @@
       "expected": "escaped",
       "passed": true,
       "observed": "escaped"
+    },
+    {
+      "id": "forged-verification-digest",
+      "expected": "verification-digest",
+      "observed": "verification-digest",
+      "passed": true
     }
   ]
 }

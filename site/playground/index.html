@@ -142,6 +142,7 @@
       <div class="toolbar">
         <button class="primary" id="validate" type="button">Validate &amp; render</button>
         <button id="example" type="button">Load example</button>
+        <button id="rejected-example" type="button">Load rejected example</button>
         <label class="file-label" for="file">Open JSON</label>
         <input id="file" type="file" accept=".json,.doubt.json,application/json">
         <button id="share" type="button" disabled>Copy share link</button>
@@ -160,7 +161,7 @@
     </section>
   </main>
   <script type="module">
-    import { canonicalJson, inspectMapContract } from "../assets/contract.js";
+    import { canonicalJson, inspectMapContract, receiptPayload } from "../assets/contract.js";
     import { renderMap } from "../assets/render-map.js";
     import { buildShareUrl, decodeShareMap } from "../assets/share-link.js";
 
@@ -187,6 +188,15 @@
       return [...new Uint8Array(digest)]
         .map((byte) => byte.toString(16).padStart(2, "0"))
         .join("");
+    }
+
+    async function receiptForMap(map) {
+      const sourceSnapshots = await Promise.all(map.sources.map(async (item) => ({
+        id: item.id,
+        retrievedAt: item.retrievedAt,
+        excerptSha256: await sha256(item.excerpt),
+      })));
+      return sha256(canonicalJson(receiptPayload(map, sourceSnapshots)));
     }
 
     function showFindings(items) {
@@ -244,7 +254,7 @@
         return;
       }
 
-      const receipt = await sha256(canonicalJson(map));
+      const receipt = await receiptForMap(map);
       const complete = { ...validation, receipt };
       const html = renderMap(map, complete);
       current = { map, validation: complete, html };
@@ -263,10 +273,7 @@
       const detail = document.createElement("span");
       const metrics = complete.metrics;
       detail.textContent = `${metrics.claims} claims · ${metrics.evidence} evidence · ${metrics.sources} sources · ${metrics.contradictions} tensions · ${metrics.unknowns} unknowns`;
-      const star = document.createElement("a");
-      star.href = "https://github.com/alsoleg89/doubt";
-      star.textContent = "Useful artifact? Star Doubt on GitHub ↗";
-      summary.append(title, detail, star);
+      summary.append(title, detail);
       const digest = document.createElement("span");
       digest.className = "receipt";
       digest.textContent = `receipt · ${receipt}`;
@@ -280,6 +287,23 @@
         const response = await fetch("../examples/agent-skills-vs-mcp.doubt.json", { cache: "no-store" });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const map = await response.json();
+        source.value = JSON.stringify(map, null, 2);
+        await evaluateEditor();
+      } catch (error) {
+        setInvalid([finding("$", "example-load", `Could not load the bundled example: ${error.message}`)]);
+      }
+    }
+
+    async function loadRejectedExample() {
+      result.className = "result";
+      result.innerHTML = "<div><strong>Loading rejected example…</strong><span>This map intentionally violates the evidence contract.</span></div>";
+      try {
+        const response = await fetch("../examples/agent-skills-vs-mcp.doubt.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const map = await response.json();
+        map.sources[0].date = "3026-99-99";
+        map.sources[0].locator = "see somewhere";
+        map.sources[0].excerpt = "a".repeat(42);
         source.value = JSON.stringify(map, null, 2);
         await evaluateEditor();
       } catch (error) {
@@ -357,6 +381,7 @@
 
     document.querySelector("#validate").addEventListener("click", evaluateEditor);
     document.querySelector("#example").addEventListener("click", loadExample);
+    document.querySelector("#rejected-example").addEventListener("click", loadRejectedExample);
     share.addEventListener("click", copyShareLink);
     downloadJson.addEventListener("click", () => {
       if (!current.map) return;

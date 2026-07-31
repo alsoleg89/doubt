@@ -123,6 +123,64 @@
       font-size: 12px;
     }
     .toolbar button.active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+    .view-toolbar { margin-bottom: 30px; }
+    .view-toolbar::before {
+      align-self: center;
+      color: var(--muted);
+      content: "VIEW";
+      font: 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+      margin-right: 3px;
+    }
+    .brief-view { max-width: 900px; }
+    .brief-position {
+      background: linear-gradient(140deg, rgba(168, 236, 103, .13), rgba(17, 20, 22, .97) 58%);
+      border: 1px solid rgba(168, 236, 103, .32);
+      border-radius: 15px;
+      padding: clamp(22px, 4vw, 36px);
+    }
+    .brief-position span, .brief-section-title {
+      color: var(--support);
+      font: 700 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .brief-position h2 { font-size: clamp(28px, 4vw, 45px); letter-spacing: -.05em; margin: 12px 0; }
+    .brief-position p { color: #c9cfca; font-size: 17px; line-height: 1.58; margin: 0; }
+    .brief-section-title { color: var(--muted); margin: 36px 0 10px; }
+    .brief-edge { border-top: 1px solid var(--line); padding: 24px 0 27px 142px; position: relative; }
+    .brief-relation {
+      border-radius: 5px;
+      color: var(--bg);
+      font: 750 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+      left: 0;
+      padding: 5px 7px;
+      position: absolute;
+      text-transform: uppercase;
+      top: 27px;
+      background: var(--support);
+    }
+    .brief-edge.contradicts .brief-relation { background: var(--against); }
+    .brief-edge.qualifies .brief-relation { background: var(--claim); }
+    .brief-edge.missing .brief-relation { background: var(--missing); }
+    .brief-edge h3 { font-size: 16px; letter-spacing: -.02em; margin: 0 0 13px; }
+    .brief-edge h3 span { color: var(--muted); font-weight: 400; padding: 0 5px; }
+    .brief-claim { color: #d4d9d5; font-size: 15px; line-height: 1.55; margin: 0 0 9px; }
+    .brief-note { color: var(--muted); font-size: 13px; line-height: 1.52; margin: 0; }
+    .brief-source {
+      border-left: 2px solid var(--line);
+      margin-top: 16px;
+      padding-left: 13px;
+    }
+    .brief-source summary { color: var(--claim); cursor: pointer; font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .brief-source blockquote { margin: 12px 0; }
+    .brief-source a { color: var(--support); font-size: 11px; text-decoration: none; }
+    .map-view { display: none; }
+    body[data-view="map"] .brief-view { display: none; }
+    body[data-view="map"] .map-view { display: block; }
+    body[data-view="brief"] .shell { grid-template-columns: minmax(0, 1fr); }
+    body[data-view="brief"] main { margin: 0 auto; max-width: 1250px; width: 100%; }
+    body[data-view="brief"] aside { display: none; }
     .map-shell { position: relative; }
     .connections {
       position: absolute;
@@ -248,6 +306,16 @@
       font-size: 11px;
       margin: -6px 0 10px;
     }
+    .verification, .unverified {
+      border: 1px solid rgba(168, 236, 103, .24);
+      border-radius: 8px;
+      color: var(--support);
+      font: 10px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin: 0 0 13px;
+      padding: 8px 9px;
+    }
+    .verification code { color: var(--muted); font: inherit; }
+    .unverified { border-color: var(--line); color: var(--muted); }
     blockquote { margin: 0 0 15px; color: #aeb5b0; font-size: 13px; line-height: 1.5; }
     .source a { color: var(--support); font-size: 12px; text-decoration: none; }
     .empty { color: var(--muted); font-size: 13px; line-height: 1.5; }
@@ -272,6 +340,8 @@
       .metric { border-bottom: 1px solid var(--line); }
       .metric:nth-child(even) { border-right: 0; }
       .metric:last-child { border-bottom: 0; }
+      .brief-edge { padding-left: 0; padding-top: 61px; }
+      .brief-relation { top: 24px; }
     }
     @media (max-width: 520px) {
       nav { align-items: flex-start; }
@@ -282,7 +352,7 @@
     }
   </style>
 </head>
-<body>
+<body data-view="brief">
   <div class="shell">
     <main>
       <nav>
@@ -307,15 +377,119 @@
         <div class="metric"><strong>2</strong><span>tensions</span></div>
         <div class="metric"><strong>1</strong><span>unknown</span></div>
       </section>
-      <div class="toolbar" aria-label="Filter map">
-        <button class="active" data-filter="all">All</button>
-        <button data-filter="claim">Claims</button>
-        <button data-filter="evidence">Evidence</button>
-        <button data-filter="unknown">Unknown</button>
+      <div class="toolbar view-toolbar" aria-label="Choose evidence view">
+        <button class="active" data-view="brief" aria-pressed="true">Brief</button>
+        <button data-view="map" aria-pressed="false">Map</button>
       </div>
-      <section class="map-shell">
-        <svg class="connections" aria-hidden="true"></svg>
-        <div class="map">
+      <section class="brief-view" aria-label="Linear reasoning brief">
+        <article class="brief-position">
+          <span>Current position</span>
+          <h2>Current position</h2>
+          <p>Choose by capability boundary, not by format popularity.</p>
+        </article>
+        <div class="brief-section-title">Reasoning · decision to evidence</div>
+        <article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Use a Skill <span>→</span> Current position</h3>
+        <p class="brief-claim">Use an Agent Skill for reusable instructions, examples, references, assets, and scripts that should load only when a workflow is relevant.</p>
+        <p class="brief-note">Reusable procedure and bundled context fit the Skill boundary.</p>
+
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Use MCP <span>→</span> Current position</h3>
+        <p class="brief-claim">Use MCP when a host must discover and call live tools, read dynamic resources, or use prompts across a local or remote client-server boundary.</p>
+        <p class="brief-note">Live data and actions fit a protocol boundary.</p>
+
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Use both <span>→</span> Current position</h3>
+        <p class="brief-claim">Pair them when a portable Skill should teach the workflow while MCP supplies live data or actions.</p>
+        <p class="brief-note">The formats compose when a workflow needs both procedural knowledge and runtime capability.</p>
+
+      </article><article class="brief-edge missing">
+        <div class="brief-relation">missing</div>
+        <h3>Missing evidence <span>→</span> Current position</h3>
+        <p class="brief-claim">No committed cross-client benchmark yet measures whether one non-trivial Skill and one MCP integration behave consistently across major coding agents.</p>
+        <p class="brief-note">A shared behavioral suite is needed before claiming equivalent portability in practice.</p>
+
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Filesystem contract <span>→</span> Use a Skill</h3>
+        <p class="brief-claim">The Agent Skills specification defines a SKILL.md package with optional scripts, references, assets, and progressive disclosure.</p>
+        <p class="brief-note">The package format directly represents reusable procedure and on-demand supporting material.</p>
+<details class="brief-source">
+            <summary>Agent Skills · Section: Directory structure; allowed-tools; Progressive disclosure</summary>
+            <blockquote>A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required.</blockquote>
+            <a href="https://agentskills.io/specification" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Client adoption <span>→</span> Use a Skill</h3>
+        <p class="brief-claim">GitHub documents the open Agent Skills standard across Copilot cloud agent, code review, CLI, app, and agent modes in multiple IDEs.</p>
+        <p class="brief-note">A documented open format has a credible portability path beyond one chat session.</p>
+<details class="brief-source">
+            <summary>GitHub Docs · Section: About agent skills; supported clients and locations</summary>
+            <blockquote>GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes.</blockquote>
+            <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge contradicts">
+        <div class="brief-relation">contradicts</div>
+        <h3>Distribution still moving <span>→</span> Use a Skill</h3>
+        <p class="brief-claim">The current well-known discovery proposal is a draft whose v0.2 format intentionally breaks with v0.1 and adds artifact digests and archive safety guidance.</p>
+        <p class="brief-note">Portable authoring is further along than stable remote discovery and distribution.</p>
+<details class="brief-source">
+            <summary>Cloudflare · Section: Changelog v0.2.0; Problem; Discovery Index</summary>
+            <blockquote>The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance.</blockquote>
+            <a href="https://github.com/cloudflare/agent-skills-discovery-rfc" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Protocol boundary <span>→</span> Use MCP</h3>
+        <p class="brief-claim">The current MCP architecture defines JSON-RPC discovery plus tools, resources, and prompts over stdio or Streamable HTTP transports.</p>
+        <p class="brief-note">MCP&#039;s primitives and transports are designed for live capability exchange.</p>
+<details class="brief-source">
+            <summary>Model Context Protocol · Section: Concepts → Layers, Transports, and Primitives</summary>
+            <blockquote>MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports.</blockquote>
+            <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge supports">
+        <div class="brief-relation">supports</div>
+        <h3>Protocol boundary <span>→</span> Use both</h3>
+        <p class="brief-claim">The current MCP architecture defines JSON-RPC discovery plus tools, resources, and prompts over stdio or Streamable HTTP transports.</p>
+        <p class="brief-note">A Skill can describe when and how to use tools that an MCP server exposes.</p>
+<details class="brief-source">
+            <summary>Model Context Protocol · Section: Concepts → Layers, Transports, and Primitives</summary>
+            <blockquote>MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports.</blockquote>
+            <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge contradicts">
+        <div class="brief-relation">contradicts</div>
+        <h3>Runtime counterpressure <span>→</span> Use MCP</h3>
+        <p class="brief-claim">MCP&#039;s official security guidance covers authorization-specific attack classes and mitigations that a remote capability must operate correctly.</p>
+        <p class="brief-note">A live remote integration adds authorization and operational risk, so MCP should not be the default for static guidance.</p>
+<details class="brief-source">
+            <summary>Model Context Protocol · Section: Attacks and Mitigations</summary>
+            <blockquote>The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks.</blockquote>
+            <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices" target="_blank" rel="noreferrer">Open source region ↗</a>
+          </details>
+      </article><article class="brief-edge qualifies">
+        <div class="brief-relation">qualifies</div>
+        <h3>Qualification <span>→</span> Use a Skill</h3>
+        <p class="brief-claim">A Skill is not automatically static or safe: it may include executable scripts, and support for pre-approved tools varies by agent implementation.</p>
+        <p class="brief-note">Choosing a Skill changes the packaging boundary; it does not remove the need to review code and permissions.</p>
+
+      </article>
+      </section>
+      <section class="map-view" aria-label="Interactive reasoning map">
+        <div class="toolbar" aria-label="Filter map">
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="claim">Claims</button>
+          <button data-filter="evidence">Evidence</button>
+          <button data-filter="unknown">Unknown</button>
+        </div>
+        <section class="map-shell">
+          <svg class="connections" aria-hidden="true"></svg>
+          <div class="map">
         <button
           class="node position"
           data-id="position"
@@ -431,6 +605,7 @@
           <strong>Missing evidence</strong>
           <span class="copy">No committed cross-client benchmark yet measures whether one non-trivial Skill and one MCP integration behave consistently across major coding agents.</span>
         </button></div>
+        </section>
       </section>
     </main>
     <aside>
@@ -535,6 +710,7 @@
           <h3>Agent Skills specification</h3>
           <p class="locator">Section: Directory structure; allowed-tools; Progressive disclosure</p>
           <p class="retrieved">Retrieved 2026-07-31</p>
+          <p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>
           <blockquote>A Skill contains SKILL.md and may bundle scripts, references, and assets. Metadata loads first, full instructions load on activation, and supporting files load only when required.</blockquote>
           <a href="https://agentskills.io/specification" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article>
@@ -546,6 +722,7 @@
           <h3>About agent skills</h3>
           <p class="locator">Section: About agent skills; supported clients and locations</p>
           <p class="retrieved">Retrieved 2026-07-31</p>
+          <p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>
           <blockquote>GitHub describes Agent Skills as an open standard and supports project or personal skill directories across its cloud agent, code review, CLI, app, and IDE agent modes.</blockquote>
           <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article>
@@ -557,6 +734,7 @@
           <h3>Agent Skills Discovery RFC</h3>
           <p class="locator">Section: Changelog v0.2.0; Problem; Discovery Index</p>
           <p class="retrieved">Retrieved 2026-07-31</p>
+          <p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>
           <blockquote>The draft defines a well-known discovery index. Its v0.2 revision changes the v0.1 format, adds a schema URI, artifact URL and digest, and strengthens archive and script-execution guidance.</blockquote>
           <a href="https://github.com/cloudflare/agent-skills-discovery-rfc" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article>
@@ -568,6 +746,7 @@
           <h3>MCP architecture overview</h3>
           <p class="locator">Section: Concepts → Layers, Transports, and Primitives</p>
           <p class="retrieved">Retrieved 2026-07-31</p>
+          <p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>
           <blockquote>MCP uses a client-server architecture and JSON-RPC data layer. Servers expose tools, resources, and prompts over local stdio or remote Streamable HTTP transports.</blockquote>
           <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article>
@@ -579,6 +758,7 @@
           <h3>MCP Security Best Practices</h3>
           <p class="locator">Section: Attacks and Mitigations</p>
           <p class="retrieved">Retrieved 2026-07-31</p>
+          <p class="unverified">Recorded snapshot · not re-fetched by Doubt</p>
           <blockquote>The official guidance documents MCP-specific risks including confused-deputy behavior, token passthrough, SSRF, state hijacking, local-server compromise, and authorization mix-up attacks.</blockquote>
           <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices" target="_blank" rel="noreferrer">Open source region ↗</a>
         </article></div>
@@ -668,6 +848,18 @@
           card.classList.remove("dim");
         });
         requestAnimationFrame(drawConnections);
+      });
+    });
+    document.querySelectorAll(".view-toolbar [data-view]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const view = button.dataset.view;
+        document.body.dataset.view = view;
+        document.querySelectorAll(".view-toolbar [data-view]").forEach((item) => {
+          const active = item.dataset.view === view;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        if (view === "map") requestAnimationFrame(drawConnections);
       });
     });
     addEventListener("resize", drawConnections);
