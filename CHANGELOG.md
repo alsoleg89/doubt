@@ -5,6 +5,10 @@
 - Add a six-source portability map comparing the shared Agent Skills core with
   the discovery, invocation, consent, permission, metadata, and distribution
   differences across Claude Code, Codex, Copilot, Cursor, and Gemini CLI.
+- Add a contribution-ready five-client portability benchmark with one frozen
+  fixture, direct/implicit/negative prompts, a machine-readable result contract,
+  and fail-closed validation for metadata, artifacts, receipts, and unsupported
+  equivalence claims.
 
 ## 0.4.1 — Portable share links
 

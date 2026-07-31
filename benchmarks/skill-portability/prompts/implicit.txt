@@ -1,0 +1,4 @@
+Turn the contested question in README.md into an inspectable evidence map using
+only this fixture. Keep contrary evidence and missing facts visible, connect
+every observation to an exact file region, and save the validated editable
+artifact as portability-output.doubt.json. Report its receipt.

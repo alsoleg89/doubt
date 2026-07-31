@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "doubt-agent-skills-portability-v1",
+  "submittedAt": "REPLACE_WITH_UTC_TIMESTAMP",
+  "client": {
+    "id": "codex",
+    "version": "REPLACE_WITH_EXACT_VERSION",
+    "model": "REPLACE_WITH_EXACT_MODEL",
+    "installPath": "REPLACE_WITH_REPOSITORY_LOCAL_SKILL_PATH",
+    "configuration": "REPLACE_WITH_RELEVANT_CONFIGURATION_OR_DEFAULT"
+  },
+  "environment": {
+    "os": "REPLACE_WITH_OS_AND_VERSION",
+    "permissionMode": "REPLACE_WITH_PERMISSION_MODE"
+  },
+  "skillDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "behavioralEquivalenceClaimed": false,
+  "runs": [
+    {
+      "promptId": "direct",
+      "outcome": "not-run",
+      "discovery": "unknown",
+      "activation": "unknown",
+      "consent": "unknown",
+      "tools": [],
+      "artifactPath": null,
+      "evidenceReceipt": null,
+      "rawOutputPath": null,
+      "notes": "REPLACE_WITH_OBSERVATIONS"
+    },
+    {
+      "promptId": "implicit",
+      "outcome": "not-run",
+      "discovery": "unknown",
+      "activation": "unknown",
+      "consent": "unknown",
+      "tools": [],
+      "artifactPath": null,
+      "evidenceReceipt": null,
+      "rawOutputPath": null,
+      "notes": "REPLACE_WITH_OBSERVATIONS"
+    },
+    {
+      "promptId": "negative",
+      "outcome": "not-run",
+      "discovery": "unknown",
+      "activation": "unknown",
+      "consent": "unknown",
+      "tools": [],
+      "artifactPath": null,
+      "evidenceReceipt": null,
+      "rawOutputPath": null,
+      "notes": "REPLACE_WITH_OBSERVATIONS"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alsoleg89/doubt/benchmarks/skill-portability/result.schema.json",
+  "title": "Doubt Agent Skills portability result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "protocolId",
+    "submittedAt",
+    "client",
+    "environment",
+    "skillDigest",
+    "behavioralEquivalenceClaimed",
+    "runs"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "protocolId": {
+      "const": "doubt-agent-skills-portability-v1"
+    },
+    "submittedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "model", "installPath", "configuration"],
+      "properties": {
+        "id": {
+          "enum": [
+            "claude-code",
+            "codex",
+            "github-copilot",
+            "cursor",
+            "gemini-cli"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "installPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configuration": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "permissionMode"],
+      "properties": {
+        "os": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permissionMode": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "skillDigest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "behavioralEquivalenceClaimed": {
+      "const": false
+    },
+    "runs": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "promptId",
+          "outcome",
+          "discovery",
+          "activation",
+          "consent",
+          "tools",
+          "artifactPath",
+          "evidenceReceipt",
+          "rawOutputPath",
+          "notes"
+        ],
+        "properties": {
+          "promptId": {
+            "enum": ["direct", "implicit", "negative"]
+          },
+          "outcome": {
+            "enum": ["pass", "fail", "blocked", "not-run"]
+          },
+          "discovery": {
+            "enum": ["observed", "not-observed", "unknown"]
+          },
+          "activation": {
+            "enum": ["observed", "not-observed", "unknown"]
+          },
+          "consent": {
+            "enum": ["requested", "not-requested", "not-applicable", "unknown"]
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifactPath": {
+            "type": ["string", "null"]
+          },
+          "evidenceReceipt": {
+            "type": ["string", "null"],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "rawOutputPath": {
+            "type": ["string", "null"]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

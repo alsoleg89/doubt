@@ -14,3 +14,18 @@ method, exact cases, expected invariant, observed rules, and generation time.
 The scope is intentionally narrow: this proves structural traceability and safe
 rendering. It does not prove that a source is true, that an AI extracted it
 faithfully, or that the final verdict is correct.
+
+## Agent Skills portability
+
+The [`skill-portability/`](skill-portability/) kit fixes one synthetic fixture,
+one unmodified skill payload, and direct, implicit, and negative prompts across
+Claude Code, Codex, GitHub Copilot, Cursor, and Gemini CLI. It accepts partial,
+negative, and blocked results, but requires exact client metadata and sanitized
+raw output.
+
+```bash
+npm run benchmark:portability
+```
+
+The committed baseline is explicitly zero submissions. Documentation support
+is not counted as behavioral equivalence.

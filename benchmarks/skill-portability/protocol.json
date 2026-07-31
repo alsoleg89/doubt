@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "doubt-agent-skills-portability-v1",
+  "skillPath": "skills/doubt",
+  "fixturePath": "benchmarks/skill-portability/fixture",
+  "clients": [
+    "claude-code",
+    "codex",
+    "github-copilot",
+    "cursor",
+    "gemini-cli"
+  ],
+  "prompts": [
+    {
+      "id": "direct",
+      "path": "benchmarks/skill-portability/prompts/direct.txt",
+      "expected": "The client explicitly activates Doubt and produces a valid portability-output.doubt.json evidence map with a receipt."
+    },
+    {
+      "id": "implicit",
+      "path": "benchmarks/skill-portability/prompts/implicit.txt",
+      "expected": "The client discovers the applicable skill without its name in the prompt and produces a valid portability-output.doubt.json evidence map with a receipt."
+    },
+    {
+      "id": "negative",
+      "path": "benchmarks/skill-portability/prompts/negative.txt",
+      "expected": "The client follows the narrow summary request without activating Doubt or creating an evidence-map artifact."
+    }
+  ],
+  "freshSessionPerPrompt": true,
+  "networkRequiredByFixture": false
+}

@@ -19,4 +19,9 @@ and the resulting `.doubt.json`.
 Do not loosen a fail-closed invariant merely to accept model output. Improve the
 skill or error message first.
 
+To contribute an Agent Skills portability result, follow the frozen
+[`benchmarks/skill-portability/`](benchmarks/skill-portability/) protocol. Keep
+the skill, fixture, and three prompts unchanged; include exact client metadata
+and sanitized raw output. Negative and blocked results are welcome.
+
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).

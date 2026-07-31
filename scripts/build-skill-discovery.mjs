@@ -108,20 +108,24 @@ async function buildArchive(files) {
   return gzipSync(Buffer.concat(chunks), { level: 9, mtime: 0 });
 }
 
-export async function buildSkillDiscovery(destination = outputRoot) {
-  const discoveryRoot = join(destination, ".well-known", "agent-skills");
-  const archivePath = join(discoveryRoot, "doubt.tar.gz");
-  const indexPath = join(discoveryRoot, "index.json");
+export async function buildSkillArchive() {
   const files = await collectFiles(skillRoot);
   if (!files.some((file) => file.archiveName === "SKILL.md")) {
     throw new Error("Archive must contain SKILL.md at its root");
   }
-
   const manifest = parseFrontmatter(
     await readFile(join(skillRoot, "SKILL.md"), "utf8"),
   );
   const archive = await buildArchive(files);
   const digest = createHash("sha256").update(archive).digest("hex");
+  return { archive, digest, files, manifest };
+}
+
+export async function buildSkillDiscovery(destination = outputRoot) {
+  const discoveryRoot = join(destination, ".well-known", "agent-skills");
+  const archivePath = join(discoveryRoot, "doubt.tar.gz");
+  const indexPath = join(discoveryRoot, "index.json");
+  const { archive, digest, files, manifest } = await buildSkillArchive();
   const index = {
     $schema: "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
     skills: [

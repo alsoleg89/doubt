@@ -1,0 +1,4 @@
+Use $doubt to answer the contested question in README.md from only the files in
+this fixture. Preserve supporting, contradicting, and qualifying evidence plus
+explicit unknowns. Cite exact file regions. Save the editable map as
+portability-output.doubt.json, validate it, and report its receipt.

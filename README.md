@@ -191,6 +191,23 @@ This benchmark measures structural traceability and safe rendering. It does not
 pretend to measure whether a source is true or whether an AI extracted it
 faithfully.
 
+## Agent Skills portability benchmark
+
+The public portability map identifies a missing edge: documentation shows a
+shared Agent Skills core, but not identical behavior across clients. The
+[five-client benchmark kit](benchmarks/skill-portability/) fixes one synthetic
+fixture, one unchanged skill, and direct, implicit, and negative prompts for
+Claude Code, Codex, GitHub Copilot, Cursor, and Gemini CLI.
+
+```bash
+npm run benchmark:portability
+```
+
+Results require exact client versions, relevant configuration, sanitized raw
+output, generated artifacts, and receipts. A contributor can submit one client;
+failures and blocked runs are valid evidence. The baseline is zero submitted
+clients, and a single-client result may not claim behavioral equivalence.
+
 ## Reader benchmark — recruiting
 
 The structural benchmark does not answer the product question: does an

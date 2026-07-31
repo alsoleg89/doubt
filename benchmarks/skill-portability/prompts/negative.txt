@@ -1,0 +1,2 @@
+Summarize the decision context in README.md in one sentence. Do not invoke a
+skill and do not create or modify any files.
