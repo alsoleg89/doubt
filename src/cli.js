@@ -1,8 +1,8 @@
-import { writeFile } from "node:fs/promises";
+import { writeFile, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { doctor, installSkill } from "./install.js";
-import { loadMap } from "./map.js";
+import { loadMap, inspectMap, MapValidationError } from "./map.js";
 import { renderMap } from "./render-map.js";
 
 const c = {
@@ -23,7 +23,7 @@ Usage
   doubt init [--agent <name|all>] [--global] [--force] [--json]
   doubt doctor [--agent <name|all>] [--global] [--json]
   doubt map <file.json> [--out <file.html>] [--json]
-  doubt validate <file.json> [--json]
+  doubt validate <file.json> [--format json] [--json]
   doubt demo [--out <file.html>] [--json]
 
 Agents
@@ -135,9 +135,43 @@ export async function run(argv) {
   if (command === "validate" || command === "check") {
     const file = flags._[0];
     if (!file) throw new Error("Pass a .json evidence map.");
-    const { validation } = await loadMap(resolve(file));
-    if (flags.json) console.log(JSON.stringify(validation, null, 2));
-    else printMapValidation(validation);
+    const wantsJson = flags.json || flags.format === "json";
+
+    const filePath = resolve(file);
+    let raw;
+    try {
+      raw = await readFile(filePath, "utf8");
+    } catch (error) {
+      throw new Error(`Could not read file: ${error.message}`);
+    }
+
+    let map;
+    let validation;
+    try {
+      map = JSON.parse(raw);
+      validation = inspectMap(map);
+    } catch (error) {
+      validation = {
+        findings: [{ path: "$", rule: "invalid-json", message: `Could not parse JSON: ${error.message}` }],
+        metrics: { claims: 0, contradictions: 0, evidence: 0, sources: 0, unknowns: 0 },
+        receipt: null,
+        valid: false,
+      };
+    }
+
+    if (!validation.valid) {
+      process.exitCode = 1;
+      if (!wantsJson) {
+    
+        throw new MapValidationError(validation.findings);
+      }
+    }
+
+    if (wantsJson) {
+      console.log(JSON.stringify(validation, null, 2));
+    } else {
+      printMapValidation(validation);
+    }
     return;
   }
 

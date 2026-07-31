@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, mkdir, writeFile, copyFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -60,4 +60,48 @@ test("topical Agent Skills vs MCP map validates and renders", async () => {
   assert.match(html, /Should an AI capability be an Agent Skill, an MCP server, or both\?/);
   assert.match(html, /Concepts → Layers, Transports, and Primitives/);
   assert.match(html, /0444afe44c523678f2ad8eb7267e0d7c7a392709921abf16474e68d2ef5a3991/);
+});
+
+test("validate command supports JSON output, exit codes, and paths with spaces", async () => {
+  const baseTemp = await mkdtemp(join(tmpdir(), "doubt-validate-"));
+  const spaceDir = join(baseTemp, "test spaces");
+  await mkdir(spaceDir);
+
+  const validMapPath = join(spaceDir, "valid.doubt.json");
+  const invalidMapPath = join(spaceDir, "invalid.json");
+
+  await copyFile("examples/agent-skills-vs-mcp.doubt.json", validMapPath);
+  
+  await writeFile(invalidMapPath, JSON.stringify({ title: "Just a title" }));
+
+  const validResult = spawnSync(
+    process.execPath,
+    ["bin/doubt.js", "validate", validMapPath, "--format", "json"],
+    { cwd: process.cwd(), encoding: "utf8" },
+  );
+  assert.equal(validResult.status, 0);
+  const validReport = JSON.parse(validResult.stdout);
+  assert.equal(validReport.valid, true);
+  assert.ok(validReport.receipt);
+  assert.ok(validReport.metrics);
+  assert.deepEqual(validReport.findings, []);
+
+  const invalidResult = spawnSync(
+    process.execPath,
+    ["bin/doubt.js", "validate", invalidMapPath, "--format", "json"],
+    { cwd: process.cwd(), encoding: "utf8" },
+  );
+  assert.equal(invalidResult.status, 1);
+  const invalidReport = JSON.parse(invalidResult.stdout);
+  assert.equal(invalidReport.valid, false);
+  assert.equal(invalidReport.receipt, null);
+  assert.ok(invalidReport.findings.length > 0);
+
+  const defaultResult = spawnSync(
+    process.execPath,
+    ["bin/doubt.js", "validate", invalidMapPath],
+    { cwd: process.cwd(), encoding: "utf8" },
+  );
+  assert.equal(defaultResult.status, 1);
+  assert.match(defaultResult.stderr, /MapValidationError/);
 });
