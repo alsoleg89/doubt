@@ -11,6 +11,8 @@
 - Restrict Pages and IndexNow runs to files that can change the public site.
 - Publish the verified v0.5.0 release tarball as the public `doubt-ai` package
   on npm, with a clean Registry install and CLI smoke test.
+- Submit Doubt to two Agent Skill catalogs with mergeable pull requests ready
+  for maintainer review.
 
 ## 0.5.0 — Agent Skills portability benchmark
 
